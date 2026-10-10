@@ -4,7 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 
 // The email link lands here with either ?code=… (PKCE) or ?token_hash=…&type=…
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? request.nextUrl.origin;
   const code = searchParams.get("code");
   const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;

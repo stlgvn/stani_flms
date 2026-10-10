@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.env*
+!.env.example
+test
+supabase/.temp
+supabase/.branches
+/[0-9][0-9].[0-9][0-9].[0-9][0-9][0-9][0-9]
+*.mp4
+*.mov

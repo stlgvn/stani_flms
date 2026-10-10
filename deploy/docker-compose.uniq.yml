@@ -1,0 +1,71 @@
+# Added on top of Supabase's docker-compose.yml (see COMPOSE_FILE in /opt/supabase/.env).
+# Paths are relative to the Supabase project directory; the app lives in ${APP_DIR}.
+
+x-app-env: &app-env
+  NEXT_PUBLIC_SUPABASE_URL: ${SUPABASE_PUBLIC_URL}
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
+  NEXT_PUBLIC_SITE_URL: ${SITE_URL}
+  SUPABASE_INTERNAL_URL: http://api-gw:8000
+  SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
+  STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+  STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+
+x-app-build: &app-build
+  context: ${APP_DIR}
+  args:
+    NEXT_PUBLIC_SUPABASE_URL: ${SUPABASE_PUBLIC_URL}
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
+    NEXT_PUBLIC_SITE_URL: ${SITE_URL}
+
+services:
+  # Nothing but Caddy is published on the host: the database and the API gateway stay private.
+  api-gw:
+    ports: !reset []
+  supavisor:
+    ports: !reset []
+
+  storage:
+    environment:
+      FILE_SIZE_LIMIT: 524288000 # 500 MB
+
+  web:
+    container_name: uniq-web
+    image: uniq-app:latest
+    build: *app-build
+    restart: unless-stopped
+    environment: *app-env
+    depends_on:
+      api-gw:
+        condition: service_healthy
+
+  worker:
+    container_name: uniq-worker
+    image: uniq-app:latest
+    build: *app-build
+    command: ["npx", "tsx", "scripts/worker.ts"]
+    restart: unless-stopped
+    environment: *app-env
+    depends_on:
+      api-gw:
+        condition: service_healthy
+
+  caddy:
+    container_name: uniq-caddy
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      PROXY_DOMAIN: ${PROXY_DOMAIN}
+    volumes:
+      - ${APP_DIR}/deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+
+volumes:
+  caddy_data:
+  caddy_config:

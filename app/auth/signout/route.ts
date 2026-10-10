@@ -4,5 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  return NextResponse.redirect(new URL("/", request.nextUrl.origin), { status: 303 });
+  // Behind a reverse proxy request.nextUrl.origin is the internal address, so prefer the public one.
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? request.nextUrl.origin;
+  return NextResponse.redirect(new URL("/", site), { status: 303 });
 }

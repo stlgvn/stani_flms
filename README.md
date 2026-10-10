@@ -54,6 +54,23 @@ The same list is in `.env.example`.
 `SUPABASE_SERVICE_ROLE_KEY` has full access to the database and is used only by the worker and the payment webhook. Never prefix it with
 `NEXT_PUBLIC_`, or it will be shipped to the browser.
 
+## Deploying to a server (one command)
+
+On a fresh Ubuntu 24.04 server (e.g. Hetzner CPX32, 4 vCPU / 8 GB), logged in as root:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/stlgvn/stani_flms/master/deploy/install.sh | bash
+```
+
+It installs Docker, self-hosted Supabase, the website, the worker and Caddy (automatic HTTPS), applies the
+migrations and opens only ports 22/80/443. Without a domain the site is at `https://<ip-with-dashes>.sslip.io`;
+to use your own, point an A record at the server and run the same command with the domain at the end:
+`… | bash -s -- uniq.example.com`. Re-running the command updates the app and keeps all data.
+
+- Settings and keys: `/opt/supabase/.env` (Stripe keys go here, then `cd /opt/supabase && docker compose up -d`).
+- Logs: `cd /opt/supabase && docker compose logs -f web worker`.
+- Until SMTP is configured in `/opt/supabase/.env` (`SMTP_*`), sign-ups are confirmed instantly (email + password).
+
 ## Starting after a reboot
 
 Four steps. Run the website and the worker **in separate terminal tabs** and keep them open:

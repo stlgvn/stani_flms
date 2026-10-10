@@ -10,7 +10,7 @@ const changes = [
 ];
 
 const steps = [
-  ["Sign in with email", "No password — we send you a magic link."],
+  ["Create an account", "Just an email and a password — takes 10 seconds."],
   ["Upload a video", "MP4, MOV, WEBM or MKV, up to 500 MB and 11 minutes."],
   ["Download your version", "Ready in a minute or two. Every version gets its own random settings."],
 ];

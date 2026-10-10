@@ -1,0 +1,12 @@
+# Public entry point: HTTPS certificates are issued automatically for PROXY_DOMAIN.
+# Supabase APIs go to its gateway; everything else is the website. Studio is not exposed.
+{$PROXY_DOMAIN} {
+	@supabase path /auth/v1/* /rest/v1/* /storage/v1/* /realtime/v1/*
+	handle @supabase {
+		reverse_proxy api-gw:8000
+	}
+	handle {
+		reverse_proxy web:3000
+	}
+	header -server
+}

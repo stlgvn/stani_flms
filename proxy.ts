@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import { AUTH_COOKIE, SUPABASE_SERVER_URL } from "@/lib/supabase/config";
 import { NextResponse, type NextRequest } from "next/server";
 
 // Refreshes the Supabase session cookie on every request and guards /dashboard.
@@ -6,9 +7,10 @@ export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    SUPABASE_SERVER_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: AUTH_COOKIE,
       cookies: {
         getAll() {
           return request.cookies.getAll();
