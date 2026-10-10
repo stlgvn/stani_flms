@@ -14,6 +14,17 @@ export const COMPARE = {
   credit: "Porsche 911 — Stani Films",
 };
 
-export const REELS: ShowcaseReel[] = [
-  { src: "/showcase/porsche-original.mp4", poster: "/showcase/porsche-original.jpg", title: "Porsche 911 — Stani Films", platform: "Instagram" },
-];
+// Hero clip: scrolling through real Instagram activity on the Stani Flms account.
+export const HERO = { src: "/showcase/ig-activity.mp4", poster: "/showcase/ig-activity.jpg" };
+
+// Real result reported by Stani Flms for this film. Keep the numbers true.
+export const CASE = {
+  src: "/showcase/levis.mp4",
+  poster: "/showcase/levis.jpg",
+  posts: "≈9",
+  hits: "6",
+  views: "100K+",
+};
+
+// Optional wall of reels with real view counts (shown when there are 3 or more).
+export const REELS: ShowcaseReel[] = [];

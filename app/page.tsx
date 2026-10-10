@@ -3,7 +3,7 @@ import { CompareVideos, ReelWall } from "@/components/Showcase";
 import StickyCta from "@/components/StickyCta";
 import Viewfinder from "@/components/Viewfinder";
 import { PACKS, usd } from "@/lib/plans";
-import { REELS } from "@/lib/showcase";
+import { CASE, HERO, REELS } from "@/lib/showcase";
 
 const pains = [
   [
@@ -97,13 +97,13 @@ export default function Home() {
             <span className="label text-xs text-muted">No card needed</span>
           </div>
         </div>
-        {REELS[0] && (
+        {HERO && (
           <div className="mx-auto w-56 space-y-2 sm:w-72">
-            <p className="label text-xs text-muted">Live preview</p>
+            <p className="label text-xs text-muted">Our Instagram / real activity</p>
             <Viewfinder className="w-full">
               <video
-                src={REELS[0].src}
-                poster={REELS[0].poster}
+                src={HERO.src}
+                poster={HERO.poster}
                 autoPlay
                 muted
                 loop
@@ -146,9 +146,46 @@ export default function Home() {
         <p className="label text-xs text-muted">Shot by Stani Flms / processed in 8 seconds</p>
       </section>
 
+      {/* Real result */}
+      <section className="space-y-6">
+        <SectionTitle n="03" title="Real result" />
+        <div className="grid bg-panel text-panel-fg md:grid-cols-[1.5fr_1fr]">
+          <div className="relative z-[60] bg-black">
+            <video
+              src={CASE.src}
+              poster={CASE.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="block aspect-video w-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-between gap-6 p-6 sm:p-8">
+            <p className="label text-xs opacity-70">Case / one film / shot by Stani Flms</p>
+            <div className="grid grid-cols-2 border-y border-panel-fg/30">
+              <div className="py-4 pr-4">
+                <div className="font-display text-6xl sm:text-7xl">{CASE.posts}</div>
+                <p className="label mt-2 text-[10px] opacity-70">times posted</p>
+              </div>
+              <div className="border-l border-panel-fg/30 py-4 pl-4">
+                <div className="font-display text-6xl text-dot sm:text-7xl">{CASE.hits}×</div>
+                <p className="label mt-2 text-[10px] opacity-70">{CASE.views} views each</p>
+              </div>
+            </div>
+            <p className="font-poppins text-sm leading-relaxed opacity-80 sm:text-base">
+              We posted this one film about 9 times. Six of those posts passed 100,000 views each. One great video
+              can keep working — it just needs a fresh file every time.
+            </p>
+          </div>
+        </div>
+        <p className="label text-[10px] text-muted">Real numbers from our account / results vary by content and platform</p>
+      </section>
+
       {/* AI creators */}
       <section className="space-y-6">
-        <SectionTitle n="03" title="For AI creators" />
+        <SectionTitle n="04" title="For AI creators" />
         <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-stretch">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold leading-tight sm:text-4xl">Don&apos;t pay to generate it twice.</h2>
@@ -171,7 +208,7 @@ export default function Home() {
 
       {/* How it works */}
       <section className="space-y-6">
-        <SectionTitle n="04" title="How it works" />
+        <SectionTitle n="05" title="How it works" />
         <ol className="space-y-3">
           {how.map(([t, sub, d], i) => (
             <li key={t} className="flex gap-4 border border-border bg-card p-4">
@@ -190,7 +227,7 @@ export default function Home() {
 
       {/* Who it's for */}
       <section className="space-y-6">
-        <SectionTitle n="05" title="Who it's for" />
+        <SectionTitle n="06" title="Who it's for" />
         <ul className="space-y-3">
           {audiences.map(([t, sub, d]) => {
             const active = t === "AI creators";
@@ -215,14 +252,14 @@ export default function Home() {
 
       {REELS.length >= 3 && (
         <section className="space-y-6">
-          <SectionTitle n="06" title="Real videos / real views" />
+          <SectionTitle n={num(7)} title="Real videos / real views" />
           <ReelWall />
         </section>
       )}
 
       {/* What changes */}
       <section className="space-y-6">
-        <SectionTitle n={num(6 + R)} title="Under the hood" />
+        <SectionTitle n={num(7 + R)} title="Under the hood" />
         <dl className="divide-y divide-border border-y border-foreground">
           {changes.map(([t, d]) => (
             <div key={t} className="grid gap-1 py-4 sm:grid-cols-[200px_1fr]">
@@ -235,7 +272,7 @@ export default function Home() {
 
       {/* Pricing */}
       <section className="space-y-6">
-        <SectionTitle n={num(7 + R)} title="Pricing" />
+        <SectionTitle n={num(8 + R)} title="Pricing" />
         <p className="label text-xs text-muted">Pay per video / credits never expire / 3 videos free</p>
         <ul className="grid border border-foreground sm:grid-cols-3">
           {PACKS.map((p, i) => {
@@ -268,7 +305,7 @@ export default function Home() {
 
       {/* FAQ */}
       <section className="space-y-6">
-        <SectionTitle n={num(8 + R)} title="Good to know" />
+        <SectionTitle n={num(9 + R)} title="Good to know" />
         <div className="divide-y divide-border border-y border-foreground">
           {faq.map(([q, a]) => (
             <details key={q} className="group py-4">

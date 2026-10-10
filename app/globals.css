@@ -92,28 +92,30 @@ body::before {
   100% { transform: translate(0, 0); }
 }
 
-/* Huge condensed headline. */
-.font-display {
-  font-family: var(--font-display);
-  font-weight: 400;
-  line-height: 0.88;
-  letter-spacing: -0.005em;
-  text-transform: uppercase;
-}
+@layer components {
+  /* Huge condensed headline. */
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.88;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+  }
 
-/* Small mono label with wide tracking: "LIGHT / PROMPT / AI VIDEO". */
-.label {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
+  /* Small mono label with wide tracking: "LIGHT / PROMPT / AI VIDEO". */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
 
-/* Section heading: "01  PICK A LOOK". */
-.kicker {
-  font-weight: 800;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  /* Section heading: "01  PICK A LOOK". */
+  .kicker {
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
 }
 
 .rec-dot {

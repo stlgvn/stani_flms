@@ -21,7 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <header className="sticky top-0 z-40 border-b border-foreground bg-background/90 backdrop-blur">
+        <header className="sticky top-0 z-[70] border-b border-foreground bg-background/90 backdrop-blur">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
             <Link href="/" className="flex items-baseline gap-3">
               <span className="font-display text-3xl">
