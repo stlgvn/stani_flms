@@ -3,31 +3,31 @@
 @import "@fontsource/reenie-beanie/400.css";
 @import "@fontsource-variable/inter/wght.css";
 
-/* Stani Films palette: milky paper, deep red ink, warm browns. */
+/* Stani Films palette: butter-cream paper with raspberry ink. */
 :root {
-  --background: #f5efe4;
-  --foreground: #2a1a14;
-  --card: #fbf8f2;
-  --border: #e4d9c7;
-  --muted: #8a7364;
-  --accent: #940501;
-  --accent-fg: #fbf8f2;
-  --tan: #a47249;
+  --background: #fbf6cc;
+  --foreground: #3a1424;
+  --card: #fffce6;
+  --border: #ece3b4;
+  --muted: #8c6670;
+  --accent: #b8335a;
+  --accent-fg: #fffce6;
+  --tan: #a8546c;
   --ok: #4f7a2a;
   --bad: #b3261e;
-  --grain-opacity: 0.07;
+  --grain-opacity: 0.08;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1b1210;
-    --foreground: #f5efe4;
-    --card: #251915;
-    --border: #3a2a24;
-    --muted: #b49c8b;
-    --accent: #d2402f;
-    --accent-fg: #fbf8f2;
-    --tan: #c99a6e;
+    --background: #241018;
+    --foreground: #fbf6cc;
+    --card: #2e1520;
+    --border: #4a2533;
+    --muted: #cba7b1;
+    --accent: #f07a9a;
+    --accent-fg: #2a0f1a;
+    --tan: #e7a3b5;
     --ok: #8fbf5a;
     --bad: #ff7a6b;
     --grain-opacity: 0.05;
