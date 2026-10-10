@@ -125,7 +125,7 @@ export default function Dashboard(props: {
     <div className="space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="font-display text-4xl text-accent">Dashboard</h1>
+          <h1 className="font-display text-6xl text-accent">Dashboard</h1>
           <p className="text-sm text-muted">{props.email}</p>
         </div>
         <div className="flex items-center gap-3">
@@ -150,7 +150,7 @@ export default function Dashboard(props: {
       )}
 
       <section className="space-y-3">
-        <h2 className="font-display text-2xl">Strength</h2>
+        <h2 className="font-display text-4xl">Strength</h2>
         <div className="grid grid-cols-3 gap-2">
           {STRENGTHS.map((s) => (
             <button
@@ -212,7 +212,7 @@ export default function Dashboard(props: {
       </section>
 
       <section className="space-y-3" id="buy">
-        <h2 className="font-display text-2xl">Buy credits</h2>
+        <h2 className="font-display text-4xl">Buy credits</h2>
         <div className="grid gap-2 sm:grid-cols-3">
           {PACKS.map((p) => (
             <form key={p.id} action="/api/checkout" method="post" className="rounded-2xl border border-border bg-card p-4">
@@ -235,7 +235,7 @@ export default function Dashboard(props: {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-display text-2xl">My videos</h2>
+        <h2 className="font-display text-4xl">My videos</h2>
         {jobs.length === 0 && <p className="text-sm text-muted">Nothing here yet.</p>}
         <ul className="space-y-2">
           {jobs.map((j) => (

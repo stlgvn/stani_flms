@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@import "@fontsource/anton/400.css";
+@import "@fontsource-variable/league-gothic/index.css";
+@import "@fontsource/reenie-beanie/400.css";
 @import "@fontsource-variable/inter/wght.css";
 
 /* Stani Films palette: milky paper, deep red ink, warm browns. */
@@ -45,7 +46,8 @@
   --color-ok: var(--ok);
   --color-bad: var(--bad);
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-display: "League Gothic Variable", "Arial Narrow", sans-serif;
+  --font-hand: "Reenie Beanie", cursive;
 }
 
 body {
@@ -67,8 +69,17 @@ body::before {
 
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: 0.01em;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  line-height: 0.9;
   text-transform: uppercase;
+}
+/* Handwritten accent, like a note on a film slate. */
+.font-hand {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 
 @keyframes rise {

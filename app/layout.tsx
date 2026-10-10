@@ -24,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
             <Link href="/" className="flex items-baseline gap-2">
-              <span className="font-display text-2xl text-accent">Stani Films</span>
+              <span className="font-display text-3xl text-accent">Stani Films</span>
               <span className="rounded-full border border-accent/30 px-2 py-0.5 text-[10px] font-semibold tracking-[0.2em] text-accent">
                 UNIQ
               </span>

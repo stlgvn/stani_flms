@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-sm space-y-6 pt-6">
-      <h1 className="font-display text-4xl text-accent">{mode === "signup" ? "Create your account" : "Sign in"}</h1>
+      <h1 className="font-display text-6xl text-accent">{mode === "signup" ? "Create your account" : "Sign in"}</h1>
       {mode === "signup" && <p className="text-sm text-muted">3 free videos to start. No card needed.</p>}
       <form onSubmit={onSubmit} className="space-y-3">
         <input
