@@ -13,7 +13,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fbf6cc" },
-    { media: "(prefers-color-scheme: dark)", color: "#5a1023" },
+    { media: "(prefers-color-scheme: dark)", color: "#5c0a06" },
   ],
 };
 
@@ -24,8 +24,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
             <Link href="/" className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold tracking-tight">
-                Uniq<span className="text-tan">.</span>
+              <span className="text-3xl font-bold tracking-tight text-accent">
+                Uniq<span className="text-dot">.</span>
               </span>
               <span className="text-[10px] font-semibold tracking-[0.25em] text-muted uppercase">by Stani Films</span>
             </Link>

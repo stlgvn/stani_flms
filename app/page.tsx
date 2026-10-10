@@ -3,11 +3,38 @@ import { CompareVideos, ReelWall } from "@/components/Showcase";
 import { PACKS, usd } from "@/lib/plans";
 import { REELS } from "@/lib/showcase";
 
-const uses = [
-  ["Post everywhere", "Run the same video on several of your own accounts — each one gets its own file."],
-  ["Test your hooks", "Make 5 versions of one Reel and see which one the algorithm likes."],
-  ["Refresh old hits", "Bring back a video that already worked, as a brand-new upload."],
-  ["For agencies", "Deliver variations to clients in minutes, not hours of re-editing."],
+const pains = [
+  [
+    "Reposts get buried",
+    "Upload the same file twice — on a second account, or a month later — and platforms can treat it as a duplicate and quietly cut its reach.",
+  ],
+  [
+    "Re-editing eats your day",
+    "A new cut, a new hook, a new color pass, a new export. Hours of work just to post something you already made.",
+  ],
+  [
+    "AI generations cost money",
+    "Every new render burns credits and still might not come out as good as the first one. Your best generation should work more than once.",
+  ],
+];
+
+const how = [
+  ["Upload", "Drop in your Reel, Short or TikTok — MP4, MOV, WEBM or MKV, up to 500 MB."],
+  [
+    "We rebuild it",
+    "A subtle zoom and crop, a touch of color and grain, 1–5% faster with audio in sync, slightly higher pitch, re-encoded at 30 fps with all old metadata wiped.",
+  ],
+  [
+    "Download and post",
+    "About a minute later you get a brand-new file that looks and sounds like the original. Repeat for as many versions as you need.",
+  ],
+];
+
+const audiences = [
+  ["Creators", "Post your best videos on every account and every platform without re-editing a single frame."],
+  ["AI creators", "Turn one great generation into five posts — without paying to generate it again."],
+  ["Brands & agencies", "Deliver fresh variations for every client account and A/B test in minutes."],
+  ["UGC & ads", "Run the same winning creative across multiple ad accounts and pages."],
 ];
 
 const changes = [
@@ -19,16 +46,14 @@ const changes = [
   ["Never mirrored", "On-screen text never ends up backwards."],
 ];
 
-const steps = [
-  ["Create an account", "Just an email and a password — takes 10 seconds."],
-  ["Upload a video", "MP4, MOV, WEBM or MKV, up to 500 MB and 11 minutes."],
-  ["Download your version", "Ready in about a minute. Every version gets its own random settings."],
-];
-
 const faq = [
   [
     "Will it lower the quality?",
     "No. A 4K video stays 4K, encoded at a high bitrate. Most people can't tell the two apart side by side.",
+  ],
+  [
+    "Does it work with AI-generated videos?",
+    "Yes — Runway, Kling, Sora, Veo, Higgsfield or anything else. If it exports as MP4 or MOV, Uniq can make new versions of it.",
   ],
   [
     "Can the platform still recognise it?",
@@ -39,13 +64,16 @@ const faq = [
   ["What if processing fails?", "The credit goes straight back to your balance."],
 ];
 
+const creator = PACKS.find((p) => p.id === "creator");
+const fiveVersions = creator ? usd(Math.round((creator.priceCents / creator.credits) * 5)) : null;
+
 export default function Home() {
   return (
     <div className="space-y-28">
       {/* Hero */}
       <section className="rise grid items-center gap-10 pt-4 sm:pt-10 md:grid-cols-[1.4fr_1fr]">
         <div className="space-y-7">
-          <p className="font-hand text-3xl text-tan">made for creators —</p>
+          <p className="font-hand text-3xl text-tan">for creators & AI creators —</p>
           <h1 className="font-display text-[4.6rem] text-accent sm:text-[8rem]">
             One video.
             <br />
@@ -54,8 +82,8 @@ export default function Home() {
             versions.
           </h1>
           <p className="max-w-lg text-lg text-muted">
-            Upload a Reel, Short or TikTok. Get back a brand-new file with fresh metadata — that looks and sounds just
-            like your original.
+            Stop re-editing and re-generating. Upload a Reel, Short or TikTok and get back a brand-new file with fresh
+            metadata — that looks and sounds just like your original. In about a minute.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link
@@ -78,27 +106,81 @@ export default function Home() {
               loop
               playsInline
               preload="metadata"
-              className="aspect-[9/16] w-60 rounded-[2.2rem] border-[6px] border-foreground object-cover shadow-2xl sm:w-72"
+              className="aspect-[9/16] w-60 rounded-[2.2rem] border-[6px] border-accent object-cover shadow-2xl sm:w-72"
             />
           </div>
         )}
+      </section>
+
+      {/* Pain */}
+      <section className="space-y-8">
+        <SectionTitle kicker="sound familiar?" title="Great content shouldn't be one-and-done." />
+        <ul className="grid gap-4 sm:grid-cols-3">
+          {pains.map(([t, d], i) => (
+            <li key={t} className="rounded-3xl border border-border bg-card p-6">
+              <div className="font-display text-6xl text-accent/25">0{i + 1}</div>
+              <div className="font-display mt-2 text-3xl text-accent">{t}</div>
+              <p className="mt-2 text-sm text-muted">{d}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="max-w-2xl text-lg">
+          <span className="font-semibold text-accent">Uniq fixes all three.</span> One upload, one minute, and your video
+          is ready to go out again — on any account, any platform, as many times as you need.
+        </p>
       </section>
 
       {/* Before / after */}
       <section className="space-y-8">
         <SectionTitle kicker="spot the difference" title="Same look. New file." note="(you won't find one)" />
         <CompareVideos />
-        <p className="text-sm text-muted">Shot by Stani Films. Left: the original. Right: the Uniq version — processed in 8 seconds.</p>
+        <p className="text-sm text-muted">
+          Shot by Stani Films. Left: the original. Right: the Uniq version — processed in 8 seconds.
+        </p>
       </section>
 
-      {/* Uses */}
+      {/* AI creators */}
+      <section className="grid gap-8 rounded-[2rem] border border-border bg-card p-8 sm:p-12 md:grid-cols-[1.3fr_1fr] md:items-center">
+        <div className="space-y-4">
+          <p className="font-hand text-2xl text-tan">for AI creators —</p>
+          <h2 className="font-display text-5xl text-accent sm:text-7xl">Don&apos;t pay to generate it twice.</h2>
+          <p className="text-muted">
+            You spent credits, prompts and hours to land that perfect AI clip. Re-generating it for every account costs
+            money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need —
+            same quality, new file every time.
+          </p>
+        </div>
+        {fiveVersions && (
+          <div className="rounded-3xl bg-accent p-8 text-accent-fg">
+            <div className="font-hand text-2xl opacity-90">5 versions of one video</div>
+            <div className="font-display mt-2 text-8xl">{fiveVersions}</div>
+            <p className="mt-2 text-sm opacity-80">on the Creator pack. No new prompts, no new generation credits.</p>
+          </div>
+        )}
+      </section>
+
+      {/* How it works */}
       <section className="space-y-8">
-        <SectionTitle kicker="why creators use it" title="More reach from every video." />
+        <SectionTitle kicker="how it works" title="Three steps. One minute." />
+        <ol className="grid gap-4 sm:grid-cols-3">
+          {how.map(([t, d], i) => (
+            <li key={t} className="rounded-3xl border border-border bg-card p-6">
+              <div className="font-display text-7xl text-accent">0{i + 1}</div>
+              <div className="mt-3 text-lg font-semibold">{t}</div>
+              <p className="mt-1 text-sm text-muted">{d}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* Who it's for */}
+      <section className="space-y-8">
+        <SectionTitle kicker="who it's for" title="More reach from every video." />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {uses.map(([t, d]) => (
+          {audiences.map(([t, d]) => (
             <li key={t} className="rounded-3xl border border-border bg-card p-6">
               <div className="font-display text-3xl text-accent">{t}</div>
-              <div className="mt-2 text-sm text-muted">{d}</div>
+              <p className="mt-2 text-sm text-muted">{d}</p>
             </li>
           ))}
         </ul>
@@ -113,29 +195,15 @@ export default function Home() {
 
       {/* What changes */}
       <section className="space-y-8">
-        <SectionTitle kicker="what changes" title="Invisible to viewers. New to algorithms." />
+        <SectionTitle kicker="under the hood" title="Invisible to viewers. New to algorithms." />
         <ul className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-3">
           {changes.map(([t, d]) => (
             <li key={t} className="bg-card p-6">
               <div className="font-display text-3xl text-accent">{t}</div>
-              <div className="mt-2 text-sm text-muted">{d}</div>
+              <p className="mt-2 text-sm text-muted">{d}</p>
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Steps */}
-      <section className="space-y-8">
-        <SectionTitle kicker="how it works" title="Three steps. One minute." />
-        <ol className="grid gap-4 sm:grid-cols-3">
-          {steps.map(([t, d], i) => (
-            <li key={t} className="rounded-3xl border border-border bg-card p-6">
-              <div className="font-display text-7xl text-accent/90">0{i + 1}</div>
-              <div className="mt-3 font-semibold">{t}</div>
-              <div className="mt-1 text-sm text-muted">{d}</div>
-            </li>
-          ))}
-        </ol>
       </section>
 
       {/* Pricing */}
@@ -183,7 +251,7 @@ export default function Home() {
       <section className="rounded-[2rem] bg-accent px-6 py-16 text-center text-accent-fg sm:px-12">
         <p className="font-hand text-3xl opacity-90">your next upload —</p>
         <h2 className="font-display mt-2 text-6xl sm:text-8xl">Make it unique</h2>
-        <p className="mx-auto mt-3 max-w-md opacity-80">Upload a video and get a fresh version in about a minute.</p>
+        <p className="mx-auto mt-3 max-w-md opacity-80">3 videos free. No card. About a minute per video.</p>
         <Link
           href="/login"
           className="mt-8 inline-block rounded-full bg-accent-fg px-8 py-4 font-semibold text-accent transition hover:-translate-y-0.5"
@@ -199,7 +267,7 @@ function SectionTitle({ kicker, title, note }: { kicker: string; title: string; 
   return (
     <div className="space-y-1">
       <p className="font-hand text-2xl text-tan">{kicker} —</p>
-      <h2 className="font-display text-5xl sm:text-7xl">
+      <h2 className="font-display text-5xl text-accent sm:text-7xl">
         {title} {note && <span className="font-hand align-middle text-3xl text-tan sm:text-4xl">{note}</span>}
       </h2>
     </div>
