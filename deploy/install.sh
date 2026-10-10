@@ -18,6 +18,7 @@ SKIP_DEPS="${SKIP_DEPS:-0}"
 SKIP_FIREWALL="${SKIP_FIREWALL:-0}"
 NO_BUILD="${NO_BUILD:-0}"           # testing only: reuse an already built uniq-app image
 DOMAIN="${1:-${DOMAIN:-}}"
+SET_STRIPE="${SET_STRIPE:-0}"       # 1 = ask for the Stripe keys in the terminal (input is hidden)
 
 log() { printf '\n\033[1;32m==> %s\033[0m\n' "$*"; }
 die() { printf '\n\033[1;31mERROR: %s\033[0m\n' "$*" >&2; exit 1; }
@@ -31,9 +32,18 @@ if [ "$SKIP_DEPS" != "1" ]; then
   apt-get install -qq -y git curl ca-certificates openssl jq ufw >/dev/null
 fi
 
+IP="$(curl -4 -fsS --max-time 10 https://api.ipify.org || hostname -I | awk '{print $1}')"
+# Updates keep the domain set on an earlier run.
+if [ -z "$DOMAIN" ] && [ "$SCHEME" = "https" ] && [ -f "$SB_DIR/.env" ]; then
+  DOMAIN="$(sed -n 's/^PROXY_DOMAIN=//p' "$SB_DIR/.env" | head -1)"
+fi
 if [ -z "$DOMAIN" ]; then
-  IP="$(curl -4 -fsS --max-time 10 https://api.ipify.org || hostname -I | awk '{print $1}')"
   DOMAIN="${IP//./-}.sslip.io"
+fi
+# A real domain must point at this server first, otherwise HTTPS cannot be set up.
+if [ "$SCHEME" = "https" ] && [[ "$DOMAIN" != *.sslip.io ]]; then
+  RESOLVED="$(getent ahostsv4 "$DOMAIN" | awk 'NR==1{print $1}')"
+  [ "$RESOLVED" = "$IP" ] || die "$DOMAIN points to '${RESOLVED:-nothing}', not to this server ($IP). Add an A record: $DOMAIN -> $IP, wait 5-30 minutes and run this again."
 fi
 SITE="${SCHEME}://${DOMAIN}"
 log "Site address: ${SITE}"
@@ -90,6 +100,14 @@ set_env APP_DIR "$APP_DIR"
 set_env COMPOSE_FILE "docker-compose.yml:$APP_DIR/deploy/docker-compose.uniq.yml"
 keep_env STRIPE_SECRET_KEY ""
 keep_env STRIPE_WEBHOOK_SECRET ""
+if [ "$SET_STRIPE" = "1" ]; then
+  log "Stripe keys (what you paste stays hidden; press Enter to keep the current value)"
+  read -rsp "Secret key (sk_live_... or sk_test_...): " sk </dev/tty; echo
+  [ -n "$sk" ] && { [[ "$sk" == sk_* || "$sk" == rk_* ]] || die "That doesn't look like a Stripe secret key."; set_env STRIPE_SECRET_KEY "$sk"; }
+  read -rsp "Webhook signing secret (whsec_...): " wh </dev/tty; echo
+  [ -n "$wh" ] && { [[ "$wh" == whsec_* ]] || die "That doesn't look like a webhook secret."; set_env STRIPE_WEBHOOK_SECRET "$wh"; }
+  unset sk wh
+fi
 
 log "Building and starting everything (5–10 minutes the first time)"
 cd "$SB_DIR"

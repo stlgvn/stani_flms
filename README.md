@@ -68,6 +68,9 @@ to use your own, point an A record at the server and run the same command with t
 `… | bash -s -- uniq.example.com`. Re-running the command updates the app and keeps all data.
 
 - Settings and keys: `/opt/supabase/.env` (Stripe keys go here, then `cd /opt/supabase && docker compose up -d`).
+- Own domain: point an A record at the server, then run the installer with `DOMAIN=uniq.example.com`
+  (`curl -fsSL …/install.sh | DOMAIN=uniq.example.com bash`). Later updates remember it.
+- Stripe keys without editing files: `curl -fsSL …/install.sh | SET_STRIPE=1 bash` asks for them (hidden input).
 - Logs: `cd /opt/supabase && docker compose logs -f web worker`.
 - Until SMTP is configured in `/opt/supabase/.env` (`SMTP_*`), sign-ups are confirmed instantly (email + password).
 
