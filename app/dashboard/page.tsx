@@ -5,16 +5,16 @@ import Dashboard from "@/components/Dashboard";
 import { createClient } from "@/lib/supabase/server";
 import { JOB_COLUMNS, type Job } from "@/lib/types";
 
-export default function DashboardPage() {
+export default function DashboardPage({ searchParams }: PageProps<"/dashboard">) {
   return (
     <Suspense fallback={<p className="text-muted">Loading…</p>}>
-      <DashboardData />
+      <DashboardData searchParams={searchParams} />
     </Suspense>
   );
 }
 
 // Reads the session from cookies, so it must sit behind a Suspense boundary (Cache Components rule).
-async function DashboardData() {
+async function DashboardData({ searchParams }: { searchParams: PageProps<"/dashboard">["searchParams"] }) {
   await connection(); // request time only: the Supabase client reads the current time
   const supabase = await createClient();
   const {
@@ -27,8 +27,12 @@ async function DashboardData() {
     supabase.from("jobs").select(JOB_COLUMNS).order("created_at", { ascending: false }).limit(50),
   ]);
 
+  const query = await searchParams;
+  const notice = query.paid ? "paid" : query.payment_error ? "payment_error" : null;
+
   return (
     <Dashboard
+      notice={notice}
       userId={user.id}
       email={user.email ?? ""}
       initialCredits={profile?.credits ?? 0}

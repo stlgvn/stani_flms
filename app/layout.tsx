@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { SITE } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -32,9 +33,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </header>
         <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">{children}</main>
         <footer className="border-t border-border">
-          <div className="mx-auto max-w-4xl px-4 py-4 text-xs text-muted">
-            Only upload videos you own or have the rights to. This service does not clear copyright and is not
-            responsible for how the result is used.
+          <div className="mx-auto max-w-4xl space-y-2 px-4 py-4 text-xs text-muted">
+            <p>
+              Only upload videos you own or have the rights to. This service does not clear copyright and is not
+              responsible for how the result is used.
+            </p>
+            <nav className="flex flex-wrap gap-x-4 gap-y-1">
+              <Link href="/terms" className="hover:text-foreground">Terms</Link>
+              <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
+              <Link href="/refunds" className="hover:text-foreground">Refunds</Link>
+              <a href={`mailto:${SITE.email}`} className="hover:text-foreground">Contact</a>
+            </nav>
           </div>
         </footer>
       </body>

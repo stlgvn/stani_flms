@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { PACKS, usd } from "@/lib/plans";
 import { JOB_COLUMNS, type Job, type JobStrength } from "@/lib/types";
 
 const STRENGTHS: { id: JobStrength; label: string; hint: string }[] = [
@@ -42,7 +43,13 @@ function putWithProgress(url: string, file: File, onProgress: (f: number) => voi
   });
 }
 
-export default function Dashboard(props: { userId: string; email: string; initialCredits: number; initialJobs: Job[] }) {
+export default function Dashboard(props: {
+  userId: string;
+  email: string;
+  initialCredits: number;
+  initialJobs: Job[];
+  notice: "paid" | "payment_error" | null;
+}) {
   const supabase = useRef(createClient()).current;
   const [credits, setCredits] = useState(props.initialCredits);
   const [jobs, setJobs] = useState<Job[]>(props.initialJobs);
@@ -61,6 +68,15 @@ export default function Dashboard(props: { userId: string; email: string; initia
     if (p) setCredits(p.credits);
   }, [supabase, props.userId]);
 
+  // After checkout the webhook may land a few seconds after the redirect — keep refreshing the balance briefly.
+  useEffect(() => {
+    if (props.notice !== "paid") return;
+    window.history.replaceState(null, "", "/dashboard");
+    let n = 0;
+    const t = setInterval(() => (++n > 10 ? clearInterval(t) : refresh()), 2000);
+    return () => clearInterval(t);
+  }, [props.notice, refresh]);
+
   const pending = jobs.some((j) => j.status === "queued" || j.status === "processing");
   useEffect(() => {
     if (!pending) return;
@@ -70,7 +86,7 @@ export default function Dashboard(props: { userId: string; email: string; initia
 
   async function handleFile(file: File) {
     setError(null);
-    if (credits <= 0) return setError("You have no videos left on your balance.");
+    if (credits <= 0) return setError("You’re out of credits — buy a pack below.");
     if (file.size > MAX_BYTES) return setError("The file is larger than 500 MB.");
     const ext = (file.name.split(".").pop() || "mp4").toLowerCase();
     if (!["mp4", "mov", "webm", "mkv"].includes(ext)) return setError("Please use an MP4, MOV, WEBM or MKV file.");
@@ -121,6 +137,17 @@ export default function Dashboard(props: { userId: string; email: string; initia
           </form>
         </div>
       </div>
+
+      {props.notice === "paid" && (
+        <p className="rounded-xl border border-ok/40 bg-ok/10 p-3 text-sm">
+          Thanks for your purchase! Your credits will appear on your balance in a few seconds.
+        </p>
+      )}
+      {props.notice === "payment_error" && (
+        <p className="rounded-xl border border-bad/40 bg-bad/10 p-3 text-sm">
+          We couldn’t open the payment page. Please try again in a minute.
+        </p>
+      )}
 
       <section className="space-y-3">
         <h2 className="font-semibold">Strength</h2>
@@ -182,6 +209,29 @@ export default function Dashboard(props: { userId: string; email: string; initia
           />
         </div>
         {error && <p className="mt-2 text-sm text-bad">{error}</p>}
+      </section>
+
+      <section className="space-y-3" id="buy">
+        <h2 className="font-semibold">Buy credits</h2>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {PACKS.map((p) => (
+            <form key={p.id} action="/api/checkout" method="post" className="rounded-xl border border-border bg-card p-4">
+              <input type="hidden" name="pack" value={p.id} />
+              <div className="flex items-baseline justify-between">
+                <span className="font-medium">{p.name}</span>
+                {p.note && <span className="text-xs text-accent">{p.note}</span>}
+              </div>
+              <div className="mt-1 text-2xl font-bold">{usd(p.priceCents)}</div>
+              <div className="text-xs text-muted">
+                {p.credits} videos · {usd(Math.round(p.priceCents / p.credits))} each
+              </div>
+              <button className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
+                Buy
+              </button>
+            </form>
+          ))}
+        </div>
+        <p className="text-xs text-muted">Secure payment by Stripe. Credits never expire.</p>
       </section>
 
       <section className="space-y-3">

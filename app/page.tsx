@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PACKS, usd } from "@/lib/plans";
 
 const changes = [
   ["Frame", "a subtle zoom and crop shift — captions and logos stay readable"],
@@ -59,6 +60,23 @@ export default function Home() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Pricing</h2>
+        <p className="text-sm text-muted">3 videos free when you sign up. Then pick a pack — credits never expire.</p>
+        <ul className="grid gap-3 sm:grid-cols-3">
+          {PACKS.map((p) => (
+            <li key={p.id} className="rounded-xl border border-border bg-card p-4">
+              <div className="flex items-baseline justify-between">
+                <span className="font-medium">{p.name}</span>
+                {p.note && <span className="text-xs text-accent">{p.note}</span>}
+              </div>
+              <div className="mt-1 text-2xl font-bold">{usd(p.priceCents)}</div>
+              <div className="text-sm text-muted">{p.credits} videos</div>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
