@@ -125,7 +125,7 @@ export default function Dashboard(props: {
     <div className="space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <h1 className="font-display text-4xl text-accent">Dashboard</h1>
           <p className="text-sm text-muted">{props.email}</p>
         </div>
         <div className="flex items-center gap-3">
@@ -150,7 +150,7 @@ export default function Dashboard(props: {
       )}
 
       <section className="space-y-3">
-        <h2 className="font-semibold">Strength</h2>
+        <h2 className="font-display text-2xl">Strength</h2>
         <div className="grid grid-cols-3 gap-2">
           {STRENGTHS.map((s) => (
             <button
@@ -184,7 +184,7 @@ export default function Dashboard(props: {
             const f = e.dataTransfer.files?.[0];
             if (f && !upload) handleFile(f);
           }}
-          className={`flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center transition ${
+          className={`flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed p-6 text-center transition ${
             drag ? "border-accent bg-accent/10" : "border-border bg-card hover:border-muted"
           }`}
         >
@@ -212,10 +212,10 @@ export default function Dashboard(props: {
       </section>
 
       <section className="space-y-3" id="buy">
-        <h2 className="font-semibold">Buy credits</h2>
+        <h2 className="font-display text-2xl">Buy credits</h2>
         <div className="grid gap-2 sm:grid-cols-3">
           {PACKS.map((p) => (
-            <form key={p.id} action="/api/checkout" method="post" className="rounded-xl border border-border bg-card p-4">
+            <form key={p.id} action="/api/checkout" method="post" className="rounded-2xl border border-border bg-card p-4">
               <input type="hidden" name="pack" value={p.id} />
               <div className="flex items-baseline justify-between">
                 <span className="font-medium">{p.name}</span>
@@ -225,7 +225,7 @@ export default function Dashboard(props: {
               <div className="text-xs text-muted">
                 {p.credits} videos · {usd(Math.round(p.priceCents / p.credits))} each
               </div>
-              <button className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
+              <button className="mt-3 w-full rounded-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
                 Buy
               </button>
             </form>
@@ -235,11 +235,11 @@ export default function Dashboard(props: {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-semibold">My videos</h2>
+        <h2 className="font-display text-2xl">My videos</h2>
         {jobs.length === 0 && <p className="text-sm text-muted">Nothing here yet.</p>}
         <ul className="space-y-2">
           {jobs.map((j) => (
-            <li key={j.id} className="rounded-xl border border-border bg-card p-4" data-testid="job">
+            <li key={j.id} className="rounded-2xl border border-border bg-card p-4" data-testid="job">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="min-w-0">
                   <div className="truncate font-medium">{j.original_name}</div>
@@ -250,7 +250,7 @@ export default function Dashboard(props: {
                 {j.status === "done" ? (
                   <button
                     onClick={() => download(j)}
-                    className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-fg hover:opacity-90"
+                    className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90"
                   >
                     Download
                   </button>

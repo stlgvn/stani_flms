@@ -12,8 +12,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f7f8" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0e12" },
+    { media: "(prefers-color-scheme: light)", color: "#f5efe4" },
+    { media: "(prefers-color-scheme: dark)", color: "#1b1210" },
   ],
 };
 
@@ -21,19 +21,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <header className="border-b border-border">
-          <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-            <Link href="/" className="text-lg font-bold tracking-tight">
-              Uniq<span className="text-accent">.</span>
+        <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+            <Link href="/" className="flex items-baseline gap-2">
+              <span className="font-display text-2xl text-accent">Stani Films</span>
+              <span className="rounded-full border border-accent/30 px-2 py-0.5 text-[10px] font-semibold tracking-[0.2em] text-accent">
+                UNIQ
+              </span>
             </Link>
-            <Link href="/dashboard" className="text-sm text-muted hover:text-foreground">
-              Dashboard →
+            <Link
+              href="/dashboard"
+              className="rounded-full border border-foreground/15 px-4 py-1.5 text-sm font-medium hover:border-accent hover:text-accent"
+            >
+              Dashboard
             </Link>
           </div>
         </header>
-        <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">{children}</main>
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">{children}</main>
         <footer className="border-t border-border">
-          <div className="mx-auto max-w-4xl space-y-2 px-4 py-4 text-xs text-muted">
+          <div className="mx-auto max-w-5xl space-y-2 px-4 py-6 text-xs text-muted">
             <p>
               Only upload videos you own or have the rights to. This service does not clear copyright and is not
               responsible for how the result is used.

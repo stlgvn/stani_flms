@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-sm space-y-6 pt-6">
-      <h1 className="text-2xl font-bold">{mode === "signup" ? "Create your account" : "Sign in"}</h1>
+      <h1 className="font-display text-4xl text-accent">{mode === "signup" ? "Create your account" : "Sign in"}</h1>
       {mode === "signup" && <p className="text-sm text-muted">3 free videos to start. No card needed.</p>}
       <form onSubmit={onSubmit} className="space-y-3">
         <input
@@ -64,7 +64,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-xl bg-accent px-4 py-3 font-semibold text-accent-fg hover:opacity-90 disabled:opacity-60"
+          className="w-full rounded-full bg-accent px-4 py-3 font-semibold text-accent-fg hover:opacity-90 disabled:opacity-60"
         >
           {busy ? "Please wait…" : mode === "signup" ? "Create account" : "Sign in"}
         </button>
