@@ -189,7 +189,7 @@ export function buildArgs(input: string, output: string, src: MediaInfo, p: Uniq
   // fps=30 must come BEFORE setpts, otherwise the video keeps its original length and drifts from the audio.
   // No hflip: burned-in captions and watermarks would end up mirrored.
   const video =
-    `[0:v]fps=30,setpts=(PTS-STARTPTS)/${p.speed},scale=${zw}:${zh},crop=${w}:${h}:${cx}:${cy},` +
+    `[0:v]fps=30,setpts=(PTS-STARTPTS)/${p.speed},scale=${zw}:${zh}:flags=lanczos,crop=${w}:${h}:${cx}:${cy},` +
     `eq=brightness=${p.brightness}:contrast=${p.contrast}:saturation=${p.saturation}:gamma=${p.gamma},` +
     `unsharp=5:5:0.4,noise=alls=${p.noise}:allf=t,vignette=PI/6[v]`;
 
@@ -208,8 +208,8 @@ export function buildArgs(input: string, output: string, src: MediaInfo, p: Uniq
     ...(hasAudio ? ["-map", "[a]"] : []),
     "-map_metadata", "-1", "-map_chapters", "-1",
     "-r", "30",
-    "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
-    ...(hasAudio ? ["-c:a", "aac", "-b:a", "160k"] : []),
+    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-profile:v", "high", "-pix_fmt", "yuv420p",
+    ...(hasAudio ? ["-c:a", "aac", "-b:a", "192k"] : []),
     "-movflags", "+faststart",
     "-metadata", `creation_time=${new Date().toISOString()}`,
     "-metadata", `title=${title}`,
