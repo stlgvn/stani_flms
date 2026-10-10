@@ -3,6 +3,8 @@
 @import "@fontsource-variable/inter/index.css";
 @import "@fontsource/ibm-plex-mono/400.css";
 @import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
 
 /* Stani Films system: off-white paper, black ink, square corners, red signal squares. */
 :root {
@@ -11,8 +13,8 @@
   --card: #f7f7f3;
   --border: #c9c9c3;
   --muted: #5c5c57;
-  --accent: #0b0b0b;
-  --accent-fg: #f2f2ee;
+  --accent: #e3241b;
+  --accent-fg: #ffffff;
   --tan: #5c5c57;
   --dot: #e3241b;
   --panel: #0b0b0b;
@@ -29,8 +31,8 @@
     --card: #141414;
     --border: #34342f;
     --muted: #a3a39c;
-    --accent: #f2f2ee;
-    --accent-fg: #0b0b0b;
+    --accent: #ff3b30;
+    --accent-fg: #ffffff;
     --tan: #a3a39c;
     --dot: #ff3b30;
     --panel: #161616;
@@ -57,6 +59,7 @@
   --color-bad: var(--bad);
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-poppins: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
 }
 

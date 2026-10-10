@@ -85,7 +85,7 @@ export default function Home() {
             <br />
             versions.
           </h1>
-          <p className="max-w-lg text-xl leading-snug">
+          <p className="font-poppins max-w-md text-base leading-relaxed sm:text-lg">
             Stop re-editing and re-generating. Get a brand-new file that looks and sounds like your original — in about a
             minute.
           </p>
@@ -152,7 +152,7 @@ export default function Home() {
         <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-stretch">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold leading-tight sm:text-4xl">Don&apos;t pay to generate it twice.</h2>
-            <p className="text-muted">
+            <p className="font-poppins text-sm leading-relaxed text-muted sm:text-base">
               You spent credits, prompts and hours to land that perfect AI clip. Re-generating it for every account costs
               money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need —
               same quality, new file every time.
@@ -286,8 +286,8 @@ export default function Home() {
       <section className="bg-panel px-6 py-14 text-center text-panel-fg sm:px-12">
         <p className="label text-xs opacity-70">Your next upload</p>
         <h2 className="font-display mt-3 text-6xl sm:text-8xl">Make it unique</h2>
-        <p className="mx-auto mt-4 max-w-md opacity-70">3 videos free. No card. About a minute per video.</p>
-        <Link href="/login" className="mt-8 inline-block bg-panel-fg px-8 py-4 font-semibold text-panel hover:opacity-90">
+        <p className="mx-auto mt-4 max-w-md font-semibold text-dot">3 videos free. No card. About a minute per video.</p>
+        <Link href="/login" className="mt-8 inline-block bg-accent px-8 py-4 font-semibold text-accent-fg hover:opacity-90">
           Start free
         </Link>
       </section>
@@ -300,7 +300,7 @@ export default function Home() {
 function SectionTitle({ n, title }: { n: string; title: string }) {
   return (
     <div className="flex items-baseline gap-4 border-b border-foreground pb-3">
-      <span className="font-mono text-sm">{n}</span>
+      <span className="font-mono text-4xl font-medium leading-none text-dot sm:text-5xl">{n}</span>
       <h2 className="kicker text-lg sm:text-xl">{title}</h2>
     </div>
   );

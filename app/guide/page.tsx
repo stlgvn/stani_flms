@@ -150,7 +150,7 @@ function Part({ n, title, children }: { n: string; title: string; children: Reac
   return (
     <section className="space-y-3">
       <div className="flex items-baseline gap-4 border-b border-foreground pb-3">
-        <span className="font-mono text-sm">{n}</span>
+        <span className="font-mono text-4xl font-medium leading-none text-dot sm:text-5xl">{n}</span>
         <h2 className="kicker text-lg">{title}</h2>
       </div>
       <div className="space-y-3 leading-relaxed">{children}</div>
