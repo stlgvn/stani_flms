@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Обновляет сессию Supabase в куках на каждом запросе и закрывает /dashboard без входа.
+// Refreshes the Supabase session cookie on every request and guards /dashboard.
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 

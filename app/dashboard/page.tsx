@@ -7,15 +7,15 @@ import { JOB_COLUMNS, type Job } from "@/lib/types";
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<p className="text-muted">Загрузка…</p>}>
+    <Suspense fallback={<p className="text-muted">Loading…</p>}>
       <DashboardData />
     </Suspense>
   );
 }
 
-// Читает сессию из кук — поэтому за границей Suspense (требование Cache Components).
+// Reads the session from cookies, so it must sit behind a Suspense boundary (Cache Components rule).
 async function DashboardData() {
-  await connection(); // только во время запроса: клиент Supabase читает текущее время
+  await connection(); // request time only: the Supabase client reads the current time
   const supabase = await createClient();
   const {
     data: { user },

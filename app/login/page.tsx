@@ -27,15 +27,15 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-sm space-y-6 pt-6">
-      <h1 className="text-2xl font-bold">Вход</h1>
+      <h1 className="text-2xl font-bold">Sign in</h1>
       {state === "sent" ? (
         <div className="rounded-xl border border-border bg-card p-4">
-          Письмо со ссылкой для входа отправлено на <b>{email}</b>. Откройте его на этом же устройстве.
+          We sent a sign-in link to <b>{email}</b>. Open it on this same device.
         </div>
       ) : (
         <form onSubmit={onSubmit} className="space-y-3">
           <label className="block text-sm text-muted" htmlFor="email">
-            Почта — пароль не нужен, пришлём ссылку
+            Email — no password needed, we’ll send you a link
           </label>
           <input
             id="email"
@@ -52,7 +52,7 @@ export default function LoginPage() {
             disabled={state === "sending"}
             className="w-full rounded-xl bg-accent px-4 py-3 font-semibold text-accent-fg hover:opacity-90 disabled:opacity-60"
           >
-            {state === "sending" ? "Отправляем…" : "Получить ссылку"}
+            {state === "sending" ? "Sending…" : "Send me a link"}
           </button>
           {error && <p className="text-sm text-bad">{error}</p>}
         </form>

@@ -1,17 +1,17 @@
 import Link from "next/link";
 
 const changes = [
-  ["Кадр", "лёгкий зум и смещение обрезки — субтитры и логотипы остаются читаемыми"],
-  ["Цвет", "яркость, контраст, насыщенность, гамма, мелкое зерно и виньетка"],
-  ["Скорость", "ускорение на 1–5% — видео и звук синхронно"],
-  ["Звук", "чуть выше тон и громкость"],
-  ["Файл", "новый код, 30 fps, стёртые метаданные, новая дата создания"],
+  ["Frame", "a subtle zoom and crop shift — captions and logos stay readable"],
+  ["Color", "brightness, contrast, saturation, gamma, fine grain and a vignette"],
+  ["Speed", "1–5% faster — video and audio stay in sync"],
+  ["Audio", "slightly higher pitch and volume"],
+  ["File", "re-encoded at 30 fps, metadata wiped, new creation date"],
 ];
 
 const steps = [
-  ["Войдите по почте", "Без пароля — пришлём ссылку для входа."],
-  ["Загрузите ролик", "MP4, MOV, WEBM или MKV до 500 МБ и 11 минут."],
-  ["Скачайте версию", "Через минуту-две готово. Каждая версия — со своими случайными параметрами."],
+  ["Sign in with email", "No password — we send you a magic link."],
+  ["Upload a video", "MP4, MOV, WEBM or MKV, up to 500 MB and 11 minutes."],
+  ["Download your version", "Ready in a minute or two. Every version gets its own random settings."],
 ];
 
 export default function Home() {
@@ -19,22 +19,22 @@ export default function Home() {
     <div className="space-y-14">
       <section className="space-y-5 pt-4">
         <h1 className="text-3xl font-bold leading-tight sm:text-5xl">
-          Один ролик — <span className="text-accent">много уникальных версий</span>
+          One video — <span className="text-accent">endless unique versions</span>
         </h1>
         <p className="max-w-2xl text-lg text-muted">
-          Для Reels, Shorts и TikTok. Новая версия не совпадает с исходником ни по файлу, ни по метаданным, но выглядит и
-          звучит так же.
+          For Reels, Shorts and TikTok. Each new version differs from the original in both file and metadata, yet looks
+          and sounds the same.
         </p>
         <Link
           href="/login"
           className="inline-block rounded-xl bg-accent px-6 py-3 font-semibold text-accent-fg shadow-sm hover:opacity-90"
         >
-          Попробовать — 3 ролика бесплатно
+          Try it — 3 videos free
         </Link>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Что меняется</h2>
+        <h2 className="text-xl font-semibold">What changes</h2>
         <ul className="grid gap-3 sm:grid-cols-2">
           {changes.map(([t, d]) => (
             <li key={t} className="rounded-xl border border-border bg-card p-4">
@@ -43,11 +43,11 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <p className="text-sm text-muted">Кадр никогда не зеркалится — текст в кадре не станет задом наперёд.</p>
+        <p className="text-sm text-muted">The frame is never mirrored, so on-screen text never ends up backwards.</p>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Три шага</h2>
+        <h2 className="text-xl font-semibold">Three steps</h2>
         <ol className="grid gap-3 sm:grid-cols-3">
           {steps.map(([t, d], i) => (
             <li key={t} className="rounded-xl border border-border bg-card p-4">

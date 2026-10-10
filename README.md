@@ -1,23 +1,23 @@
-# Uniq — уникализатор коротких вертикальных роликов
+# Uniq — short vertical video uniqualizer
 
-Из одного исходника (Reels / Shorts / TikTok) делает новые версии, которые не совпадают с оригиналом ни по файлу,
-ни по метаданным, но выглядят и звучат так же: лёгкий зум и сдвиг кадра, ускорение на 1–5 % (звук синхронно),
-чуть выше тон, цветокоррекция, зерно, виньетка, перекодирование в 30 fps, стёртые метаданные.
-Каждый запуск — новые случайные параметры. Кадр никогда не зеркалится.
+Turns one source video (Reels / Shorts / TikTok) into new versions that differ from the original in both file and
+metadata, yet look and sound the same: a subtle zoom and crop shift, 1–5 % faster playback (audio stays in sync),
+slightly higher pitch, color grading, grain, a vignette, re-encoding at 30 fps and wiped metadata.
+Every run picks new random parameters. The frame is never mirrored.
 
-Состав:
+What's inside:
 
-| часть | где | что делает |
+| part | where | what it does |
 |---|---|---|
-| ядро | `lib/uniq.ts` | ffprobe + ffmpeg, случайные параметры, проверка синхронности |
-| команда | `scripts/uniq.ts` | `npm run uniq -- …` — обработать один файл без сайта |
-| сайт | `app/`, `components/`, `proxy.ts` | Next.js: главная, вход по почте, личный кабинет |
-| база | `supabase/migrations/` | профили с балансом, очередь задач, приватное хранилище |
-| воркер | `scripts/worker.ts` | берёт задачи из очереди и обрабатывает |
+| core | `lib/uniq.ts` | ffprobe + ffmpeg, random parameters, A/V sync check |
+| CLI | `scripts/uniq.ts` | `npm run uniq -- …` — process a single file without the website |
+| website | `app/`, `components/`, `proxy.ts` | Next.js: landing page, email sign-in, dashboard |
+| database | `supabase/migrations/` | profiles with a credit balance, job queue, private storage |
+| worker | `scripts/worker.ts` | takes jobs from the queue and processes them |
 
-## Первый запуск (один раз)
+## First-time setup
 
-Нужно: **ffmpeg**, **Node.js 20+**, **Docker**.
+You need **ffmpeg**, **Node.js 20+** and **Docker**.
 
 macOS:
 
@@ -26,90 +26,90 @@ brew install ffmpeg node colima docker
 colima start --cpu 4 --memory 8
 ```
 
-Windows: `winget install Gyan.FFmpeg OpenJS.NodeJS.LTS` и Docker Desktop.
+Windows: `winget install Gyan.FFmpeg OpenJS.NodeJS.LTS` plus Docker Desktop.
 
-Потом в папке проекта:
+Then, in the project folder:
 
 ```bash
 npm install
-npx supabase start          # первый раз качает образы, ~5–10 минут
-npx supabase status -o env  # ключи для .env.local
+npx supabase start          # downloads images the first time, ~5–10 minutes
+npx supabase status -o env  # keys for .env.local
 ```
 
-Создайте файл `.env.local` (в git он не попадает):
+Create a `.env.local` file (it is never committed to git):
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<ANON_KEY из supabase status>
-SUPABASE_SERVICE_ROLE_KEY=<SERVICE_ROLE_KEY из supabase status>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<ANON_KEY from supabase status>
+SUPABASE_SERVICE_ROLE_KEY=<SERVICE_ROLE_KEY from supabase status>
 ```
 
-`SUPABASE_SERVICE_ROLE_KEY` — ключ с полным доступом к базе. Он нужен только воркеру. Никогда не добавляйте к нему
-префикс `NEXT_PUBLIC_`, иначе он попадёт в браузер.
+`SUPABASE_SERVICE_ROLE_KEY` has full access to the database and is used only by the worker. Never prefix it with
+`NEXT_PUBLIC_`, or it will be shipped to the browser.
 
-## Запуск после перезагрузки компьютера
+## Starting after a reboot
 
-Четыре шага. Сайт и воркер запускайте **в отдельных вкладках терминала** и не закрывайте их:
+Four steps. Run the website and the worker **in separate terminal tabs** and keep them open:
 
 ```bash
-colima start                # 1. Docker (на Windows — просто открыть Docker Desktop)
-npx supabase start          # 2. база, вход, хранилище
-npm run dev                 # 3. вкладка 1 — сайт: http://localhost:3000
-npm run worker:dev          # 4. вкладка 2 — воркер (перезапускается при правке кода)
+colima start                # 1. Docker (on Windows just open Docker Desktop)
+npx supabase start          # 2. database, auth, storage
+npm run dev                 # 3. tab 1 — website: http://localhost:3000
+npm run worker:dev          # 4. tab 2 — worker (restarts when the code changes)
 ```
 
-- Письма со ссылкой для входа локально никуда не уходят — их видно в Mailpit: http://127.0.0.1:54324
-- Панель базы (Supabase Studio): http://127.0.0.1:54323
-- Выключить базу: `npx supabase stop`
+- Sign-in emails are not really sent locally — you'll find them in Mailpit: http://127.0.0.1:54324
+- Database dashboard (Supabase Studio): http://127.0.0.1:54323
+- Stop the database: `npx supabase stop`
 
-Начислить роликов вручную (например, себе): в Studio → Table editor → `profiles` → поле `credits`,
-или SQL: `update profiles set credits = credits + 10 where email = 'you@example.com';`
+To add credits manually (e.g. for yourself): Studio → Table editor → `profiles` → `credits`,
+or in SQL: `update profiles set credits = credits + 10 where email = 'you@example.com';`
 
-## Без сайта: одна команда
+## Without the website: one command
 
 ```bash
-npm run uniq -- "<вход.mp4>" "<выход.mp4>" [light|medium|strong] ["Название для метаданных"]
+npm run uniq -- "<input.mp4>" "<output.mp4>" [light|medium|strong] ["Metadata title"]
 ```
 
-Пути лучше указывать абсолютные. Готовые ролики складываем в папку проекта, в подпапку с датой (`ДД.ММ.ГГГГ`),
-например `…/stani_flms/10.10.2026/🚀 Тема — крючок_v1.mp4`. Эти папки в git не попадают.
+Use absolute paths. Finished videos go into the project folder, in a sub-folder named after the day (`DD.MM.YYYY`),
+e.g. `…/stani_flms/10.10.2026/🎬 Topic — hook_v1.mp4`. These folders are not committed to git.
 
-Сила изменений: `light` — почти незаметно, `medium` (по умолчанию) — оптимально, `strong` — максимум отличий.
+Strength: `light` — barely noticeable, `medium` (default) — the sweet spot, `strong` — maximum difference.
 
-## Как устроено
+## How it works
 
-1. Пользователь входит по ссылке из письма (без пароля), получает 3 бесплатных ролика.
-2. Браузер загружает файл напрямую в приватное хранилище в папку `<user_id>/<uuid>/in.<ext>` (с прогрессом),
-   затем вызывает `create_job` — функция атомарно списывает 1 ролик с баланса и ставит задачу в очередь.
-3. Воркер забирает задачу (`claim_job`, безопасно при нескольких воркерах), проверяет длительность (до 11 минут),
-   прогоняет ядро и кладёт `out.mp4` рядом. Результат хранится 48 часов.
-4. При ошибке задача помечается «Ошибка», ролик возвращается на баланс.
-5. Раз в 10 минут воркер удаляет просроченные файлы и возвращает в очередь задачи, зависшие дольше часа.
+1. A user signs in with a magic link (no password) and gets 3 free videos.
+2. The browser uploads the file straight to private storage, into `<user_id>/<uuid>/in.<ext>` (with a progress bar),
+   then calls `create_job`, which atomically deducts 1 credit and queues the job.
+3. The worker claims the job (`claim_job`, safe with several workers), checks the duration (up to 11 minutes),
+   runs the core and stores `out.mp4` next to the source. Results are kept for 48 hours.
+4. If processing fails, the job is marked "Failed" and the credit is refunded.
+5. Every 10 minutes the worker deletes expired files and requeues jobs stuck for over an hour.
 
-Безопасность: пользователь видит только свои задачи, профиль и файлы; писать в таблицы напрямую нельзя;
-`claim_job` и `refund_credit` доступны только воркеру.
+Security: users only see their own jobs, profile and files; nobody can write to the tables directly;
+`claim_job` and `refund_credit` are available to the worker only.
 
-## Перед публичным запуском
+## Before going public
 
-- **Почта.** Встроенный почтовик Supabase шлёт мало писем и попадает в спам. Подключите свой SMTP
-  (Яндекс 360 / Unisender / Postmark и т. п.) и настройте шаблон письма для входа.
-- **Supabase в облаке.** На бесплатном тарифе лимит файла 50 МБ — для роликов до 500 МБ нужен платный тариф
-  (или свой Supabase на сервере). Залейте миграцию: `npx supabase link` → `npx supabase db push`.
-  В настройках Auth пропишите адрес сайта и `https://<домен>/auth/confirm` в Redirect URLs.
-- **Оплата.** Например, ЮKassa: после успешного платежа вебхук на сервере увеличивает `profiles.credits`
-  (через service role, не из браузера).
-- **Документы.** Публичная оферта, политика конфиденциальности, согласие на обработку персональных данных;
-  в оферте — что пользователь загружает только контент, на который у него есть права.
-- **Пользователи из РФ — 152-ФЗ.** Персональные данные (почта) граждан РФ должны храниться на серверах в России:
-  разверните Supabase (self-hosted, Docker) на российском VPS и подайте уведомление в Роскомнадзор как оператор ПДн.
-- **Воркер.** Отдельный VPS от 4 vCPU / 8 ГБ RAM с ffmpeg и Node.js, запуск `npm run worker` под systemd или pm2.
-  Ролик в 1 минуту обрабатывается примерно за 1,5–2 минуты на 4 ядрах. Для очереди побольше — несколько воркеров.
-- **Сайт.** Vercel или тот же VPS (`npm run build && npm start` за nginx с HTTPS).
+- **Email.** Supabase's built-in mailer sends very few emails and lands in spam. Plug in your own SMTP
+  (Postmark, Resend, Amazon SES, etc.) and customize the sign-in email template.
+- **Hosted Supabase.** The free plan caps files at 50 MB — videos up to 500 MB need a paid plan
+  (or self-hosted Supabase). Push the migration: `npx supabase link` → `npx supabase db push`.
+  In Auth settings set the site URL and add `https://<domain>/auth/confirm` to Redirect URLs.
+- **Payments.** E.g. Stripe (or YooKassa for Russia): a server-side webhook increases `profiles.credits` after a
+  successful payment (using the service role, never from the browser).
+- **Legal.** Terms of service, a privacy policy and consent to data processing; the terms should state that users
+  only upload content they have the rights to.
+- **Russian users — Federal Law 152-FZ.** Personal data (emails) of Russian citizens must be stored on servers in
+  Russia: self-host Supabase (Docker) on a Russian VPS and register as a personal data operator with Roskomnadzor.
+- **Worker.** A separate VPS with at least 4 vCPU / 8 GB RAM, ffmpeg and Node.js, running `npm run worker` under
+  systemd or pm2. A 1-minute video takes about 1.5–2 minutes on 4 cores. Add more workers for a longer queue.
+- **Website.** Vercel, or the same VPS (`npm run build && npm start` behind nginx with HTTPS).
 
-## Если что-то не работает
+## Troubleshooting
 
-- `supabase start` не может скачать образы (ошибки `public.ecr.aws` / `Forbidden`):
+- `supabase start` can't pull images (`public.ecr.aws` / `Forbidden` errors):
   `SUPABASE_INTERNAL_IMAGE_REGISTRY=docker.io npx supabase start`.
-- Задачи висят «В очереди» — не запущен воркер (`npm run worker:dev`).
-- Письмо не приходит — смотрите Mailpit (http://127.0.0.1:54324); ссылку открывайте в том же браузере,
-  где запрашивали вход.
+- Jobs stay "Queued" — the worker isn't running (`npm run worker:dev`).
+- No sign-in email — check Mailpit (http://127.0.0.1:54324) and open the link in the same browser where you
+  requested it.

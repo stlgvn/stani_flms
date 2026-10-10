@@ -1,6 +1,6 @@
-// Воркер: берёт задачи из очереди, прогоняет через ядро и выкладывает результат.
-// Запуск: npm run worker (или npm run worker:dev — перезапуск при правке кода).
-// Ключ service role нужен только здесь и берётся из .env.local.
+// Worker: takes jobs from the queue, runs them through the core and uploads the result.
+// Run: npm run worker (or npm run worker:dev to restart on code changes).
+// The service role key is used only here and is read from .env.local.
 
 import { config } from "dotenv";
 import { createClient } from "@supabase/supabase-js";
@@ -14,7 +14,7 @@ config({ path: path.join(__dirname, "..", ".env.local"), quiet: true });
 const SUPABASE_URL = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 if (!SUPABASE_URL || !SERVICE_KEY) {
-  console.error("Нет NEXT_PUBLIC_SUPABASE_URL или SUPABASE_SERVICE_ROLE_KEY в .env.local");
+  console.error("NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing from .env.local");
   process.exit(1);
 }
 
@@ -46,14 +46,14 @@ async function processJob(job: Job) {
   const outputPath = `${path.posix.dirname(job.input_path)}/out.mp4`;
   try {
     const { data: blob, error: dlErr } = await db.storage.from(BUCKET).download(job.input_path);
-    if (dlErr || !blob) throw new Error(`Не удалось скачать исходник: ${dlErr?.message ?? "пусто"}`);
+    if (dlErr || !blob) throw new Error(`Could not download the source: ${dlErr?.message ?? "empty"}`);
     await writeFile(input, Buffer.from(await blob.arrayBuffer()));
 
     const info = await probe(input).catch(() => {
-      throw new Error("Файл не похож на видео или повреждён.");
+      throw new Error("The file is not a video or is corrupted.");
     });
     await db.from("jobs").update({ source_duration: info.duration }).eq("id", job.id);
-    if (info.duration > MAX_SECONDS) throw new Error("Ролик длиннее 11 минут.");
+    if (info.duration > MAX_SECONDS) throw new Error("The video is longer than 11 minutes.");
 
     let lastPct = 0;
     const title = job.original_name.replace(/\.[^.]+$/, "");
@@ -72,7 +72,7 @@ async function processJob(job: Job) {
     const { error: upErr } = await db.storage
       .from(BUCKET)
       .upload(outputPath, await readFile(output), { contentType: "video/mp4", upsert: true });
-    if (upErr) throw new Error(`Не удалось сохранить результат: ${upErr.message}`);
+    if (upErr) throw new Error(`Could not save the result: ${upErr.message}`);
 
     await db
       .from("jobs")
@@ -85,7 +85,7 @@ async function processJob(job: Job) {
         expires_at: new Date(Date.now() + KEEP_HOURS * 3600 * 1000).toISOString(),
       })
       .eq("id", job.id);
-    log(`✓ ${job.id} за ${res.seconds} с (${job.strength})`);
+    log(`✓ ${job.id} in ${res.seconds}s (${job.strength})`);
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     log(`✗ ${job.id}: ${message}`);
@@ -104,7 +104,7 @@ async function processJob(job: Job) {
   }
 }
 
-// Раз в 10 минут: удалить файлы с истёкшим сроком и вернуть в очередь зависшие задачи.
+// Every 10 minutes: delete expired files and requeue stuck jobs.
 async function maintenance() {
   const now = new Date().toISOString();
   const { data: old } = await db
@@ -117,16 +117,16 @@ async function maintenance() {
     const paths = [j.input_path, j.output_path].filter(Boolean) as string[];
     const { error } = await db.storage.from(BUCKET).remove(paths);
     if (error) {
-      log(`Не удалось удалить файлы ${j.id}: ${error.message}`);
+      log(`Could not delete files for ${j.id}: ${error.message}`);
       continue;
     }
-    // Упавшие задачи оставляем «Ошибкой», чтобы был виден текст; срок снимаем, чтобы не чистить повторно.
+    // Failed jobs stay "failed" so the error stays visible; clear the expiry so they are not cleaned twice.
     await db
       .from("jobs")
       .update(j.status === "done" ? { status: "expired", expires_at: null } : { expires_at: null })
       .eq("id", j.id);
   }
-  if (old?.length) log(`Очищено задач: ${old.length}`);
+  if (old?.length) log(`Cleaned up jobs: ${old.length}`);
 
   const stuckBefore = new Date(Date.now() - STUCK_MINUTES * 60 * 1000).toISOString();
   const { data: stuck } = await db
@@ -135,17 +135,17 @@ async function maintenance() {
     .eq("status", "processing")
     .lt("started_at", stuckBefore)
     .select("id");
-  if (stuck?.length) log(`Возвращено в очередь зависших задач: ${stuck.length}`);
+  if (stuck?.length) log(`Requeued stuck jobs: ${stuck.length}`);
 }
 
 async function main() {
-  log(`Воркер запущен, Supabase: ${SUPABASE_URL}`);
+  log(`Worker started, Supabase: ${SUPABASE_URL}`);
   let nextMaintenance = 0;
   let stopping = false;
   const stop = () => {
     if (stopping) process.exit(0);
     stopping = true;
-    log("Остановка после текущей задачи… (ещё раз Ctrl+C — сразу)");
+    log("Stopping after the current job… (Ctrl+C again to quit now)");
   };
   process.on("SIGINT", stop);
   process.on("SIGTERM", stop);
@@ -166,7 +166,7 @@ async function main() {
       log(`→ ${job.id} «${job.original_name}» (${job.strength})`);
       await processJob(job);
     } catch (e) {
-      log("Ошибка цикла:", e instanceof Error ? e.message : e);
+      log("Loop error:", e instanceof Error ? e.message : e);
       await sleep(5000);
     }
   }

@@ -3,8 +3,8 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Uniq — уникализатор коротких роликов",
-  description: "Новые версии Reels, Shorts и TikTok из одного исходника: другой файл и метаданные, тот же вид и звук.",
+  title: "Uniq — short video uniqualizer",
+  description: "Fresh versions of your Reels, Shorts and TikToks from one source: a new file and metadata, the same look and sound.",
 };
 
 export const viewport: Viewport = {
@@ -18,7 +18,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ru" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         <header className="border-b border-border">
           <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
@@ -26,15 +26,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               Uniq<span className="text-accent">.</span>
             </Link>
             <Link href="/dashboard" className="text-sm text-muted hover:text-foreground">
-              Личный кабинет →
+              Dashboard →
             </Link>
           </div>
         </header>
         <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">{children}</main>
         <footer className="border-t border-border">
           <div className="mx-auto max-w-4xl px-4 py-4 text-xs text-muted">
-            Загружайте только ролики, на которые у вас есть права. Сервис не снимает авторские права и не отвечает за
-            использование результата.
+            Only upload videos you own or have the rights to. This service does not clear copyright and is not
+            responsible for how the result is used.
           </div>
         </footer>
       </body>

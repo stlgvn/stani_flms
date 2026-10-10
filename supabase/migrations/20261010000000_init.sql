@@ -1,6 +1,6 @@
--- Уникализатор: профили с балансом, очередь задач, хранилище видео.
+-- Uniqualizer: profiles with a credit balance, a job queue, video storage.
 
--- ---------- профили ----------
+-- ---------- profiles ----------
 create table public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   email text,
@@ -24,7 +24,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
--- ---------- задачи ----------
+-- ---------- jobs ----------
 create type public.job_status as enum ('queued', 'processing', 'done', 'failed', 'expired');
 create type public.job_strength as enum ('light', 'medium', 'strong');
 
@@ -49,7 +49,7 @@ create table public.jobs (
 create index jobs_user_created_idx on public.jobs (user_id, created_at desc);
 create index jobs_queue_idx on public.jobs (created_at) where status = 'queued';
 
--- ---------- RLS: читать только своё, писать напрямую нельзя ----------
+-- ---------- RLS: read your own rows only, no direct writes ----------
 alter table public.profiles enable row level security;
 alter table public.jobs enable row level security;
 
@@ -61,7 +61,7 @@ create policy "own jobs" on public.jobs
 revoke insert, update, delete, truncate on public.profiles, public.jobs from anon, authenticated;
 revoke all on public.profiles, public.jobs from anon;
 
--- ---------- создание задачи (сайт) ----------
+-- ---------- create a job (website) ----------
 create function public.create_job(p_input_path text, p_original_name text, p_strength public.job_strength)
 returns public.jobs
 language plpgsql
@@ -73,16 +73,16 @@ declare
   v_job public.jobs;
 begin
   if v_uid is null then
-    raise exception 'Нужно войти';
+    raise exception 'Please sign in';
   end if;
   if p_input_path is null or p_input_path not like v_uid::text || '/%' or p_input_path like '%..%' then
-    raise exception 'Неверный путь к файлу';
+    raise exception 'Invalid file path';
   end if;
 
   update public.profiles set credits = credits - 1
    where id = v_uid and credits > 0;
   if not found then
-    raise exception 'Закончились ролики на балансе';
+    raise exception 'You have no videos left on your balance';
   end if;
 
   insert into public.jobs (user_id, original_name, input_path, strength)
@@ -95,7 +95,7 @@ $$;
 revoke execute on function public.create_job(text, text, public.job_strength) from public, anon;
 grant execute on function public.create_job(text, text, public.job_strength) to authenticated;
 
--- ---------- взять задачу из очереди (воркер) ----------
+-- ---------- claim a job from the queue (worker) ----------
 create function public.claim_job()
 returns setof public.jobs
 language sql
@@ -117,7 +117,7 @@ $$;
 revoke execute on function public.claim_job() from public, anon, authenticated;
 grant execute on function public.claim_job() to service_role;
 
--- ---------- вернуть кредит при ошибке (воркер) ----------
+-- ---------- refund a credit on failure (worker) ----------
 create function public.refund_credit(p_user uuid)
 returns void
 language sql
@@ -132,7 +132,7 @@ grant execute on function public.refund_credit(uuid) to service_role;
 
 revoke execute on function public.handle_new_user() from public, anon, authenticated;
 
--- ---------- хранилище ----------
+-- ---------- storage ----------
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
   'videos', 'videos', false, 524288000,

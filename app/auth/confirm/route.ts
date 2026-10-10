@@ -2,7 +2,7 @@ import type { EmailOtpType } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-// Сюда ведёт ссылка из письма: либо ?code=… (PKCE), либо ?token_hash=…&type=…
+// The email link lands here with either ?code=… (PKCE) or ?token_hash=…&type=…
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl;
   const code = searchParams.get("code");

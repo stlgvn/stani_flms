@@ -1,7 +1,7 @@
-// Ядро уникализатора: из одного ролика делает новую версию со случайными
-// параметрами (зум, сдвиг кадра, скорость, тон, цвет, шум, громкость).
-// ffmpeg/ffprobe запускаются через spawn с массивом аргументов — без shell,
-// поэтому кириллица, пробелы и эмодзи в путях не ломают команду.
+// Uniqualizer core: turns one video into a new version with random
+// parameters (zoom, crop shift, speed, pitch, color, noise, volume).
+// ffmpeg/ffprobe run via spawn with an argument array — no shell —
+// so non-Latin characters, spaces and emoji in paths are safe.
 
 import { spawn } from "node:child_process";
 
@@ -91,12 +91,12 @@ export function randomParams(strength: Strength = "medium"): UniqParams {
 // ---------- ffprobe ----------
 
 export interface MediaInfo {
-  width: number; // с учётом поворота
+  width: number; // rotation applied
   height: number;
   fps: number;
-  duration: number; // общая длительность файла, с
+  duration: number; // whole-file duration, s
   videoDuration: number;
-  audioDuration: number | null; // null — звука нет
+  audioDuration: number | null; // null — no audio
   sampleRate: number | null;
   sizeBytes: number;
 }
@@ -113,7 +113,7 @@ function run(cmd: string, args: string[]): Promise<{ code: number; stdout: strin
   });
 }
 
-// "00:01:02.500000000" (теги mkv/webm) → секунды
+// "00:01:02.500000000" (mkv/webm tags) → seconds
 function parseClock(s: string | undefined): number {
   if (!s) return NaN;
   const m = s.match(/^(\d+):(\d+):([\d.]+)$/);
@@ -132,10 +132,10 @@ export async function probe(file: string): Promise<MediaInfo> {
   const { code, stdout, stderr } = await run("ffprobe", [
     "-v", "error", "-print_format", "json", "-show_streams", "-show_format", file,
   ]);
-  if (code !== 0) throw new Error(`ffprobe не смог прочитать файл: ${stderr.trim().slice(-500)}`);
+  if (code !== 0) throw new Error(`ffprobe could not read the file: ${stderr.trim().slice(-500)}`);
   const j = JSON.parse(stdout);
   const v = j.streams?.find((s: any) => s.codec_type === "video" && !s.disposition?.attached_pic);
-  if (!v) throw new Error("В файле нет видеодорожки");
+  if (!v) throw new Error("The file has no video track");
   const a = j.streams?.find((s: any) => s.codec_type === "audio");
 
   let rotation = 0;
@@ -159,12 +159,12 @@ export async function probe(file: string): Promise<MediaInfo> {
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
-// ---------- рендер ----------
+// ---------- render ----------
 
 export interface UniqOptions {
   strength?: Strength;
   title?: string;
-  params?: UniqParams; // если не задано — случайные
+  params?: UniqParams; // random if omitted
   onProgress?: (fraction: number) => void; // 0..1
 }
 
@@ -173,12 +173,12 @@ export interface UniqResult {
   strength: Strength;
   source: MediaInfo;
   output: MediaInfo;
-  seconds: number; // сколько занял рендер
-  avDrift: number; // насколько расхождение дорожек отличается от исходника, с
+  seconds: number; // render time
+  avDrift: number; // how much the A/V gap differs from the source, s
 }
 
 export function buildArgs(input: string, output: string, src: MediaInfo, p: UniqParams, title: string): string[] {
-  // Размер кадра должен быть чётным для yuv420p/libx264.
+  // Frame size must be even for yuv420p/libx264.
   const w = src.width - (src.width % 2);
   const h = src.height - (src.height % 2);
   const zw = even(w * p.zoom);
@@ -186,15 +186,15 @@ export function buildArgs(input: string, output: string, src: MediaInfo, p: Uniq
   const cx = Math.round((zw - w) * p.cropX);
   const cy = Math.round((zh - h) * p.cropY);
 
-  // fps=30 обязательно ДО setpts — иначе видео останется исходной длины и разойдётся со звуком.
-  // hflip не используем: вшитые субтитры и водяные знаки стали бы зеркальными.
+  // fps=30 must come BEFORE setpts, otherwise the video keeps its original length and drifts from the audio.
+  // No hflip: burned-in captions and watermarks would end up mirrored.
   const video =
     `[0:v]fps=30,setpts=(PTS-STARTPTS)/${p.speed},scale=${zw}:${zh},crop=${w}:${h}:${cx}:${cy},` +
     `eq=brightness=${p.brightness}:contrast=${p.contrast}:saturation=${p.saturation}:gamma=${p.gamma},` +
     `unsharp=5:5:0.4,noise=alls=${p.noise}:allf=t,vignette=PI/6[v]`;
 
   const hasAudio = src.audioDuration !== null;
-  // asetrate поднимает и тон, и темп на pitch; atempo добирает до ровно speed.
+  // asetrate raises pitch and tempo by `pitch`; atempo brings the tempo to exactly `speed`.
   const audio = hasAudio
     ? `;[0:a]asetrate=${Math.round(src.sampleRate! * p.pitch)},atempo=${round(p.speed / p.pitch, 6)},` +
       `aresample=48000,volume=${p.volume}[a]`
@@ -247,14 +247,14 @@ export async function uniqualize(input: string, output: string, opts: UniqOption
     });
     p.on("error", reject);
     p.on("close", (code) =>
-      code === 0 ? resolve() : reject(new Error(`ffmpeg завершился с кодом ${code}: ${stderr.trim().slice(-800)}`)),
+      code === 0 ? resolve() : reject(new Error(`ffmpeg exited with code ${code}: ${stderr.trim().slice(-800)}`)),
     );
   });
   const seconds = round((Date.now() - started) / 1000, 1);
   opts.onProgress?.(1);
 
-  // Проверка синхронности: ошибка — только если расхождение дорожек НОВОЕ,
-  // т.к. у многих исходников звук и так короче видео на 0.1–0.2 с.
+  // Sync check: fail only on a NEW A/V gap, since many sources already
+  // have audio 0.1–0.2 s shorter than the video.
   const out = await probe(output);
   let avDrift = 0;
   if (src.audioDuration !== null && out.audioDuration !== null) {
@@ -263,7 +263,7 @@ export async function uniqualize(input: string, output: string, opts: UniqOption
     avDrift = round(Math.abs(outGap - srcGap), 3);
     if (avDrift > 0.15) {
       throw new Error(
-        `Звук разошёлся с видео на ${avDrift} с (видео ${out.videoDuration} с, звук ${out.audioDuration} с)`,
+        `Audio drifted from video by ${avDrift}s (video ${out.videoDuration}s, audio ${out.audioDuration}s)`,
       );
     }
   }
