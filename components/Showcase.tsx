@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { COMPARE, REELS } from "@/lib/showcase";
-import Viewfinder from "./Viewfinder";
 
 // Original and unique version side by side, kept in sync so the viewer can compare frame by frame.
 export function CompareVideos() {
@@ -22,20 +21,18 @@ export function CompareVideos() {
         { ref: a, v: COMPARE.original, label: "Original", note: "your upload" },
         { ref: b, v: COMPARE.uniq, label: "Uniq version", note: "brand-new file" },
       ].map(({ ref, v, label, note }) => (
-        <figure key={label} className="relative z-[60] overflow-hidden rounded-3xl bg-card">
-          <Viewfinder compact label={label === "Original" ? "ORIGINAL" : "UNIQ · NEW FILE"}>
-            <video
-              ref={ref}
-              src={v.src}
-              poster={v.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="block aspect-[9/16] w-full object-cover"
-            />
-          </Viewfinder>
+        <figure key={label} className="relative z-[60] overflow-hidden rounded-3xl border border-border bg-card">
+          <video
+            ref={ref}
+            src={v.src}
+            poster={v.poster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="block aspect-[9/16] w-full object-cover"
+          />
           <figcaption className="flex flex-wrap items-baseline justify-between gap-x-2 px-4 py-3">
             <span className="font-display text-2xl">{label}</span>
             <span className="font-hand text-2xl text-tan">{note}</span>

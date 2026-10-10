@@ -19,7 +19,8 @@
   --dot: #e0703c;
   --ok: #4f7a2a;
   --bad: #b3261e;
-  --grain-opacity: 0.22;
+  --grain-opacity: 0.4;
+  --grain-blend: multiply;
 }
 
 /* Dark mode is the inverse: deep red paper, butter ink. */
@@ -36,7 +37,8 @@
     --dot: #f0a35e;
     --ok: #8fbf5a;
     --bad: #ffb4a8;
-    --grain-opacity: 0.16;
+    --grain-opacity: 0.35;
+    --grain-blend: soft-light;
   }
 }
 
@@ -71,7 +73,10 @@ body::before {
   pointer-events: none;
   z-index: 50;
   opacity: var(--grain-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: var(--grain-blend);
+  /* High-contrast speckle noise; a small tile keeps it fine and sharp on phone screens too. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
   animation: grain 0.5s steps(8) infinite;
 }
 /* Blinking REC dot in the camera viewfinder. */

@@ -70,7 +70,7 @@ const fiveVersions = creator ? usd(Math.round((creator.priceCents / creator.cred
 
 export default function Home() {
   return (
-    <div className="space-y-28">
+    <div className="space-y-20 pb-16 sm:space-y-28 sm:pb-0">
       {/* Hero */}
       <section className="rise grid items-center gap-10 pt-4 sm:pt-10 md:grid-cols-[1.4fr_1fr]">
         <div className="space-y-7">
@@ -98,8 +98,8 @@ export default function Home() {
         </div>
         {REELS[0] && (
           <div className="relative mx-auto">
-            <span className="font-hand absolute -top-8 -left-6 -rotate-6 text-3xl text-tan">see it in action ↓</span>
-            <Viewfinder className="w-60 rounded-[1.6rem] shadow-2xl sm:w-72">
+            <span className="font-hand absolute -top-9 left-0 -rotate-6 text-3xl text-tan sm:-left-6">see it in action ↓</span>
+            <Viewfinder className="w-56 rounded-[1.6rem] shadow-2xl sm:w-72">
               <video
                 src={REELS[0].src}
                 poster={REELS[0].poster}
@@ -118,9 +118,10 @@ export default function Home() {
       {/* Pain */}
       <section className="space-y-8">
         <SectionTitle kicker="sound familiar?" title="Great content shouldn't be one-and-done." />
-        <ul className="grid gap-4 sm:grid-cols-3">
+        <Swipe />
+        <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:gap-4 sm:overflow-visible sm:px-0 sm:grid-cols-3">
           {pains.map(([t, d], i) => (
-            <li key={t} className="rounded-3xl border border-border bg-card p-6">
+            <li key={t} className="w-[82%] shrink-0 snap-start sm:w-auto rounded-3xl border border-border bg-card p-5 sm:p-6">
               <div className="font-display text-6xl text-accent/25">0{i + 1}</div>
               <div className="font-display mt-2 text-3xl text-accent">{t}</div>
               <p className="mt-2 text-sm text-muted">{d}</p>
@@ -143,7 +144,7 @@ export default function Home() {
       </section>
 
       {/* AI creators */}
-      <section className="grid gap-8 rounded-[2rem] border border-border bg-card p-8 sm:p-12 md:grid-cols-[1.3fr_1fr] md:items-center">
+      <section className="grid gap-8 rounded-[2rem] border border-border bg-card p-6 sm:p-12 md:grid-cols-[1.3fr_1fr] md:items-center">
         <div className="space-y-4">
           <p className="font-hand text-2xl text-tan">for AI creators —</p>
           <h2 className="font-display text-5xl text-accent sm:text-7xl">Don&apos;t pay to generate it twice.</h2>
@@ -165,9 +166,10 @@ export default function Home() {
       {/* How it works */}
       <section className="space-y-8">
         <SectionTitle kicker="how it works" title="Three steps. One minute." />
-        <ol className="grid gap-4 sm:grid-cols-3">
+        <Swipe />
+        <ol className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:gap-4 sm:overflow-visible sm:px-0 sm:grid-cols-3">
           {how.map(([t, d], i) => (
-            <li key={t} className="rounded-3xl border border-border bg-card p-6">
+            <li key={t} className="w-[82%] shrink-0 snap-start sm:w-auto rounded-3xl border border-border bg-card p-5 sm:p-6">
               <div className="font-display text-7xl text-accent">0{i + 1}</div>
               <div className="mt-3 text-lg font-semibold">{t}</div>
               <p className="mt-1 text-sm text-muted">{d}</p>
@@ -179,9 +181,10 @@ export default function Home() {
       {/* Who it's for */}
       <section className="space-y-8">
         <SectionTitle kicker="who it's for" title="More reach from every video." />
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Swipe />
+        <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:gap-4 sm:overflow-visible sm:px-0 sm:grid-cols-2 lg:grid-cols-4">
           {audiences.map(([t, d]) => (
-            <li key={t} className="rounded-3xl border border-border bg-card p-6">
+            <li key={t} className="w-[82%] shrink-0 snap-start sm:w-auto rounded-3xl border border-border bg-card p-5 sm:p-6">
               <div className="font-display text-3xl text-accent">{t}</div>
               <p className="mt-2 text-sm text-muted">{d}</p>
             </li>
@@ -199,10 +202,10 @@ export default function Home() {
       {/* What changes */}
       <section className="space-y-8">
         <SectionTitle kicker="under the hood" title="Invisible to viewers. New to algorithms." />
-        <ul className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-3">
           {changes.map(([t, d]) => (
-            <li key={t} className="bg-card p-6">
-              <div className="font-display text-3xl text-accent">{t}</div>
+            <li key={t} className="bg-card p-4 sm:p-6">
+              <div className="font-display text-2xl text-accent sm:text-3xl">{t}</div>
               <p className="mt-2 text-sm text-muted">{d}</p>
             </li>
           ))}
@@ -257,8 +260,18 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Always-visible button on phones */}
+      <div className="fixed inset-x-0 bottom-0 z-[70] border-t border-border bg-background/90 p-3 backdrop-blur sm:hidden">
+        <Link
+          href="/login"
+          className="block rounded-full bg-accent py-3.5 text-center font-semibold text-accent-fg shadow-lg shadow-accent/30"
+        >
+          Try it — 3 videos free
+        </Link>
+      </div>
+
       {/* Final CTA */}
-      <section className="rounded-[2rem] bg-accent px-6 py-16 text-center text-accent-fg sm:px-12">
+      <section className="rounded-[2rem] bg-accent px-6 py-12 text-center sm:py-16 text-accent-fg sm:px-12">
         <p className="font-hand text-3xl opacity-90">your next upload —</p>
         <h2 className="font-display mt-2 text-6xl sm:text-8xl">Make it unique</h2>
         <p className="mx-auto mt-3 max-w-md opacity-80">3 videos free. No card. About a minute per video.</p>
@@ -271,6 +284,11 @@ export default function Home() {
       </section>
     </div>
   );
+}
+
+// Hint that the cards below scroll sideways on phones.
+function Swipe() {
+  return <p className="font-hand -mt-5 text-right text-xl text-tan sm:hidden">swipe →</p>;
 }
 
 function SectionTitle({ kicker, title, note }: { kicker: string; title: string; note?: string }) {
