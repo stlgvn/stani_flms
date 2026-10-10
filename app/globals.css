@@ -1,44 +1,43 @@
 @import "tailwindcss";
-@import "@fontsource-variable/league-gothic/index.css";
-@import "@fontsource/reenie-beanie/400.css";
-@import "@fontsource/poppins/400.css";
-@import "@fontsource/poppins/500.css";
-@import "@fontsource/poppins/600.css";
-@import "@fontsource/poppins/700.css";
+@import "@fontsource/anton/400.css";
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
 
-/* Stani Films palette: butter-cream paper and the Stani Films red. */
+/* Stani Films system: off-white paper, black ink, square corners, red signal squares. */
 :root {
-  --background: #fbf6cc;
-  --foreground: #5c0a06;
-  --card: #fffce6;
-  --border: #eddfb0;
-  --muted: #8a3a30;
-  --accent: #940501;
-  --accent-fg: #fbf6cc;
-  --tan: #a0463c;
-  --dot: #e0703c;
-  --ok: #4f7a2a;
-  --bad: #b3261e;
-  --grain-opacity: 0.4;
-  --grain-blend: multiply;
+  --background: #f2f2ee;
+  --foreground: #0b0b0b;
+  --card: #f7f7f3;
+  --border: #c9c9c3;
+  --muted: #5c5c57;
+  --accent: #0b0b0b;
+  --accent-fg: #f2f2ee;
+  --tan: #5c5c57;
+  --dot: #e3241b;
+  --panel: #0b0b0b;
+  --panel-fg: #f2f2ee;
+  --ok: #2f7a2a;
+  --bad: #d11f16;
+  --grain-opacity: 0.07;
 }
 
-/* Dark mode is the inverse: deep red paper, butter ink. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #5c0a06;
-    --foreground: #fbf6cc;
-    --card: #6e140e;
-    --border: #8a2a20;
-    --muted: #f0d0ae;
-    --accent: #fbf6cc;
-    --accent-fg: #940501;
-    --tan: #f0c48f;
-    --dot: #f0a35e;
+    --background: #0b0b0b;
+    --foreground: #f2f2ee;
+    --card: #141414;
+    --border: #34342f;
+    --muted: #a3a39c;
+    --accent: #f2f2ee;
+    --accent-fg: #0b0b0b;
+    --tan: #a3a39c;
+    --dot: #ff3b30;
+    --panel: #161616;
+    --panel-fg: #f2f2ee;
     --ok: #8fbf5a;
-    --bad: #ffb4a8;
-    --grain-opacity: 0.35;
-    --grain-blend: soft-light;
+    --bad: #ff6b60;
+    --grain-opacity: 0.06;
   }
 }
 
@@ -52,20 +51,23 @@
   --color-accent-fg: var(--accent-fg);
   --color-tan: var(--tan);
   --color-dot: var(--dot);
+  --color-panel: var(--panel);
+  --color-panel-fg: var(--panel-fg);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
-  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-display: "League Gothic Variable", "Arial Narrow", sans-serif;
-  --font-hand: "Reenie Beanie", cursive;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  letter-spacing: -0.01em;
 }
 
-/* Living film grain: the noise jumps a few pixels every frame, like real film stock. */
+/* Light animated film grain over the page (videos sit above it). */
 body::before {
   content: "";
   position: fixed;
@@ -73,22 +75,10 @@ body::before {
   pointer-events: none;
   z-index: 50;
   opacity: var(--grain-opacity);
-  mix-blend-mode: var(--grain-blend);
-  /* High-contrast speckle noise; a small tile keeps it fine and sharp on phone screens too. */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
   animation: grain 0.5s steps(8) infinite;
 }
-/* Blinking REC dot in the camera viewfinder. */
-.rec-dot {
-  animation: rec 1.2s steps(1) infinite;
-}
-@keyframes rec {
-  50% {
-    opacity: 0;
-  }
-}
-
 @keyframes grain {
   0% { transform: translate(0, 0); }
   17% { transform: translate(-3%, 2%); }
@@ -98,26 +88,38 @@ body::before {
   83% { transform: translate(-1%, -3%); }
   100% { transform: translate(0, 0); }
 }
-@media (prefers-reduced-motion: reduce) {
-  body::before,
-  .rec-dot {
-    animation: none;
-  }
-}
 
+/* Huge condensed headline. */
 .font-display {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: 0.005em;
-  line-height: 0.9;
+  line-height: 0.88;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
 }
-/* Handwritten accent, like a note on a film slate. */
-.font-hand {
-  font-family: var(--font-hand);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  text-transform: none;
+
+/* Small mono label with wide tracking: "LIGHT / PROMPT / AI VIDEO". */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Section heading: "01  PICK A LOOK". */
+.kicker {
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.rec-dot {
+  animation: rec 1.2s steps(1) infinite;
+}
+@keyframes rec {
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes rise {
@@ -133,7 +135,10 @@ body::before {
 .rise {
   animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
+
 @media (prefers-reduced-motion: reduce) {
+  body::before,
+  .rec-dot,
   .rise {
     animation: none;
   }

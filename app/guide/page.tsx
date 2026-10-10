@@ -28,8 +28,8 @@ async function Guide() {
   return (
     <article className="mx-auto max-w-2xl space-y-10">
       <header className="space-y-3">
-        <p className="font-hand text-2xl text-tan">your growth guide —</p>
-        <h1 className="font-display text-6xl text-accent sm:text-8xl">The Trial Reels Playbook</h1>
+        <p className="label text-xs text-muted">your growth guide —</p>
+        <h1 className="font-display text-6xl sm:text-8xl">The Trial Reels Playbook</h1>
         <p className="text-lg text-muted">
           How to use Instagram Trial Reels and Uniq together to test your videos on new audiences — without spamming the
           followers you already have.
@@ -78,7 +78,7 @@ async function Guide() {
                 ["Repeat every week", "Keep a simple note of which hook won. After a month you'll know what your new audience wants."],
               ].map(([t, d], i) => (
                 <li key={t} className="flex gap-4">
-                  <span className="font-display w-8 shrink-0 text-4xl text-accent">{i + 1}</span>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-panel font-display text-xl text-panel-fg">{i + 1}</span>
                   <div>
                     <div className="font-semibold">{t}</div>
                     <p className="text-sm text-muted">{d}</p>
@@ -102,7 +102,7 @@ async function Guide() {
                 "“Before vs after”",
                 "A question your audience asks you all the time",
               ].map((h) => (
-                <li key={h} className="rounded-2xl border border-border bg-card px-4 py-3 text-sm">
+                <li key={h} className=" border border-border bg-card px-4 py-3 text-sm">
                   {h}
                 </li>
               ))}
@@ -118,25 +118,25 @@ async function Guide() {
             </ul>
           </Part>
 
-          <div className="rounded-[2rem] bg-accent p-8 text-center text-accent-fg">
-            <p className="font-hand text-2xl opacity-90">ready for this week&apos;s test? —</p>
+          <div className=" bg-accent p-8 text-center text-accent-fg">
+            <p className="label text-xs opacity-70">ready for this week&apos;s test? —</p>
             <Link
               href="/dashboard"
-              className="mt-4 inline-block rounded-full bg-accent-fg px-8 py-4 font-semibold text-accent"
+              className="mt-4 inline-block bg-panel-fg px-8 py-4 font-semibold text-panel"
             >
               Make your versions
             </Link>
           </div>
         </>
       ) : (
-        <div className="rounded-[2rem] border border-border bg-card p-8 text-center">
-          <p className="font-hand text-3xl text-tan">the rest is for customers —</p>
+        <div className=" border border-border bg-card p-8 text-center">
+          <p className="label text-xs text-muted">the rest is for customers —</p>
           <p className="mx-auto mt-2 max-w-md text-muted">
             The full step-by-step playbook, 10 hooks to test and the weekly routine unlock with any credit pack.
           </p>
           <Link
             href="/dashboard#buy"
-            className="mt-6 inline-block rounded-full bg-accent px-8 py-4 font-semibold text-accent-fg"
+            className="mt-6 inline-block bg-accent px-8 py-4 font-semibold text-accent-fg"
           >
             Get a pack and unlock the guide
           </Link>
@@ -149,9 +149,9 @@ async function Guide() {
 function Part({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
     <section className="space-y-3">
-      <div className="flex items-baseline gap-3">
-        <span className="font-display text-3xl text-accent/40">{n}</span>
-        <h2 className="font-display text-4xl text-accent">{title}</h2>
+      <div className="flex items-baseline gap-4 border-b border-foreground pb-3">
+        <span className="font-mono text-sm">{n}</span>
+        <h2 className="kicker text-lg">{title}</h2>
       </div>
       <div className="space-y-3 leading-relaxed">{children}</div>
     </section>

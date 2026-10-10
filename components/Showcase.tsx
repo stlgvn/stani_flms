@@ -21,7 +21,7 @@ export function CompareVideos() {
         { ref: a, v: COMPARE.original, label: "Original", note: "your upload" },
         { ref: b, v: COMPARE.uniq, label: "Uniq version", note: "brand-new file" },
       ].map(({ ref, v, label, note }) => (
-        <figure key={label} className="relative z-[60] overflow-hidden rounded-3xl border border-border bg-card">
+        <figure key={label} className="relative z-[60]">
           <video
             ref={ref}
             src={v.src}
@@ -33,9 +33,9 @@ export function CompareVideos() {
             preload="metadata"
             className="block aspect-[9/16] w-full object-cover"
           />
-          <figcaption className="flex flex-wrap items-baseline justify-between gap-x-2 px-4 py-3">
-            <span className="font-display text-2xl">{label}</span>
-            <span className="font-hand text-2xl text-tan">{note}</span>
+          <figcaption className="mt-2 flex flex-wrap items-baseline justify-between gap-x-2">
+            <span className="label text-[11px]">{label}</span>
+            <span className="label text-[10px] opacity-60">{note}</span>
           </figcaption>
         </figure>
       ))}
@@ -49,7 +49,7 @@ export function ReelWall() {
       {REELS.map((r) => (
         <figure
           key={r.src}
-          className="relative z-[60] w-56 shrink-0 snap-start overflow-hidden rounded-[2rem] border-4 border-foreground/90 bg-black shadow-xl sm:w-64"
+          className="relative z-[60] w-56 shrink-0 snap-start overflow-hidden border border-foreground bg-black sm:w-64"
         >
           <video
             src={r.src}
@@ -65,7 +65,7 @@ export function ReelWall() {
             <div className="text-xs opacity-80">{r.platform}</div>
             <div className="text-sm font-semibold">{r.title}</div>
             {r.views && (
-              <div className="font-display mt-1 text-3xl">
+              <div className="font-display mt-1 text-4xl">
                 {r.views} <span className="text-base">views</span>
               </div>
             )}

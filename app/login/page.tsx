@@ -37,7 +37,8 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-sm space-y-6 pt-6">
-      <h1 className="font-display text-6xl text-accent">{mode === "signup" ? "Create your account" : "Sign in"}</h1>
+      <p className="label text-xs text-muted">Uniq / account</p>
+      <h1 className="font-display text-6xl">{mode === "signup" ? "Create your account" : "Sign in"}</h1>
       {mode === "signup" && <p className="text-sm text-muted">3 free videos to start. No card needed.</p>}
       <form onSubmit={onSubmit} className="space-y-3">
         <input
@@ -48,7 +49,7 @@ export default function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
-          className="w-full rounded-xl border border-border bg-card px-4 py-3 outline-none focus:border-accent"
+          className="w-full border border-foreground bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-foreground"
         />
         <input
           id="password"
@@ -59,12 +60,12 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password (6+ characters)"
-          className="w-full rounded-xl border border-border bg-card px-4 py-3 outline-none focus:border-accent"
+          className="w-full border border-foreground bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-foreground"
         />
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-full bg-accent px-4 py-3 font-semibold text-accent-fg hover:opacity-90 disabled:opacity-60"
+          className="w-full bg-accent px-4 py-3 font-semibold text-accent-fg hover:opacity-90 disabled:opacity-60"
         >
           {busy ? "Please wait…" : mode === "signup" ? "Create account" : "Sign in"}
         </button>

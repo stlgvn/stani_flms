@@ -125,11 +125,11 @@ export default function Dashboard(props: {
     <div className="space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="font-display text-6xl text-accent">Dashboard</h1>
+          <h1 className="font-display text-6xl">Dashboard</h1>
           <p className="text-sm text-muted">{props.email}</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="rounded-xl border border-border bg-card px-4 py-2 text-sm">
+          <div className=" border border-border bg-card px-4 py-2 text-sm">
             Balance: <b data-testid="credits">{credits}</b> {credits === 1 ? "video" : "videos"}
           </div>
           <a href="/guide" className="text-sm font-medium text-accent hover:underline">
@@ -142,30 +142,30 @@ export default function Dashboard(props: {
       </div>
 
       {props.notice === "paid" && (
-        <p className="rounded-xl border border-ok/40 bg-ok/10 p-3 text-sm">
+        <p className=" border border-ok/40 bg-ok/10 p-3 text-sm">
           Thanks for your purchase! Your credits will appear on your balance in a few seconds — and your{" "}
           <a href="/guide" className="font-semibold underline">Trial Reels Playbook</a> is unlocked.
         </p>
       )}
       {props.notice === "payment_error" && (
-        <p className="rounded-xl border border-bad/40 bg-bad/10 p-3 text-sm">
+        <p className=" border border-bad/40 bg-bad/10 p-3 text-sm">
           We couldn’t open the payment page. Please try again in a minute.
         </p>
       )}
 
       <section className="space-y-3">
-        <h2 className="font-display text-4xl">Strength</h2>
-        <div className="grid grid-cols-3 gap-2">
-          {STRENGTHS.map((s) => (
+        <h2 className="kicker border-b border-foreground pb-3 text-lg">Strength</h2>
+        <div className="grid grid-cols-3 border border-foreground">
+          {STRENGTHS.map((s, i) => (
             <button
               key={s.id}
               onClick={() => setStrength(s.id)}
-              className={`rounded-xl border px-3 py-3 text-left ${
-                strength === s.id ? "border-accent bg-accent/10" : "border-border bg-card hover:border-muted"
+              className={`px-3 py-3 text-center ${i > 0 ? "border-l border-foreground" : ""} ${
+                strength === s.id ? "bg-foreground text-background" : "bg-card hover:bg-border/40"
               }`}
             >
-              <div className="font-medium">{s.label}</div>
-              <div className="text-xs text-muted">{s.hint}</div>
+              <div className="font-semibold">{s.label}</div>
+              <div className={`label text-[10px] ${strength === s.id ? "opacity-70" : "text-muted"}`}>{s.hint}</div>
             </button>
           ))}
         </div>
@@ -188,8 +188,8 @@ export default function Dashboard(props: {
             const f = e.dataTransfer.files?.[0];
             if (f && !upload) handleFile(f);
           }}
-          className={`flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed p-6 text-center transition ${
-            drag ? "border-accent bg-accent/10" : "border-border bg-card hover:border-muted"
+          className={`flex min-h-40 cursor-pointer flex-col items-center justify-center border-2 border-dashed p-6 text-center transition ${
+            drag ? "border-foreground bg-border/50" : "border-foreground bg-card hover:bg-border/30"
           }`}
         >
           {upload ? (
@@ -216,20 +216,20 @@ export default function Dashboard(props: {
       </section>
 
       <section className="space-y-3" id="buy">
-        <h2 className="font-display text-4xl">Buy credits</h2>
+        <h2 className="kicker border-b border-foreground pb-3 text-lg">Buy credits</h2>
         <div className="grid gap-2 sm:grid-cols-3">
           {PACKS.map((p) => (
-            <form key={p.id} action="/api/checkout" method="post" className="rounded-2xl border border-border bg-card p-4">
+            <form key={p.id} action="/api/checkout" method="post" className=" border border-border bg-card p-4">
               <input type="hidden" name="pack" value={p.id} />
               <div className="flex items-baseline justify-between">
                 <span className="font-medium">{p.name}</span>
-                {p.note && <span className="text-xs text-accent">{p.note}</span>}
+                {p.note && <span className="label text-[10px] text-muted">{p.note}</span>}
               </div>
               <div className="mt-1 text-2xl font-bold">{usd(p.priceCents)}</div>
               <div className="text-xs text-muted">
                 {p.credits} videos · {usd(Math.round(p.priceCents / p.credits))} each
               </div>
-              <button className="mt-3 w-full rounded-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
+              <button className="mt-3 w-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
                 Buy
               </button>
             </form>
@@ -242,11 +242,11 @@ export default function Dashboard(props: {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-display text-4xl">My videos</h2>
+        <h2 className="kicker border-b border-foreground pb-3 text-lg">My videos</h2>
         {jobs.length === 0 && <p className="text-sm text-muted">Nothing here yet.</p>}
         <ul className="space-y-2">
           {jobs.map((j) => (
-            <li key={j.id} className="rounded-2xl border border-border bg-card p-4" data-testid="job">
+            <li key={j.id} className=" border border-border bg-card p-4" data-testid="job">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="min-w-0">
                   <div className="truncate font-medium">{j.original_name}</div>
@@ -257,7 +257,7 @@ export default function Dashboard(props: {
                 {j.status === "done" ? (
                   <button
                     onClick={() => download(j)}
-                    className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90"
+                    className=" bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90"
                   >
                     Download
                   </button>
@@ -294,8 +294,8 @@ export default function Dashboard(props: {
 
 function Bar({ value }: { value: number }) {
   return (
-    <div className="h-2 w-full overflow-hidden rounded-full bg-border">
-      <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${Math.round(value * 100)}%` }} />
+    <div className="h-2 w-full overflow-hidden bg-border">
+      <div className="h-full bg-accent transition-all" style={{ width: `${Math.round(value * 100)}%` }} />
     </div>
   );
 }

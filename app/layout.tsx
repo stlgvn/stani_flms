@@ -12,8 +12,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbf6cc" },
-    { media: "(prefers-color-scheme: dark)", color: "#5c0a06" },
+    { media: "(prefers-color-scheme: light)", color: "#f2f2ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0b" },
   ],
 };
 
@@ -21,30 +21,30 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+        <header className="sticky top-0 z-40 border-b border-foreground bg-background/90 backdrop-blur">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-            <Link href="/" className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold tracking-tight text-accent">
+            <Link href="/" className="flex items-baseline gap-3">
+              <span className="font-display text-3xl">
                 Uniq<span className="text-dot">.</span>
               </span>
-              <span className="text-[11px] font-medium text-muted">by Stani Films</span>
+              <span className="label text-[10px] text-muted">by Stani Flms</span>
             </Link>
             <Link
               href="/dashboard"
-              className="rounded-full border border-foreground/15 px-4 py-1.5 text-sm font-medium hover:border-accent hover:text-accent"
+              className="label border border-foreground px-3 py-1.5 text-[11px] hover:bg-foreground hover:text-background"
             >
               Dashboard
             </Link>
           </div>
         </header>
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">{children}</main>
-        <footer className="border-t border-border">
-          <div className="mx-auto max-w-5xl space-y-2 px-4 py-6 text-xs text-muted">
+        <footer className="border-t border-foreground">
+          <div className="mx-auto max-w-5xl space-y-3 px-4 py-6 text-xs text-muted">
             <p>
               Only upload videos you own or have the rights to. This service does not clear copyright and is not
               responsible for how the result is used.
             </p>
-            <nav className="flex flex-wrap gap-x-4 gap-y-1">
+            <nav className="label flex flex-wrap gap-x-5 gap-y-1 text-[11px]">
               <Link href="/terms" className="hover:text-foreground">Terms</Link>
               <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
               <Link href="/refunds" className="hover:text-foreground">Refunds</Link>

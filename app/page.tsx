@@ -21,38 +21,33 @@ const pains = [
 ];
 
 const how = [
-  ["Upload", "Drop in your Reel, Short or TikTok — MP4, MOV, WEBM or MKV, up to 500 MB."],
+  ["Upload", "Reel / Short / TikTok", "MP4, MOV, WEBM or MKV, up to 500 MB."],
   [
     "We rebuild it",
+    "Frame / color / speed / audio / file",
     "A subtle zoom and crop, a touch of color and grain, 1–5% faster with audio in sync, slightly higher pitch, re-encoded at 30 fps with all old metadata wiped.",
   ],
-  [
-    "Download and post",
-    "About a minute later you get a brand-new file that looks and sounds like the original. Repeat for as many versions as you need.",
-  ],
+  ["Download and post", "About one minute", "A brand-new file that looks and sounds like the original. Repeat for as many versions as you need."],
 ];
 
 const audiences = [
-  ["Creators", "Post your best videos on every account and every platform without re-editing a single frame."],
-  ["AI creators", "Turn one great generation into five posts — without paying to generate it again."],
-  ["Brands & agencies", "Deliver fresh variations for every client account and A/B test in minutes."],
-  ["UGC & ads", "Run the same winning creative across multiple ad accounts and pages."],
+  ["Creators", "Every account / every platform", "Post your best videos everywhere without re-editing a single frame."],
+  ["AI creators", "Runway / Kling / Sora / Veo", "Turn one great generation into five posts — without paying to generate it again."],
+  ["Brands & agencies", "Client accounts / A/B tests", "Deliver fresh variations for every account in minutes."],
+  ["UGC & ads", "Ad accounts / pages", "Run the same winning creative across multiple ad accounts and pages."],
 ];
 
 const changes = [
-  ["Frame", "A subtle zoom and crop shift — captions and logos stay readable."],
-  ["Color", "Brightness, contrast, saturation and gamma, plus fine grain and a vignette."],
-  ["Speed", "1–5% faster, with video and audio perfectly in sync."],
+  ["Frame", "Subtle zoom and crop shift. Captions and logos stay readable."],
+  ["Color", "Brightness, contrast, saturation, gamma, fine grain, vignette."],
+  ["Speed", "1–5% faster. Video and audio stay in sync."],
   ["Audio", "Slightly higher pitch and volume."],
-  ["File", "Re-encoded at 30 fps, metadata wiped, new creation date."],
+  ["File", "Re-encoded at 30 fps. Metadata wiped. New creation date."],
   ["Never mirrored", "On-screen text never ends up backwards."],
 ];
 
 const faq = [
-  [
-    "Will it lower the quality?",
-    "No. A 4K video stays 4K, encoded at a high bitrate. Most people can't tell the two apart side by side.",
-  ],
+  ["Will it lower the quality?", "No. A 4K video stays 4K, encoded at a high bitrate. Most people can't tell the two apart side by side."],
   [
     "Does it work with AI-generated videos?",
     "Yes — Runway, Kling, Sora, Veo, Higgsfield or anything else. If it exports as MP4 or MOV, Uniq can make new versions of it.",
@@ -69,38 +64,43 @@ const faq = [
 const creator = PACKS.find((p) => p.id === "creator");
 const fiveVersions = creator ? usd(Math.round((creator.priceCents / creator.credits) * 5)) : null;
 
+// On phones the cards scroll sideways; on larger screens they become a grid.
+const SWIPE = "-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:overflow-visible sm:px-0";
+// Section numbers shift when the "real views" block is shown.
+const R = REELS.length >= 3 ? 1 : 0;
+const num = (n: number) => String(n).padStart(2, "0");
+const SWIPE_ITEM = "w-[82%] shrink-0 snap-start sm:w-auto";
+
 export default function Home() {
   return (
-    <div className="space-y-20 pb-16 sm:space-y-28 sm:pb-0">
+    <div className="space-y-20 sm:space-y-28">
       {/* Hero */}
-      <section className="rise grid items-center gap-10 pt-4 sm:pt-10 md:grid-cols-[1.4fr_1fr]">
-        <div className="space-y-7">
-          <p className="font-hand text-3xl text-tan">for creators & AI creators —</p>
-          <h1 className="font-display text-[4.6rem] text-accent sm:text-[8rem]">
+      <section className="rise grid items-center gap-10 border-t border-foreground pt-8 md:grid-cols-[1.4fr_1fr]">
+        <div className="space-y-6">
+          <p className="label text-muted">Reels / Shorts / TikTok / AI video</p>
+          <h1 className="font-display text-[4.4rem] sm:text-[7.5rem]">
             One video.
             <br />
-            Endless unique
+            Endless
             <br />
             versions.
           </h1>
-          <p className="max-w-lg text-lg text-muted">
-            Stop re-editing and re-generating. Upload a Reel, Short or TikTok and get back a brand-new file with fresh
-            metadata — that looks and sounds just like your original. In about a minute.
+          <p className="max-w-lg text-xl leading-snug">
+            Stop re-editing and re-generating. Get a brand-new file that looks and sounds like your original — in about a
+            minute.
           </p>
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              href="/login"
-              className="rounded-full bg-accent px-8 py-4 font-semibold text-accent-fg shadow-[0_12px_32px_-10px] shadow-accent/60 transition hover:-translate-y-0.5"
-            >
+          <p className="label text-muted">For creators &amp; AI creators</p>
+          <div className="flex flex-wrap items-center gap-4 border-t border-foreground pt-6">
+            <Link href="/login" className="bg-accent px-7 py-4 font-semibold text-accent-fg hover:opacity-90">
               Try it — 3 videos free
             </Link>
-            <span className="font-hand text-2xl text-muted">no card needed</span>
+            <span className="label text-xs text-muted">No card needed</span>
           </div>
         </div>
         {REELS[0] && (
-          <div className="relative mx-auto">
-            <span className="font-hand absolute -top-9 left-0 -rotate-6 text-3xl text-tan sm:-left-6">see it in action ↓</span>
-            <Viewfinder className="w-56 rounded-[1.6rem] shadow-2xl sm:w-72">
+          <div className="mx-auto w-56 space-y-2 sm:w-72">
+            <p className="label text-xs text-muted">Live preview</p>
+            <Viewfinder className="w-full">
               <video
                 src={REELS[0].src}
                 poster={REELS[0].poster}
@@ -117,143 +117,164 @@ export default function Home() {
       </section>
 
       {/* Pain */}
-      <section className="space-y-8">
-        <SectionTitle kicker="sound familiar?" title="Great content shouldn't be one-and-done." />
-        <Swipe />
-        <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:gap-4 sm:overflow-visible sm:px-0 sm:grid-cols-3">
+      <section className="space-y-6">
+        <SectionTitle n="01" title="The problem" />
+        <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl">Great content shouldn&apos;t be one-and-done.</h2>
+        <p className="label -mb-3 text-right text-xs text-muted sm:hidden">Swipe →</p>
+        <ul className={`${SWIPE} sm:grid-cols-3 sm:gap-4`}>
           {pains.map(([t, d], i) => (
-            <li key={t} className="w-[82%] shrink-0 snap-start sm:w-auto rounded-3xl border border-border bg-card p-5 sm:p-6">
-              <div className="font-display text-6xl text-accent/25">0{i + 1}</div>
-              <div className="font-display mt-2 text-3xl text-accent">{t}</div>
+            <li key={t} className={`${SWIPE_ITEM} border border-border bg-card p-5`}>
+              <p className="label text-xs text-muted">Problem / 0{i + 1}</p>
+              <div className="mt-3 text-xl font-bold">{t}</div>
               <p className="mt-2 text-sm text-muted">{d}</p>
             </li>
           ))}
         </ul>
-        <p className="max-w-2xl text-lg">
-          <span className="font-semibold text-accent">Uniq fixes all three.</span> One upload, one minute, and your video
-          is ready to go out again — on any account, any platform, as many times as you need.
-        </p>
+        <Tip label="Operator tip">
+          Uniq fixes all three. One upload, one minute, and your video is ready to go out again — on any account, any
+          platform, as many times as you need.
+        </Tip>
       </section>
 
       {/* Before / after */}
-      <section className="space-y-8">
-        <SectionTitle kicker="spot the difference" title="Same look. New file." note="(you won't find one)" />
-        <CompareVideos />
-        <p className="text-sm text-muted">
-          Shot by Stani Films. Left: the original. Right: the Uniq version — processed in 8 seconds.
-        </p>
+      <section className="space-y-6">
+        <SectionTitle n="02" title="Spot the difference" />
+        <div className="bg-panel p-4 text-panel-fg sm:p-8">
+          <p className="label mb-4 text-xs opacity-70">Side by side / same look / new file</p>
+          <CompareVideos />
+        </div>
+        <p className="label text-xs text-muted">Shot by Stani Flms / processed in 8 seconds</p>
       </section>
 
       {/* AI creators */}
-      <section className="grid gap-8 rounded-[2rem] border border-border bg-card p-6 sm:p-12 md:grid-cols-[1.3fr_1fr] md:items-center">
-        <div className="space-y-4">
-          <p className="font-hand text-2xl text-tan">for AI creators —</p>
-          <h2 className="font-display text-5xl text-accent sm:text-7xl">Don&apos;t pay to generate it twice.</h2>
-          <p className="text-muted">
-            You spent credits, prompts and hours to land that perfect AI clip. Re-generating it for every account costs
-            money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need —
-            same quality, new file every time.
-          </p>
-        </div>
-        {fiveVersions && (
-          <div className="rounded-3xl bg-accent p-8 text-accent-fg">
-            <div className="font-hand text-2xl opacity-90">5 versions of one video</div>
-            <div className="font-display mt-2 text-8xl">{fiveVersions}</div>
-            <p className="mt-2 text-sm opacity-80">on the Creator pack. No new prompts, no new generation credits.</p>
+      <section className="space-y-6">
+        <SectionTitle n="03" title="For AI creators" />
+        <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-stretch">
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold leading-tight sm:text-4xl">Don&apos;t pay to generate it twice.</h2>
+            <p className="text-muted">
+              You spent credits, prompts and hours to land that perfect AI clip. Re-generating it for every account costs
+              money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need —
+              same quality, new file every time.
+            </p>
+            <p className="label text-xs text-muted">Runway / Kling / Sora / Veo / Higgsfield</p>
           </div>
-        )}
+          {fiveVersions && (
+            <div className="flex flex-col justify-between bg-panel p-6 text-panel-fg">
+              <p className="label text-xs opacity-70">5 versions of one video</p>
+              <div className="font-display mt-4 text-8xl">{fiveVersions}</div>
+              <p className="mt-3 text-sm opacity-70">On the Creator pack. No new prompts, no new generation credits.</p>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* How it works */}
-      <section className="space-y-8">
-        <SectionTitle kicker="how it works" title="Three steps. One minute." />
-        <Swipe />
-        <ol className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:gap-4 sm:overflow-visible sm:px-0 sm:grid-cols-3">
-          {how.map(([t, d], i) => (
-            <li key={t} className="w-[82%] shrink-0 snap-start sm:w-auto rounded-3xl border border-border bg-card p-5 sm:p-6">
-              <div className="font-display text-7xl text-accent">0{i + 1}</div>
-              <div className="mt-3 text-lg font-semibold">{t}</div>
-              <p className="mt-1 text-sm text-muted">{d}</p>
+      <section className="space-y-6">
+        <SectionTitle n="04" title="How it works" />
+        <ol className="space-y-3">
+          {how.map(([t, sub, d], i) => (
+            <li key={t} className="flex gap-4 border border-border bg-card p-4">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center bg-panel font-display text-4xl text-panel-fg">
+                {i + 1}
+              </div>
+              <div>
+                <div className="text-xl font-bold">{t}</div>
+                <p className="label mt-0.5 text-xs text-muted">{sub}</p>
+                <p className="mt-2 text-sm text-muted">{d}</p>
+              </div>
             </li>
           ))}
         </ol>
       </section>
 
       {/* Who it's for */}
-      <section className="space-y-8">
-        <SectionTitle kicker="who it's for" title="More reach from every video." />
-        <Swipe />
-        <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:gap-4 sm:overflow-visible sm:px-0 sm:grid-cols-2 lg:grid-cols-4">
-          {audiences.map(([t, d]) => (
-            <li key={t} className="w-[82%] shrink-0 snap-start sm:w-auto rounded-3xl border border-border bg-card p-5 sm:p-6">
-              <div className="font-display text-3xl text-accent">{t}</div>
-              <p className="mt-2 text-sm text-muted">{d}</p>
-            </li>
-          ))}
+      <section className="space-y-6">
+        <SectionTitle n="05" title="Who it's for" />
+        <ul className="space-y-3">
+          {audiences.map(([t, sub, d]) => {
+            const active = t === "AI creators";
+            return (
+              <li
+                key={t}
+                className={`flex items-start justify-between gap-4 border p-4 ${
+                  active ? "border-panel bg-panel text-panel-fg" : "border-border bg-card"
+                }`}
+              >
+                <div>
+                  <div className="text-xl font-bold">{t}</div>
+                  <p className={`label mt-0.5 text-xs ${active ? "opacity-70" : "text-muted"}`}>{sub}</p>
+                  <p className={`mt-2 text-sm ${active ? "opacity-80" : "text-muted"}`}>{d}</p>
+                </div>
+                {active && <span className="mt-2 h-3 w-3 shrink-0 bg-dot" />}
+              </li>
+            );
+          })}
         </ul>
       </section>
 
       {REELS.length >= 3 && (
-        <section className="space-y-8">
-          <SectionTitle kicker="made with uniq" title="Real videos. Real views." />
+        <section className="space-y-6">
+          <SectionTitle n="06" title="Real videos / real views" />
           <ReelWall />
         </section>
       )}
 
       {/* What changes */}
-      <section className="space-y-8">
-        <SectionTitle kicker="under the hood" title="Invisible to viewers. New to algorithms." />
-        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-3">
+      <section className="space-y-6">
+        <SectionTitle n={num(6 + R)} title="Under the hood" />
+        <dl className="divide-y divide-border border-y border-foreground">
           {changes.map(([t, d]) => (
-            <li key={t} className="bg-card p-4 sm:p-6">
-              <div className="font-display text-2xl text-accent sm:text-3xl">{t}</div>
-              <p className="mt-2 text-sm text-muted">{d}</p>
-            </li>
+            <div key={t} className="grid gap-1 py-4 sm:grid-cols-[200px_1fr]">
+              <dt className="label text-sm">{t}</dt>
+              <dd className="text-muted">{d}</dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       </section>
 
       {/* Pricing */}
-      <section className="space-y-8">
-        <SectionTitle kicker="pricing" title="Pay per video." note="credits never expire" />
-        <ul className="grid gap-4 sm:grid-cols-3">
-          {PACKS.map((p) => (
-            <li
-              key={p.id}
-              className={`rounded-3xl border p-6 ${
-                p.note === "Most popular" ? "border-accent bg-accent text-accent-fg" : "border-border bg-card"
-              }`}
-            >
-              <div className="flex items-baseline justify-between">
-                <span className="font-semibold">{p.name}</span>
-                {p.note && <span className="font-hand text-xl">{p.note}</span>}
-              </div>
-              <div className="font-display mt-4 text-7xl">{usd(p.priceCents)}</div>
-              <div className="mt-1 text-sm opacity-75">
-                {p.credits} videos · {usd(Math.round(p.priceCents / p.credits))} each
-              </div>
-            </li>
-          ))}
+      <section className="space-y-6">
+        <SectionTitle n={num(7 + R)} title="Pricing" />
+        <p className="label text-xs text-muted">Pay per video / credits never expire / 3 videos free</p>
+        <ul className="grid border border-foreground sm:grid-cols-3">
+          {PACKS.map((p, i) => {
+            const active = p.note === "Most popular";
+            return (
+              <li
+                key={p.id}
+                className={`relative p-6 ${active ? "bg-panel text-panel-fg" : "bg-card"} ${
+                  i > 0 ? "border-t border-foreground sm:border-t-0 sm:border-l" : ""
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold">{p.name}</span>
+                  {active && <span className="h-3 w-3 bg-dot" />}
+                </div>
+                {p.note && <p className={`label mt-1 text-[11px] ${active ? "opacity-70" : "text-muted"}`}>{p.note}</p>}
+                <div className="font-display mt-5 text-7xl">{usd(p.priceCents)}</div>
+                <p className={`label mt-2 text-xs ${active ? "opacity-70" : "text-muted"}`}>
+                  {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
+                </p>
+              </li>
+            );
+          })}
         </ul>
-        <div className="flex flex-col gap-4 rounded-3xl border border-dashed border-accent/40 p-6 sm:flex-row sm:items-center">
-          <div className="font-display text-5xl text-accent">+ Bonus</div>
-          <p className="text-sm">
-            <span className="font-semibold">Every pack includes The Trial Reels Playbook</span> — a step-by-step guide to
-            testing Uniq versions with Instagram Trial Reels and growing a new audience, plus 10 hooks to try.
-          </p>
-        </div>
-        <p className="text-sm text-muted">Every new account gets 3 videos free.</p>
+        <Tip label="Bonus with every pack">
+          <b>The Trial Reels Playbook</b> — a step-by-step guide to testing Uniq versions with Instagram Trial Reels and
+          growing a new audience, plus 10 hooks to try.
+        </Tip>
       </section>
 
       {/* FAQ */}
-      <section className="space-y-8">
-        <SectionTitle kicker="questions" title="Good to know." />
-        <div className="divide-y divide-border rounded-3xl border border-border bg-card">
+      <section className="space-y-6">
+        <SectionTitle n={num(8 + R)} title="Good to know" />
+        <div className="divide-y divide-border border-y border-foreground">
           {faq.map(([q, a]) => (
-            <details key={q} className="group px-6 py-5">
+            <details key={q} className="group py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold">
                 {q}
-                <span className="font-display text-3xl text-accent transition group-open:rotate-45">+</span>
+                <span className="font-mono text-xl transition group-open:rotate-45">+</span>
               </summary>
               <p className="mt-3 text-sm text-muted">{a}</p>
             </details>
@@ -261,36 +282,37 @@ export default function Home() {
         </div>
       </section>
 
-      <StickyCta />
-
       {/* Final CTA */}
-      <section className="rounded-[2rem] bg-accent px-6 py-12 text-center sm:py-16 text-accent-fg sm:px-12">
-        <p className="font-hand text-3xl opacity-90">your next upload —</p>
-        <h2 className="font-display mt-2 text-6xl sm:text-8xl">Make it unique</h2>
-        <p className="mx-auto mt-3 max-w-md opacity-80">3 videos free. No card. About a minute per video.</p>
-        <Link
-          href="/login"
-          className="mt-8 inline-block rounded-full bg-accent-fg px-8 py-4 font-semibold text-accent transition hover:-translate-y-0.5"
-        >
+      <section className="bg-panel px-6 py-14 text-center text-panel-fg sm:px-12">
+        <p className="label text-xs opacity-70">Your next upload</p>
+        <h2 className="font-display mt-3 text-6xl sm:text-8xl">Make it unique</h2>
+        <p className="mx-auto mt-4 max-w-md opacity-70">3 videos free. No card. About a minute per video.</p>
+        <Link href="/login" className="mt-8 inline-block bg-panel-fg px-8 py-4 font-semibold text-panel hover:opacity-90">
           Start free
         </Link>
       </section>
+
+      <StickyCta />
     </div>
   );
 }
 
-// Hint that the cards below scroll sideways on phones.
-function Swipe() {
-  return <p className="font-hand -mt-5 text-right text-xl text-tan sm:hidden">swipe →</p>;
+function SectionTitle({ n, title }: { n: string; title: string }) {
+  return (
+    <div className="flex items-baseline gap-4 border-b border-foreground pb-3">
+      <span className="font-mono text-sm">{n}</span>
+      <h2 className="kicker text-lg sm:text-xl">{title}</h2>
+    </div>
+  );
 }
 
-function SectionTitle({ kicker, title, note }: { kicker: string; title: string; note?: string }) {
+function Tip({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-1">
-      <p className="font-hand text-2xl text-tan">{kicker} —</p>
-      <h2 className="font-display text-5xl text-accent sm:text-7xl">
-        {title} {note && <span className="font-hand align-middle text-3xl text-tan sm:text-4xl">{note}</span>}
-      </h2>
+    <div className="border border-foreground bg-card p-5">
+      <p className="label flex items-center gap-3 text-xs">
+        <span className="h-3 w-3 bg-dot" /> {label}
+      </p>
+      <p className="mt-3 text-lg leading-snug">{children}</p>
     </div>
   );
 }
