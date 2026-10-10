@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompareVideos, ReelWall } from "@/components/Showcase";
+import Viewfinder from "@/components/Viewfinder";
 import { PACKS, usd } from "@/lib/plans";
 import { REELS } from "@/lib/showcase";
 
@@ -98,16 +99,18 @@ export default function Home() {
         {REELS[0] && (
           <div className="relative mx-auto">
             <span className="font-hand absolute -top-8 -left-6 -rotate-6 text-3xl text-tan">see it in action ↓</span>
-            <video
-              src={REELS[0].src}
-              poster={REELS[0].poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="relative z-[60] aspect-[9/16] w-60 rounded-[2.2rem] border-[6px] border-accent object-cover shadow-2xl sm:w-72"
-            />
+            <Viewfinder className="w-60 rounded-[1.6rem] shadow-2xl sm:w-72">
+              <video
+                src={REELS[0].src}
+                poster={REELS[0].poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="block aspect-[9/16] w-full object-cover"
+              />
+            </Viewfinder>
           </div>
         )}
       </section>
