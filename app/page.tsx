@@ -88,7 +88,7 @@ export default function Home() {
       <section className="space-y-8">
         <SectionTitle kicker="spot the difference" title="Same look. New file." note="(you won't find one)" />
         <CompareVideos />
-        <p className="text-sm text-muted">Shot and edited by Stani Films. Left: the original upload. Right: a Uniq version.</p>
+        <p className="text-sm text-muted">Shot by Stani Films. Left: the original. Right: the Uniq version — processed in 8 seconds.</p>
       </section>
 
       {/* Uses */}

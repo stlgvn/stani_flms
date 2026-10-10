@@ -8,9 +8,9 @@ export interface Pack {
 }
 
 export const PACKS: Pack[] = [
-  { id: "starter", name: "Starter", credits: 10, priceCents: 900 },
-  { id: "creator", name: "Creator", credits: 50, priceCents: 2900, note: "Most popular" },
-  { id: "pro", name: "Pro", credits: 200, priceCents: 7900, note: "Best value" },
+  { id: "starter", name: "Starter", credits: 10, priceCents: 600 },
+  { id: "creator", name: "Creator", credits: 60, priceCents: 1900, note: "Most popular" },
+  { id: "pro", name: "Pro", credits: 300, priceCents: 6300, note: "Best value" },
 ];
 
 export const findPack = (id: string) => PACKS.find((p) => p.id === id);

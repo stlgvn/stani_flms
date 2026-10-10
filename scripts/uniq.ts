@@ -41,8 +41,8 @@ async function main() {
   const s = res.source;
   const o = res.output;
   console.log(`Done in ${res.seconds}s → ${outAbs}`);
-  console.log(`Source: ${s.width}x${s.height}, ${s.fps} fps, video ${s.videoDuration}s, audio ${s.audioDuration ?? "none"}s`);
-  console.log(`Result: ${o.width}x${o.height}, ${o.fps} fps, video ${o.videoDuration}s, audio ${o.audioDuration ?? "none"}s, A/V drift ${res.avDrift}s`);
+  console.log(`Source: ${s.width}x${s.height}, ${s.fps} fps, video ${s.videoDuration}s, audio ${s.audioDuration === null ? "none" : `${s.audioDuration}s`}`);
+  console.log(`Result: ${o.width}x${o.height}, ${o.fps} fps, video ${o.videoDuration}s, audio ${o.audioDuration === null ? "none" : `${o.audioDuration}s`}, A/V drift ${res.avDrift}s`);
   console.log(`Params (${res.strength}): ${JSON.stringify(res.params)}`);
 }
 

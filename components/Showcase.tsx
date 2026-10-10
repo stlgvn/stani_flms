@@ -16,7 +16,7 @@ export function CompareVideos() {
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="mx-auto grid max-w-2xl grid-cols-2 gap-3 sm:gap-6">
       {[
         { ref: a, v: COMPARE.original, label: "Original", note: "your upload" },
         { ref: b, v: COMPARE.uniq, label: "Uniq version", note: "brand-new file" },
@@ -31,9 +31,9 @@ export function CompareVideos() {
             loop
             playsInline
             preload="metadata"
-            className="aspect-video w-full object-cover"
+            className="aspect-[9/16] w-full object-cover"
           />
-          <figcaption className="flex items-baseline justify-between px-5 py-3">
+          <figcaption className="flex flex-wrap items-baseline justify-between gap-x-2 px-4 py-3">
             <span className="font-display text-2xl">{label}</span>
             <span className="font-hand text-2xl text-accent">{note}</span>
           </figcaption>

@@ -9,11 +9,11 @@ export interface ShowcaseReel {
 }
 
 export const COMPARE = {
-  original: { src: "/showcase/levis-original.mp4", poster: "/showcase/levis-original.jpg" },
-  uniq: { src: "/showcase/levis-uniq.mp4", poster: "/showcase/levis-uniq.jpg" },
-  credit: "Levi's × Stani Films",
+  original: { src: "/showcase/porsche-original.mp4", poster: "/showcase/porsche-original.jpg" },
+  uniq: { src: "/showcase/porsche-uniq.mp4", poster: "/showcase/porsche-uniq.jpg" },
+  credit: "Porsche 911 — Stani Films",
 };
 
 export const REELS: ShowcaseReel[] = [
-  { src: "/showcase/levis-vertical.mp4", poster: "/showcase/levis-vertical.jpg", title: "Levi's × Stani Films", platform: "Instagram" },
+  { src: "/showcase/porsche-original.mp4", poster: "/showcase/porsche-original.jpg", title: "Porsche 911 — Stani Films", platform: "Instagram" },
 ];
