@@ -228,6 +228,13 @@ export default function Home() {
             </li>
           ))}
         </ul>
+        <div className="flex flex-col gap-4 rounded-3xl border border-dashed border-accent/40 p-6 sm:flex-row sm:items-center">
+          <div className="font-display text-5xl text-accent">+ Bonus</div>
+          <p className="text-sm">
+            <span className="font-semibold">Every pack includes The Trial Reels Playbook</span> — a step-by-step guide to
+            testing Uniq versions with Instagram Trial Reels and growing a new audience, plus 10 hooks to try.
+          </p>
+        </div>
         <p className="text-sm text-muted">Every new account gets 3 videos free.</p>
       </section>
 

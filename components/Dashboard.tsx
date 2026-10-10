@@ -132,6 +132,9 @@ export default function Dashboard(props: {
           <div className="rounded-xl border border-border bg-card px-4 py-2 text-sm">
             Balance: <b data-testid="credits">{credits}</b> {credits === 1 ? "video" : "videos"}
           </div>
+          <a href="/guide" className="text-sm font-medium text-accent hover:underline">
+            Growth guide
+          </a>
           <form action="/auth/signout" method="post">
             <button className="text-sm text-muted hover:text-foreground">Sign out</button>
           </form>
@@ -140,7 +143,8 @@ export default function Dashboard(props: {
 
       {props.notice === "paid" && (
         <p className="rounded-xl border border-ok/40 bg-ok/10 p-3 text-sm">
-          Thanks for your purchase! Your credits will appear on your balance in a few seconds.
+          Thanks for your purchase! Your credits will appear on your balance in a few seconds — and your{" "}
+          <a href="/guide" className="font-semibold underline">Trial Reels Playbook</a> is unlocked.
         </p>
       )}
       {props.notice === "payment_error" && (
@@ -231,7 +235,10 @@ export default function Dashboard(props: {
             </form>
           ))}
         </div>
-        <p className="text-xs text-muted">Secure payment by Stripe. Credits never expire.</p>
+        <p className="text-xs text-muted">
+          Secure payment by Stripe. Credits never expire. Every pack includes{" "}
+          <a href="/guide" className="font-semibold text-accent underline">The Trial Reels Playbook</a>.
+        </p>
       </section>
 
       <section className="space-y-3">
