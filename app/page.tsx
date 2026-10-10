@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompareVideos, ReelWall } from "@/components/Showcase";
+import StickyCta from "@/components/StickyCta";
 import Viewfinder from "@/components/Viewfinder";
 import { PACKS, usd } from "@/lib/plans";
 import { REELS } from "@/lib/showcase";
@@ -260,15 +261,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Always-visible button on phones */}
-      <div className="fixed inset-x-0 bottom-0 z-[70] border-t border-border bg-background/90 p-3 backdrop-blur sm:hidden">
-        <Link
-          href="/login"
-          className="block rounded-full bg-accent py-3.5 text-center font-semibold text-accent-fg shadow-lg shadow-accent/30"
-        >
-          Try it — 3 videos free
-        </Link>
-      </div>
+      <StickyCta />
 
       {/* Final CTA */}
       <section className="rounded-[2rem] bg-accent px-6 py-12 text-center sm:py-16 text-accent-fg sm:px-12">
