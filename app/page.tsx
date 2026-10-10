@@ -106,7 +106,7 @@ export default function Home() {
               loop
               playsInline
               preload="metadata"
-              className="aspect-[9/16] w-60 rounded-[2.2rem] border-[6px] border-accent object-cover shadow-2xl sm:w-72"
+              className="relative z-[60] aspect-[9/16] w-60 rounded-[2.2rem] border-[6px] border-accent object-cover shadow-2xl sm:w-72"
             />
           </div>
         )}

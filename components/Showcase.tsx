@@ -21,7 +21,7 @@ export function CompareVideos() {
         { ref: a, v: COMPARE.original, label: "Original", note: "your upload" },
         { ref: b, v: COMPARE.uniq, label: "Uniq version", note: "brand-new file" },
       ].map(({ ref, v, label, note }) => (
-        <figure key={label} className="overflow-hidden rounded-3xl border border-border bg-card">
+        <figure key={label} className="relative z-[60] overflow-hidden rounded-3xl border border-border bg-card">
           <video
             ref={ref}
             src={v.src}
@@ -49,7 +49,7 @@ export function ReelWall() {
       {REELS.map((r) => (
         <figure
           key={r.src}
-          className="relative w-56 shrink-0 snap-start overflow-hidden rounded-[2rem] border-4 border-foreground/90 bg-black shadow-xl sm:w-64"
+          className="relative z-[60] w-56 shrink-0 snap-start overflow-hidden rounded-[2rem] border-4 border-foreground/90 bg-black shadow-xl sm:w-64"
         >
           <video
             src={r.src}
