@@ -1,5 +1,5 @@
 // Videos shown on the landing page. Files live in public/showcase/.
-// `views` must be the real numbers from the platform — leave it out if you don't have them.
+// `views` must be the real numbers from the platform - leave it out if you don't have them.
 export interface ShowcaseReel {
   src: string;
   poster: string;
@@ -11,11 +11,11 @@ export interface ShowcaseReel {
 export const COMPARE = {
   original: { src: "/showcase/levis-src.mp4", poster: "/showcase/levis-src.jpg" },
   uniq: { src: "/showcase/levis-uniq.mp4", poster: "/showcase/levis-uniq.jpg" },
-  credit: "Levi's film — Stani Flms",
+  credit: "Levi's film - Stani Flms",
 };
 
 // Hero clip: scrolling through real Instagram activity on the Stani Flms account.
-export const HERO = { src: "/showcase/ig-activity.mp4", poster: "/showcase/ig-activity.jpg" };
+export const HERO = { src: "/showcase/hero-bg.mp4", poster: "/showcase/hero-bg.jpg" };
 
 // Real results reported by Stani Flms. Keep every number true.
 export interface ShowcaseCase {
@@ -37,7 +37,7 @@ export const CASES: ShowcaseCase[] = [
       { value: "169K", label: "views on one post" },
       { value: "5.2K", label: "likes on that post" },
     ],
-    text: "We posted this one film about 9 times. Six of those posts passed 100,000 views each. One great video can keep working — it just needs a fresh file every time.",
+    text: "We posted this one film about 9 times. Six of those posts passed 100,000 views each. One great video can keep working - it just needs a fresh file every time.",
   },
 ];
 

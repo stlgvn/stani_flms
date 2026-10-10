@@ -8,7 +8,7 @@ import { CASES, HERO, REELS, type ShowcaseCase } from "@/lib/showcase";
 const pains = [
   [
     "Reposts get buried",
-    "Upload the same file twice — on a second account, or a month later — and platforms can treat it as a duplicate and quietly cut its reach.",
+    "Upload the same file twice - on a second account, or a month later - and platforms can treat it as a duplicate and quietly cut its reach.",
   ],
   [
     "Re-editing eats your day",
@@ -32,7 +32,7 @@ const how = [
 
 const audiences = [
   ["Creators", "Every account / every platform", "Post your best videos everywhere without re-editing a single frame."],
-  ["AI creators", "Runway / Kling / Sora / Veo", "Turn one great generation into five posts — without paying to generate it again."],
+  ["AI creators", "Runway / Kling / Sora / Veo", "Turn one great generation into five posts - without paying to generate it again."],
   ["Brands & agencies", "Client accounts / A/B tests", "Deliver fresh variations for every account in minutes."],
   ["UGC & ads", "Ad accounts / pages", "Run the same winning creative across multiple ad accounts and pages."],
 ];
@@ -50,11 +50,11 @@ const faq = [
   ["Will it lower the quality?", "No. A 4K video stays 4K, encoded at a high bitrate. Most people can't tell the two apart side by side."],
   [
     "Does it work with AI-generated videos?",
-    "Yes — Runway, Kling, Sora, Veo, Higgsfield or anything else. If it exports as MP4 or MOV, Uniq can make new versions of it.",
+    "Yes - Runway, Kling, Sora, Veo, Higgsfield or anything else. If it exports as MP4 or MOV, Uniq can make new versions of it.",
   ],
   [
     "Can the platform still recognise it?",
-    "Each version is a new file with new metadata and small changes to picture and sound. No tool can promise how Instagram, TikTok or YouTube will treat a video — we don't either.",
+    "Each version is a new file with new metadata and small changes to picture and sound. No tool can promise how Instagram, TikTok or YouTube will treat a video - we don't either.",
   ],
   ["Can I upload someone else's video?", "No. Only videos you own or have the rights to. Uniq doesn't clear copyright."],
   ["How long are my files kept?", "48 hours after processing, then they're deleted automatically."],
@@ -74,10 +74,21 @@ const SWIPE_ITEM = "w-[82%] shrink-0 snap-start sm:w-auto";
 export default function Home() {
   return (
     <div className="space-y-20 sm:space-y-28">
-      {/* Hero */}
-      <section className="rise grid items-center gap-10 border-t border-foreground pt-8 md:grid-cols-[1.4fr_1fr]">
-        <div className="space-y-6">
-          <p className="label text-muted">Reels / Shorts / TikTok / AI video</p>
+      {/* Hero: full-width, real Instagram activity playing behind the headline */}
+      <Viewfinder grid={false} className="rise relative -mt-10 ml-[calc(50%-50vw)] w-screen">
+        <video
+          src={HERO.src}
+          poster={HERO.poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative mx-auto flex min-h-[calc(100svh-61px)] max-w-5xl flex-col justify-center space-y-6 px-8 py-20 text-white sm:px-12">
+          <p className="label text-white/70">Reels / Shorts / TikTok / AI video</p>
           <h1 className="font-display text-[4.4rem] sm:text-[7.5rem]">
             One video.
             <br />
@@ -85,37 +96,19 @@ export default function Home() {
             <br />
             versions.
           </h1>
-          <p className="font-poppins max-w-md text-sm leading-relaxed sm:text-base">
+          <p className="font-poppins max-w-md text-sm leading-relaxed text-white/90 sm:text-base">
             Stop re-editing and re-generating.
             <br />
             Get a brand-new file that looks and sounds like your original, in about a minute.
           </p>
-          <p className="label text-muted">For creators &amp; AI creators</p>
-          <div className="flex flex-wrap items-center gap-4 border-t border-foreground pt-6">
+          <div className="flex flex-wrap items-center gap-4 border-t border-white/40 pt-6">
             <Link href="/login" className="bg-accent px-7 py-4 font-semibold text-accent-fg hover:opacity-90">
-              Try It: 3 Videos Free
+              Try It - 3 Videos Free
             </Link>
-            <span className="label text-xs text-muted">No card needed</span>
+            <span className="label text-xs text-white/70">No card needed</span>
           </div>
         </div>
-        {HERO && (
-          <div className="mx-auto w-56 space-y-2 sm:w-72">
-            <p className="label text-xs text-muted">Our Instagram / real activity</p>
-            <Viewfinder className="w-full">
-              <video
-                src={HERO.src}
-                poster={HERO.poster}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="block aspect-[9/16] w-full object-cover"
-              />
-            </Viewfinder>
-          </div>
-        )}
-      </section>
+      </Viewfinder>
 
       {/* Pain */}
       <section className="space-y-6">
@@ -132,7 +125,7 @@ export default function Home() {
           ))}
         </ul>
         <Tip label="Operator tip">
-          Uniq fixes all three. One upload, one minute, and your video is ready to go out again — on any account, any
+          Uniq fixes all three. One upload, one minute, and your video is ready to go out again - on any account, any
           platform, as many times as you need.
         </Tip>
       </section>
@@ -154,7 +147,7 @@ export default function Home() {
           <CaseCard key={c.src} c={c} />
         ))}
         <Tip label="Operator tip">
-          A video doesn&apos;t have to hit the first time. Ours often took off on the 2nd, 3rd or 4th post — that&apos;s
+          A video doesn&apos;t have to hit the first time. Ours often took off on the 2nd, 3rd or 4th post - that&apos;s
           why every try needs a fresh file.
         </Tip>
         <p className="label text-[10px] text-muted">Real numbers from our account / results vary by content and platform</p>
@@ -168,7 +161,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold leading-tight sm:text-4xl">Don&apos;t pay to generate it twice.</h2>
             <p className="font-poppins text-sm leading-relaxed text-muted sm:text-base">
               You spent credits, prompts and hours to land that perfect AI clip. Re-generating it for every account costs
-              money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need —
+              money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need -
               same quality, new file every time.
             </p>
             <p className="label text-xs text-muted">Runway / Kling / Sora / Veo / Higgsfield</p>
@@ -285,7 +278,7 @@ export default function Home() {
           })}
         </ul>
         <Tip label="Bonus with every pack">
-          <b>The Trial Reels Playbook</b> — a step-by-step guide to testing Uniq versions with Instagram Trial Reels and
+          <b>The Trial Reels Playbook</b> - a step-by-step guide to testing Uniq versions with Instagram Trial Reels and
           growing a new audience, plus 10 hooks to try.
         </Tip>
       </section>

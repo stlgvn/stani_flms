@@ -68,6 +68,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   letter-spacing: -0.01em;
+  overflow-x: clip;
 }
 
 /* Light animated film grain over the page (videos sit above it). */
