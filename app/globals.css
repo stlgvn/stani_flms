@@ -22,7 +22,7 @@
   --panel-fg: #f2f2ee;
   --ok: #2f7a2a;
   --bad: #d11f16;
-  --grain-opacity: 0.07;
+  --grain-opacity: 0.11;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,7 +40,7 @@
     --panel-fg: #f2f2ee;
     --ok: #8fbf5a;
     --bad: #ff6b60;
-    --grain-opacity: 0.06;
+    --grain-opacity: 0.09;
   }
 }
 
@@ -72,13 +72,13 @@ body {
   overflow-x: clip;
 }
 
-/* Light animated film grain over the page (videos sit above it). */
+/* Animated film grain over everything, videos included. */
 body::before {
   content: "";
   position: fixed;
   inset: -50%;
   pointer-events: none;
-  z-index: 50;
+  z-index: 100;
   opacity: var(--grain-opacity);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
@@ -144,7 +144,6 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before,
   .rec-dot,
   .rise {
     animation: none;

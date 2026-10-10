@@ -89,7 +89,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative mx-auto flex min-h-[calc(100svh-61px)] max-w-5xl flex-col justify-center space-y-6 px-8 py-20 text-white sm:px-12">
           <p className="label text-white/70">Reels / Shorts / TikTok / AI video</p>
-          <h1 className="font-display text-[4.4rem] sm:text-[7.5rem]">
+          <h1 className="font-display text-[4.4rem] leading-[1] sm:text-[7.5rem]">
             One video.
             <br />
             Endless
@@ -102,7 +102,7 @@ export default function Home() {
             Get a brand-new file that looks and sounds like your original, in about a minute.
           </p>
           <div className="flex flex-wrap items-center gap-4 border-t border-white/40 pt-6">
-            <Link href="/login" className="bg-accent px-7 py-4 font-semibold text-accent-fg hover:opacity-90">
+            <Link href="/login" className="bg-accent px-7 py-4 font-semibold tracking-wide text-accent-fg uppercase hover:opacity-90">
               Try It - 3 Videos Free
             </Link>
             <span className="label text-xs text-white/70">No card needed</span>
@@ -254,19 +254,19 @@ export default function Home() {
             return (
               <li
                 key={p.id}
-                className={`relative p-6 ${active ? "bg-panel text-panel-fg" : "bg-card"} ${
+                className={`relative p-6 ${active ? "bg-dot text-white" : "bg-card"} ${
                   i > 0 ? "border-t border-foreground sm:border-t-0 sm:border-l" : ""
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span
                     className={`kicker text-2xl ${
-                      p.id === "starter" ? "bg-[#f5c518] px-2 py-0.5 text-[#0b0b0b]" : p.id === "creator" ? "text-dot" : ""
+                      p.id === "starter" ? "text-[#e6a800]" : p.id === "pro" ? "text-[#7c3aed]" : ""
                     }`}
                   >
                     {p.name}
                   </span>
-                  {active && <span className="h-5 w-5 bg-dot" />}
+                  {active && <span className="h-5 w-5 bg-white" />}
                 </div>
                 {p.note && <p className={`label mt-1 text-[11px] ${active ? "opacity-70" : "text-muted"}`}>{p.note}</p>}
                 <div className="font-display mt-5 text-7xl">{usd(p.priceCents)}</div>
@@ -288,7 +288,7 @@ export default function Home() {
         <p className="label text-xs opacity-70">Your next upload</p>
         <h2 className="font-display mt-3 text-6xl sm:text-8xl">Make it unique</h2>
         <p className="mx-auto mt-4 max-w-md font-semibold text-dot">3 Videos Free. No card. About a minute per video.</p>
-        <Link href="/login" className="mt-8 inline-block bg-accent px-8 py-4 font-semibold text-accent-fg hover:opacity-90">
+        <Link href="/login" className="mt-10 inline-block bg-accent px-12 py-6 text-xl font-bold tracking-wide text-accent-fg uppercase hover:opacity-90 sm:px-16 sm:text-2xl">
           Start Free
         </Link>
       </section>
@@ -318,7 +318,7 @@ function SectionTitle({ n, title }: { n: string; title: string }) {
   return (
     <div className="flex items-baseline gap-4 border-b border-foreground pb-3">
       <span className="font-mono text-4xl font-medium leading-none text-dot sm:text-5xl">{n}</span>
-      <h2 className="kicker text-lg sm:text-xl">{title}</h2>
+      <h2 className="font-display text-3xl tracking-wide sm:text-4xl">{title}</h2>
     </div>
   );
 }

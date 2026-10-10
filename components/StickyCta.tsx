@@ -15,7 +15,7 @@ export default function StickyCta() {
   if (!show) return null;
   return (
     <div className="fixed inset-x-0 bottom-0 z-[70] border-t border-foreground bg-background/95 p-3 backdrop-blur sm:hidden">
-      <Link href="/login" className="block bg-accent py-3.5 text-center font-semibold text-accent-fg">
+      <Link href="/login" className="block bg-accent py-3.5 text-center font-semibold tracking-wide text-accent-fg uppercase">
         Try It - 3 Videos Free
       </Link>
     </div>
