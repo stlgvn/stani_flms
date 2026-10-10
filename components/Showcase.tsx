@@ -35,7 +35,7 @@ export function CompareVideos() {
           />
           <figcaption className="flex flex-wrap items-baseline justify-between gap-x-2 px-4 py-3">
             <span className="font-display text-2xl">{label}</span>
-            <span className="font-hand text-2xl text-accent">{note}</span>
+            <span className="font-hand text-2xl text-tan">{note}</span>
           </figcaption>
         </figure>
       ))}

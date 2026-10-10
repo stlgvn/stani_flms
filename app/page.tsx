@@ -69,7 +69,7 @@ export default function Home() {
         </div>
         {REELS[0] && (
           <div className="relative mx-auto">
-            <span className="font-hand absolute -top-8 -left-6 -rotate-6 text-3xl text-accent">see it in action ↓</span>
+            <span className="font-hand absolute -top-8 -left-6 -rotate-6 text-3xl text-tan">see it in action ↓</span>
             <video
               src={REELS[0].src}
               poster={REELS[0].poster}
@@ -200,7 +200,7 @@ function SectionTitle({ kicker, title, note }: { kicker: string; title: string; 
     <div className="space-y-1">
       <p className="font-hand text-2xl text-tan">{kicker} —</p>
       <h2 className="font-display text-5xl sm:text-7xl">
-        {title} {note && <span className="font-hand align-middle text-3xl text-accent sm:text-4xl">{note}</span>}
+        {title} {note && <span className="font-hand align-middle text-3xl text-tan sm:text-4xl">{note}</span>}
       </h2>
     </div>
   );
