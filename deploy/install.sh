@@ -8,6 +8,8 @@
 # Re-running the same command later updates the app and keeps all data and keys.
 set -euo pipefail
 
+main() {
+
 REPO_URL="${REPO_URL:-https://github.com/stlgvn/stani_flms}"
 APP_DIR="${APP_DIR:-/opt/stani_flms}"
 SB_DIR="${SB_DIR:-/opt/supabase}"
@@ -92,7 +94,7 @@ keep_env STRIPE_WEBHOOK_SECRET ""
 log "Building and starting everything (5–10 minutes the first time)"
 cd "$SB_DIR"
 if [ "$NO_BUILD" = "1" ]; then build_flag=--no-build; else build_flag=--build; fi
-docker compose up -d "$build_flag" --remove-orphans
+docker compose up -d "$build_flag" --remove-orphans </dev/null
 
 log "Waiting for the database and storage"
 for i in $(seq 1 90); do
@@ -106,15 +108,17 @@ done
 
 log "Applying database migrations"
 psql_db() { docker compose exec -T db psql -v ON_ERROR_STOP=1 -q -U supabase_admin -d postgres "$@"; }
-psql_db -c "create schema if not exists uniq_internal; create table if not exists uniq_internal.migrations (name text primary key, applied_at timestamptz not null default now());"
+# The script itself may arrive on stdin (curl | bash), so commands that don't need input get /dev/null.
+psql_cmd() { psql_db "$@" </dev/null; }
+psql_cmd -c "create schema if not exists uniq_internal; create table if not exists uniq_internal.migrations (name text primary key, applied_at timestamptz not null default now());"
 for f in "$APP_DIR"/supabase/migrations/*.sql; do
   name="$(basename "$f")"
-  if [ -z "$(psql_db -tA -c "select 1 from uniq_internal.migrations where name = '$name'")" ]; then
+  if [ -z "$(psql_cmd -tA -c "select 1 from uniq_internal.migrations where name = '$name'")" ]; then
     echo "  $name"
     { cat "$f"; echo; echo "insert into uniq_internal.migrations (name) values ('$name');"; } | psql_db -1
   fi
 done
-docker compose restart rest >/dev/null # reload the API schema cache
+docker compose restart rest >/dev/null </dev/null # reload the API schema cache
 
 if [ "$SKIP_FIREWALL" != "1" ]; then
   log "Firewall: allowing only SSH, HTTP and HTTPS"
@@ -137,3 +141,6 @@ cat <<EOF
   Settings:     $SB_DIR/.env   (Stripe keys go here, then: cd $SB_DIR && docker compose up -d)
 
 EOF
+}
+
+main "$@"
