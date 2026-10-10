@@ -113,7 +113,7 @@ export default function Home() {
       {/* Pain */}
       <section className="space-y-6">
         <SectionTitle n="01" title="The problem" />
-        <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl">Great content shouldn&apos;t be one-and-done.</h2>
+        <h2 className="max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Great content shouldn&apos;t be one-and-done.</h2>
         <p className="label -mb-3 text-right text-xs text-muted sm:hidden">Swipe →</p>
         <ul className={`${SWIPE} sm:grid-cols-3 sm:gap-4`}>
           {pains.map(([t, d], i) => (
@@ -158,7 +158,7 @@ export default function Home() {
         <SectionTitle n="04" title="For AI creators" />
         <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-stretch">
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold leading-tight sm:text-4xl">Don&apos;t pay to generate it twice.</h2>
+            <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Don&apos;t pay to generate it twice.</h2>
             <p className="font-poppins text-sm leading-relaxed text-muted sm:text-base">
               You spent credits, prompts and hours to land that perfect AI clip. Re-generating it for every account costs
               money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need -
@@ -200,7 +200,7 @@ export default function Home() {
         <SectionTitle n="06" title="Who it's for" />
         <ul className="space-y-3">
           {audiences.map(([t, sub, d]) => {
-            const active = t === "AI creators";
+            const active = t === "Creators";
             return (
               <li
                 key={t}
@@ -230,15 +230,15 @@ export default function Home() {
       {/* What changes */}
       <section className="space-y-6">
         <SectionTitle n={num(7 + R)} title="Under the hood" />
-        <p className="font-poppins max-w-2xl text-base leading-relaxed sm:text-lg">
+        <p className="font-poppins max-w-2xl text-sm leading-relaxed sm:text-lg">
           A technology built specifically to make reels unique. The changes are invisible to the human eye, but every
           version is a brand-new file for the algorithms.
         </p>
         <dl className="divide-y divide-border border-y border-foreground">
           {changes.map(([t, d]) => (
-            <div key={t} className="grid gap-1 py-4 sm:grid-cols-[200px_1fr]">
-              <dt className="label text-sm">{t}</dt>
-              <dd className="text-muted">{d}</dd>
+            <div key={t} className="grid gap-0.5 py-2.5 sm:grid-cols-[200px_1fr] sm:gap-1 sm:py-4">
+              <dt className="label text-[10px] sm:text-sm">{t}</dt>
+              <dd className="text-xs text-muted sm:text-base">{d}</dd>
             </div>
           ))}
         </dl>

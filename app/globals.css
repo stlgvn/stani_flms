@@ -1,10 +1,11 @@
 @import "tailwindcss";
 @import "@fontsource/anton/400.css";
-@import "@fontsource-variable/inter/index.css";
 @import "@fontsource/ibm-plex-mono/400.css";
 @import "@fontsource/ibm-plex-mono/500.css";
 @import "@fontsource/poppins/400.css";
 @import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
 
 /* Stani Films system: off-white paper, black ink, square corners, red signal squares. */
 :root {
@@ -57,7 +58,7 @@
   --color-panel-fg: var(--panel-fg);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --font-poppins: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
