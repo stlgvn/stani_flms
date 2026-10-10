@@ -9,9 +9,9 @@ export interface ShowcaseReel {
 }
 
 export const COMPARE = {
-  original: { src: "/showcase/porsche-original.mp4", poster: "/showcase/porsche-original.jpg" },
-  uniq: { src: "/showcase/porsche-uniq.mp4", poster: "/showcase/porsche-uniq.jpg" },
-  credit: "Porsche 911 — Stani Films",
+  original: { src: "/showcase/levis-src.mp4", poster: "/showcase/levis-src.jpg" },
+  uniq: { src: "/showcase/levis-uniq.mp4", poster: "/showcase/levis-uniq.jpg" },
+  credit: "Levi's film — Stani Flms",
 };
 
 // Hero clip: scrolling through real Instagram activity on the Stani Flms account.

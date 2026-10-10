@@ -143,7 +143,7 @@ export default function Home() {
           <p className="label mb-4 text-xs opacity-70">Side by side / same look / new file</p>
           <CompareVideos />
         </div>
-        <p className="label text-xs text-muted">Shot by Stani Flms / processed in 8 seconds</p>
+        <p className="label text-xs text-muted">Shot by Stani Flms / real Uniq output / processed in 10 seconds</p>
       </section>
 
       {/* Real result */}
