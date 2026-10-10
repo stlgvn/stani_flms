@@ -25,7 +25,6 @@ export interface ShowcaseCase {
   label: string;
   stats: { value: string; label: string; accent?: boolean }[];
   text: string;
-  note?: string;
 }
 
 export const CASES: ShowcaseCase[] = [
@@ -45,15 +44,13 @@ export const CASES: ShowcaseCase[] = [
     src: "/showcase/rig-reel.mp4",
     poster: "/showcase/rig-reel.jpg",
     vertical: true,
-    label: "Case 02 / one reel / screen recording",
+    label: "Case 02 / one reel",
     stats: [
-      { value: "≈9", label: "times posted" },
-      { value: "8×", label: "took off", accent: true },
-      { value: "668K", label: "views on the best post" },
+      { value: "8/9", label: "posts took off", accent: true },
+      { value: "668K", label: "best post" },
       { value: "≈5K", label: "new followers" },
     ],
-    text: "Same reel, posted about 9 times — 8 of them took off. The best one hit 668K views and 50.8K likes.",
-    note: "Together the posts brought about 5,000 new followers.",
+    text: "",
   },
 ];
 

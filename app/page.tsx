@@ -320,9 +320,30 @@ function SectionTitle({ n, title }: { n: string; title: string }) {
 }
 
 function CaseCard({ c }: { c: ShowcaseCase }) {
+  // Vertical reels are shown small: just enough to see the real numbers on screen.
+  if (c.vertical)
+    return (
+      <div className="flex items-center gap-5 bg-panel p-4 text-panel-fg sm:gap-8 sm:p-6">
+        <div className="relative z-[60] w-[104px] shrink-0 bg-black sm:w-[120px]">
+          <video src={c.src} poster={c.poster} autoPlay muted loop playsInline preload="metadata" className="block w-full" />
+        </div>
+        <div className="min-w-0 flex-1 space-y-4">
+          <p className="label text-[10px] opacity-70">{c.label}</p>
+          <div className="grid max-w-lg grid-cols-3 gap-3">
+            {c.stats.map((s) => (
+              <div key={s.label}>
+                <div className={`font-display text-3xl sm:text-5xl ${s.accent ? "text-dot" : ""}`}>{s.value}</div>
+                <p className="label mt-1 text-[9px] opacity-70">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+
   return (
-    <div className={`grid bg-panel text-panel-fg ${c.vertical ? "md:grid-cols-[minmax(0,320px)_1fr]" : "md:grid-cols-[1.5fr_1fr]"}`}>
-      <div className={`relative z-[60] bg-black ${c.vertical ? "mx-auto w-full max-w-[320px]" : ""}`}>
+    <div className="grid bg-panel text-panel-fg md:grid-cols-[1.5fr_1fr]">
+      <div className="relative z-[60] bg-black">
         <video
           src={c.src}
           poster={c.poster}
@@ -331,7 +352,7 @@ function CaseCard({ c }: { c: ShowcaseCase }) {
           loop
           playsInline
           preload="metadata"
-          className={`block w-full object-cover ${c.vertical ? "" : "aspect-video md:aspect-auto md:h-full"}`}
+          className="block aspect-video w-full object-cover md:aspect-auto md:h-full"
         />
       </div>
       <div className="flex flex-col justify-between gap-6 p-6 sm:p-8">
@@ -347,10 +368,7 @@ function CaseCard({ c }: { c: ShowcaseCase }) {
             </div>
           ))}
         </div>
-        <div className="space-y-2">
-          <p className="font-poppins text-sm leading-relaxed opacity-80 sm:text-base">{c.text}</p>
-          {c.note && <p className="label text-[10px] opacity-60">{c.note}</p>}
-        </div>
+        <p className="font-poppins text-sm leading-relaxed opacity-80 sm:text-base">{c.text}</p>
       </div>
     </div>
   );
