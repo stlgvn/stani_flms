@@ -3,7 +3,7 @@ import { CompareVideos, ReelWall } from "@/components/Showcase";
 import StickyCta from "@/components/StickyCta";
 import Viewfinder from "@/components/Viewfinder";
 import { PACKS, usd } from "@/lib/plans";
-import { CASE, HERO, REELS } from "@/lib/showcase";
+import { CASES, HERO, REELS, type ShowcaseCase } from "@/lib/showcase";
 
 const pains = [
   [
@@ -149,37 +149,13 @@ export default function Home() {
       {/* Real result */}
       <section className="space-y-6">
         <SectionTitle n="03" title="Real result" />
-        <div className="grid bg-panel text-panel-fg md:grid-cols-[1.5fr_1fr]">
-          <div className="relative z-[60] bg-black">
-            <video
-              src={CASE.src}
-              poster={CASE.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="block aspect-video w-full object-cover"
-            />
-          </div>
-          <div className="flex flex-col justify-between gap-6 p-6 sm:p-8">
-            <p className="label text-xs opacity-70">Case / one film / shot by Stani Flms</p>
-            <div className="grid grid-cols-2 border-y border-panel-fg/30">
-              <div className="py-4 pr-4">
-                <div className="font-display text-6xl sm:text-7xl">{CASE.posts}</div>
-                <p className="label mt-2 text-[10px] opacity-70">times posted</p>
-              </div>
-              <div className="border-l border-panel-fg/30 py-4 pl-4">
-                <div className="font-display text-6xl text-dot sm:text-7xl">{CASE.hits}×</div>
-                <p className="label mt-2 text-[10px] opacity-70">{CASE.views} views each</p>
-              </div>
-            </div>
-            <p className="font-poppins text-sm leading-relaxed opacity-80 sm:text-base">
-              We posted this one film about 9 times. Six of those posts passed 100,000 views each. One great video
-              can keep working — it just needs a fresh file every time.
-            </p>
-          </div>
-        </div>
+        {CASES.map((c) => (
+          <CaseCard key={c.src} c={c} />
+        ))}
+        <Tip label="Operator tip">
+          A video doesn&apos;t have to hit the first time. Ours often took off on the 2nd, 3rd or 4th post — that&apos;s
+          why every try needs a fresh file.
+        </Tip>
         <p className="label text-[10px] text-muted">Real numbers from our account / results vary by content and platform</p>
       </section>
 
@@ -339,6 +315,43 @@ function SectionTitle({ n, title }: { n: string; title: string }) {
     <div className="flex items-baseline gap-4 border-b border-foreground pb-3">
       <span className="font-mono text-4xl font-medium leading-none text-dot sm:text-5xl">{n}</span>
       <h2 className="kicker text-lg sm:text-xl">{title}</h2>
+    </div>
+  );
+}
+
+function CaseCard({ c }: { c: ShowcaseCase }) {
+  return (
+    <div className={`grid bg-panel text-panel-fg ${c.vertical ? "md:grid-cols-[minmax(0,320px)_1fr]" : "md:grid-cols-[1.5fr_1fr]"}`}>
+      <div className={`relative z-[60] bg-black ${c.vertical ? "mx-auto w-full max-w-[320px]" : ""}`}>
+        <video
+          src={c.src}
+          poster={c.poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className={`block w-full object-cover ${c.vertical ? "" : "aspect-video md:aspect-auto md:h-full"}`}
+        />
+      </div>
+      <div className="flex flex-col justify-between gap-6 p-6 sm:p-8">
+        <p className="label text-xs opacity-70">{c.label}</p>
+        <div className="grid grid-cols-2 border-t border-panel-fg/30">
+          {c.stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={`border-b border-panel-fg/30 py-4 ${i % 2 ? "border-l pl-4" : "pr-4"}`}
+            >
+              <div className={`font-display text-6xl sm:text-7xl ${s.accent ? "text-dot" : ""}`}>{s.value}</div>
+              <p className="label mt-2 text-[10px] opacity-70">{s.label}</p>
+            </div>
+          ))}
+        </div>
+        <div className="space-y-2">
+          <p className="font-poppins text-sm leading-relaxed opacity-80 sm:text-base">{c.text}</p>
+          {c.note && <p className="label text-[10px] opacity-60">{c.note}</p>}
+        </div>
+      </div>
     </div>
   );
 }

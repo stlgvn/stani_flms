@@ -17,14 +17,45 @@ export const COMPARE = {
 // Hero clip: scrolling through real Instagram activity on the Stani Flms account.
 export const HERO = { src: "/showcase/ig-activity.mp4", poster: "/showcase/ig-activity.jpg" };
 
-// Real result reported by Stani Flms for this film. Keep the numbers true.
-export const CASE = {
-  src: "/showcase/levis.mp4",
-  poster: "/showcase/levis.jpg",
-  posts: "≈9",
-  hits: "6",
-  views: "100K+",
-};
+// Real results reported by Stani Flms. Keep every number true.
+export interface ShowcaseCase {
+  src: string;
+  poster: string;
+  vertical?: boolean;
+  label: string;
+  stats: { value: string; label: string; accent?: boolean }[];
+  text: string;
+  note?: string;
+}
+
+export const CASES: ShowcaseCase[] = [
+  {
+    src: "/showcase/levis.mp4",
+    poster: "/showcase/levis.jpg",
+    label: "Case 01 / one film / shot by Stani Flms",
+    stats: [
+      { value: "≈9", label: "times posted" },
+      { value: "6×", label: "100K+ views each", accent: true },
+      { value: "169K", label: "views on one post" },
+      { value: "5.2K", label: "likes on that post" },
+    ],
+    text: "We posted this one film about 9 times. Six of those posts passed 100,000 views each. One great video can keep working — it just needs a fresh file every time.",
+  },
+  {
+    src: "/showcase/rig-reel.mp4",
+    poster: "/showcase/rig-reel.jpg",
+    vertical: true,
+    label: "Case 02 / one reel / screen recording",
+    stats: [
+      { value: "≈9", label: "times posted" },
+      { value: "8×", label: "took off", accent: true },
+      { value: "668K", label: "views on the best post" },
+      { value: "≈5K", label: "new followers" },
+    ],
+    text: "Same reel, posted about 9 times — 8 of them took off. The best one hit 668K views and 50.8K likes.",
+    note: "Together the posts brought about 5,000 new followers.",
+  },
+];
 
 // Optional wall of reels with real view counts (shown when there are 3 or more).
 export const REELS: ShowcaseReel[] = [];
