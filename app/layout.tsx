@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <span className="text-3xl font-bold tracking-tight text-accent">
                 Uniq<span className="text-dot">.</span>
               </span>
-              <span className="text-[10px] font-semibold tracking-[0.25em] text-muted uppercase">by Stani Films</span>
+              <span className="text-[11px] font-medium text-muted">by Stani Films</span>
             </Link>
             <Link
               href="/dashboard"
