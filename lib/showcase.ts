@@ -21,7 +21,6 @@ export const HERO = { src: "/showcase/ig-activity.mp4", poster: "/showcase/ig-ac
 export interface ShowcaseCase {
   src: string;
   poster: string;
-  vertical?: boolean;
   label: string;
   stats: { value: string; label: string; accent?: boolean }[];
   text: string;
@@ -39,18 +38,6 @@ export const CASES: ShowcaseCase[] = [
       { value: "5.2K", label: "likes on that post" },
     ],
     text: "We posted this one film about 9 times. Six of those posts passed 100,000 views each. One great video can keep working — it just needs a fresh file every time.",
-  },
-  {
-    src: "/showcase/rig-reel.mp4",
-    poster: "/showcase/rig-reel.jpg",
-    vertical: true,
-    label: "Case 02 / one reel",
-    stats: [
-      { value: "8/9", label: "posts took off", accent: true },
-      { value: "668K", label: "best post" },
-      { value: "≈5K", label: "new followers" },
-    ],
-    text: "",
   },
 ];
 

@@ -85,14 +85,15 @@ export default function Home() {
             <br />
             versions.
           </h1>
-          <p className="font-poppins max-w-md text-base leading-relaxed sm:text-lg">
-            Stop re-editing and re-generating. Get a brand-new file that looks and sounds like your original — in about a
-            minute.
+          <p className="font-poppins max-w-md text-sm leading-relaxed sm:text-base">
+            Stop re-editing and re-generating.
+            <br />
+            Get a brand-new file that looks and sounds like your original, in about a minute.
           </p>
           <p className="label text-muted">For creators &amp; AI creators</p>
           <div className="flex flex-wrap items-center gap-4 border-t border-foreground pt-6">
             <Link href="/login" className="bg-accent px-7 py-4 font-semibold text-accent-fg hover:opacity-90">
-              Try it — 3 videos free
+              Try It: 3 Videos Free
             </Link>
             <span className="label text-xs text-muted">No card needed</span>
           </div>
@@ -236,6 +237,10 @@ export default function Home() {
       {/* What changes */}
       <section className="space-y-6">
         <SectionTitle n={num(7 + R)} title="Under the hood" />
+        <p className="font-poppins max-w-2xl text-base leading-relaxed sm:text-lg">
+          A technology built specifically to make reels unique. The changes are invisible to the human eye, but every
+          version is a brand-new file for the algorithms.
+        </p>
         <dl className="divide-y divide-border border-y border-foreground">
           {changes.map(([t, d]) => (
             <div key={t} className="grid gap-1 py-4 sm:grid-cols-[200px_1fr]">
@@ -249,7 +254,7 @@ export default function Home() {
       {/* Pricing */}
       <section className="space-y-6">
         <SectionTitle n={num(8 + R)} title="Pricing" />
-        <p className="label text-xs text-muted">Pay per video / credits never expire / 3 videos free</p>
+        <p className="label text-xs text-muted">Pay per video / credits never expire / 3 Videos Free</p>
         <ul className="grid border border-foreground sm:grid-cols-3">
           {PACKS.map((p, i) => {
             const active = p.note === "Most popular";
@@ -261,8 +266,14 @@ export default function Home() {
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold">{p.name}</span>
-                  {active && <span className="h-3 w-3 bg-dot" />}
+                  <span
+                    className={`kicker text-2xl ${
+                      p.id === "starter" ? "bg-[#f5c518] px-2 py-0.5 text-[#0b0b0b]" : p.id === "creator" ? "text-dot" : ""
+                    }`}
+                  >
+                    {p.name}
+                  </span>
+                  {active && <span className="h-5 w-5 bg-dot" />}
                 </div>
                 {p.note && <p className={`label mt-1 text-[11px] ${active ? "opacity-70" : "text-muted"}`}>{p.note}</p>}
                 <div className="font-display mt-5 text-7xl">{usd(p.priceCents)}</div>
@@ -277,6 +288,16 @@ export default function Home() {
           <b>The Trial Reels Playbook</b> — a step-by-step guide to testing Uniq versions with Instagram Trial Reels and
           growing a new audience, plus 10 hooks to try.
         </Tip>
+      </section>
+
+      {/* Final CTA */}
+      <section className="bg-panel px-6 py-14 text-center text-panel-fg sm:px-12">
+        <p className="label text-xs opacity-70">Your next upload</p>
+        <h2 className="font-display mt-3 text-6xl sm:text-8xl">Make it unique</h2>
+        <p className="mx-auto mt-4 max-w-md font-semibold text-dot">3 Videos Free. No card. About a minute per video.</p>
+        <Link href="/login" className="mt-8 inline-block bg-accent px-8 py-4 font-semibold text-accent-fg hover:opacity-90">
+          Start Free
+        </Link>
       </section>
 
       {/* FAQ */}
@@ -295,16 +316,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="bg-panel px-6 py-14 text-center text-panel-fg sm:px-12">
-        <p className="label text-xs opacity-70">Your next upload</p>
-        <h2 className="font-display mt-3 text-6xl sm:text-8xl">Make it unique</h2>
-        <p className="mx-auto mt-4 max-w-md font-semibold text-dot">3 videos free. No card. About a minute per video.</p>
-        <Link href="/login" className="mt-8 inline-block bg-accent px-8 py-4 font-semibold text-accent-fg hover:opacity-90">
-          Start free
-        </Link>
-      </section>
-
       <StickyCta />
     </div>
   );
@@ -320,9 +331,7 @@ function SectionTitle({ n, title }: { n: string; title: string }) {
 }
 
 function CaseCard({ c }: { c: ShowcaseCase }) {
-  // Vertical reels are shown small: just enough to see the real numbers on screen.
-  if (c.vertical)
-    return (
+  return (
       <div className="flex items-center gap-5 bg-panel p-4 text-panel-fg sm:gap-8 sm:p-6">
         <div className="relative z-[60] w-[104px] shrink-0 bg-black sm:w-[120px]">
           <video src={c.src} poster={c.poster} autoPlay muted loop playsInline preload="metadata" className="block w-full" />
