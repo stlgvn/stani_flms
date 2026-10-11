@@ -36,19 +36,19 @@ async function Guide() {
         </p>
       </header>
 
-      <Part n="01" title="What Trial Reels are">
-        <p>
-          Trial Reels is an Instagram feature for professional accounts: the Reel is shown to people who{" "}
-          <b>don&apos;t follow you yet</b>. Your followers don&apos;t see it unless you decide to share it with them after
-          you&apos;ve seen how it performed.
-        </p>
-        <p>
-          That makes it a free testing lab — and Uniq gives you as many unique versions as you want to run through it.
-        </p>
-      </Part>
-
       {unlocked ? (
         <>
+          <Part n="01" title="What Trial Reels are">
+            <p>
+              Trial Reels is an Instagram feature for professional accounts: the Reel is shown to people who{" "}
+              <b>don&apos;t follow you yet</b>. Your followers don&apos;t see it unless you decide to share it with them after
+              you&apos;ve seen how it performed.
+            </p>
+            <p>
+              That makes it a free testing lab — and Uniq gives you as many unique versions as you want to run through it.
+            </p>
+          </Part>
+
           <Part n="02" title="Why Uniq makes it work">
             <p>
               Posting the same file again and again is exactly what platforms are built to spot. Every Uniq version is a
