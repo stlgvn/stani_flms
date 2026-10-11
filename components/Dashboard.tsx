@@ -279,22 +279,22 @@ export default function Dashboard(props: {
               key={p.id}
               action="/api/checkout"
               method="post"
-              className={`border p-4 ${p.id === props.selectedPack ? "border-2 border-dot bg-card" : "border-border bg-card"}`}
+              className={`border p-5 ${p.id === props.selectedPack ? "border-2 border-dot bg-card" : "border-border bg-card"}`}
             >
               <input type="hidden" name="pack" value={p.id} />
               <div className="flex items-baseline justify-between">
-                <span className="font-medium">{p.name}</span>
+                <span className="kicker text-base">{p.name}</span>
                 {p.id === props.selectedPack ? (
                   <span className="label text-[10px] text-dot">Your pick</span>
                 ) : (
                   p.note && <span className="label text-[10px] text-muted">{p.note}</span>
                 )}
               </div>
-              <div className="mt-1 text-2xl font-bold">{usd(p.priceCents)}</div>
-              <div className="text-xs text-muted">
-                {p.credits} videos · {usd(Math.round(p.priceCents / p.credits))} each
+              <div className="font-display mt-4 text-6xl">{usd(p.priceCents)}</div>
+              <div className="label mt-2 text-[10px] text-muted">
+                {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
               </div>
-              <button className="mt-3 w-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
+              <button className="mt-5 bg-[#c41d15] px-10 py-2.5 text-sm font-semibold tracking-wide text-white uppercase hover:bg-[#a8180f]">
                 Buy
               </button>
             </form>
