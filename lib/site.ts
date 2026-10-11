@@ -2,7 +2,7 @@
 export const SITE = {
   name: "Uniq",
   company: "[Your company or full legal name]",
-  email: "[support@your-domain.com]",
+  email: "info@stlgv.com",
   address: "[Business address]",
   updated: "October 10, 2026",
 };
