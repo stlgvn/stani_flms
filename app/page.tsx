@@ -257,11 +257,11 @@ export default function Home() {
       </section>
 
       {/* Sign-off wordmark between the last section and the footer */}
-      <div className="flex flex-col items-center pt-4 pb-2">
-        <span className="font-display text-[7rem] leading-none sm:text-[11rem]">
+      <div className="-mt-6 flex flex-col items-center sm:-mt-10">
+        <span className="font-display text-[2rem] leading-none sm:text-[2.75rem]">
           Uniq<span className="text-dot">.</span>
         </span>
-        <span className="label mt-3 text-[10px] text-muted">by Stani Flms</span>
+        <span className="label mt-1.5 text-[9px] text-muted">by Stani Flms</span>
       </div>
 
       <StickyCta />
