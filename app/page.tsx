@@ -255,7 +255,7 @@ export default function Home() {
             </details>
           ))}
         </div>
-        <Wordmark className="pt-4" />
+        <Wordmark className="pt-6" />
       </section>
 
       <StickyCta />
