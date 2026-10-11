@@ -191,11 +191,11 @@ export default function Home() {
           Our own engine, built specifically to make reels unique. Every version gets its own random mix of changes,
           so no two files are ever the same. Invisible to the human eye - a brand-new upload to the algorithm.
         </p>
-        <dl className="divide-y divide-white/15 bg-[#4a4a46] px-5 text-white sm:px-6">
+        <dl className="divide-y divide-border border border-foreground bg-[#e4e4de] px-5 sm:px-6">
           {changes.map(([t, d]) => (
             <div key={t} className="grid gap-0.5 py-2.5 sm:grid-cols-[200px_1fr] sm:gap-1 sm:py-4">
               <dt className="label text-[10px] sm:text-sm">{t}</dt>
-              <dd className="text-xs text-white/80 sm:text-base">{d}</dd>
+              <dd className="text-xs text-muted sm:text-base">{d}</dd>
             </div>
           ))}
         </dl>
@@ -206,7 +206,7 @@ export default function Home() {
         <SectionTitle n={num(7 + R)} title="Pricing" />
         <p className="label text-xs text-muted">Pay per video / credits never expire / 3 Videos Free</p>
         <PackCards mode="link" />
-        <Tip label="Bonus with every pack">
+        <Tip label="Bonus with every pack" plain>
           <b>The Trial Reels Playbook</b>
           <br />
           A step-by-step guide to testing Uniq versions with Instagram Trial Reels and growing a new audience, plus 10
@@ -304,9 +304,9 @@ function CaseCard({ c }: { c: ShowcaseCase }) {
   );
 }
 
-function Tip({ label, children }: { label: string; children: React.ReactNode }) {
+function Tip({ label, plain, children }: { label: string; plain?: boolean; children: React.ReactNode }) {
   return (
-    <div className="border border-foreground bg-[#e4e4de] p-5">
+    <div className={`border border-foreground p-5 ${plain ? "bg-card" : "bg-[#e4e4de]"}`}>
       <p className="label flex items-center gap-3 text-xs">
         <span className="h-3 w-3 bg-dot" /> {label}
       </p>
