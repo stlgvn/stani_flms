@@ -73,7 +73,8 @@ const SWIPE_ITEM = "w-[82%] shrink-0 snap-start sm:w-auto";
 
 export default function Home() {
   return (
-    <div className="space-y-20 sm:space-y-28">
+    <>
+      <div className="space-y-20 sm:space-y-28">
       {/* Hero: full-width, real Instagram activity playing behind the headline */}
       <Viewfinder grid={false} ink className="rise relative -mt-10 ml-[calc(50%-50vw)] w-screen">
         <video
@@ -258,8 +259,10 @@ export default function Home() {
         <Wordmark className="pt-6" />
       </section>
 
+
+      </div>
       <StickyCta />
-    </div>
+    </>
   );
 }
 
