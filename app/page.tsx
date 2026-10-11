@@ -15,8 +15,8 @@ const pains = [
     "A new cut, a new hook, a new color pass, a new export. Hours of work just to post something you already made.",
   ],
   [
-    "AI generations cost money",
-    "Every new render burns credits and still might not come out as good as the first one. Your best generation should work more than once.",
+    "Your best video gets one shot",
+    "A reel that took off once deserves another run. Without a fresh file, it usually doesn't get one.",
   ],
 ];
 
@@ -32,9 +32,9 @@ const how = [
 
 const audiences = [
   ["Creators", "Every account / every platform", "Post your best videos everywhere without re-editing a single frame."],
-  ["AI creators", "Runway / Kling / Sora / Veo", "Turn one great generation into five posts - without paying to generate it again."],
+  ["AI creators", "Runway / Kling / Sora / Veo", "Got an AI video that blew up? Make it unique and post it again for another shot at the same reach."],
   ["Brands & agencies", "Client accounts / A/B tests", "Deliver fresh variations for every account in minutes."],
-  ["UGC & ads", "Ad accounts / pages", "Run the same winning creative across multiple ad accounts and pages."],
+  ["UGC creators", "Brand accounts / pages", "Run the same winning video across several brand accounts and pages."],
 ];
 
 const changes = [
@@ -61,8 +61,6 @@ const faq = [
   ["What if processing fails?", "The credit goes straight back to your balance."],
 ];
 
-const creator = PACKS.find((p) => p.id === "creator");
-const fiveVersions = creator ? usd(Math.round((creator.priceCents / creator.credits) * 5)) : null;
 
 // On phones the cards scroll sideways; on larger screens they become a grid.
 const SWIPE = "-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:overflow-visible sm:px-0";
@@ -153,32 +151,9 @@ export default function Home() {
         <p className="label text-[10px] text-muted">Real numbers from our account / results vary by content and platform</p>
       </section>
 
-      {/* AI creators */}
-      <section className="space-y-6">
-        <SectionTitle n="04" title="For AI creators" />
-        <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-stretch">
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Don&apos;t pay to generate it twice.</h2>
-            <p className="font-poppins text-sm leading-relaxed text-muted sm:text-base">
-              You spent credits, prompts and hours to land that perfect AI clip. Re-generating it for every account costs
-              money and rarely comes out as good. Uniq turns one great generation into as many unique posts as you need -
-              same quality, new file every time.
-            </p>
-            <p className="label text-xs text-muted">Runway / Kling / Sora / Veo / Higgsfield</p>
-          </div>
-          {fiveVersions && (
-            <div className="flex flex-col justify-between bg-panel p-6 text-panel-fg">
-              <p className="label text-xs opacity-70">5 versions of one video</p>
-              <div className="font-display mt-4 text-8xl">{fiveVersions}</div>
-              <p className="mt-3 text-sm opacity-70">On the Creator pack. No new prompts, no new generation credits.</p>
-            </div>
-          )}
-        </div>
-      </section>
-
       {/* How it works */}
       <section className="space-y-6">
-        <SectionTitle n="05" title="How it works" />
+        <SectionTitle n="04" title="How it works" />
         <ol className="space-y-3">
           {how.map(([t, sub, d], i) => (
             <li key={t} className="flex gap-4 border border-border bg-card p-4">
@@ -197,7 +172,7 @@ export default function Home() {
 
       {/* Who it's for */}
       <section className="space-y-6">
-        <SectionTitle n="06" title="Who it's for" />
+        <SectionTitle n="05" title="Who it's for" />
         <ul className="space-y-3">
           {audiences.map(([t, sub, d]) => {
             const active = t === "Creators";
@@ -222,17 +197,17 @@ export default function Home() {
 
       {REELS.length >= 3 && (
         <section className="space-y-6">
-          <SectionTitle n={num(7)} title="Real videos / real views" />
+          <SectionTitle n={num(6)} title="Real videos / real views" />
           <ReelWall />
         </section>
       )}
 
       {/* What changes */}
       <section className="space-y-6">
-        <SectionTitle n={num(7 + R)} title="Under the hood" />
+        <SectionTitle n={num(6 + R)} title="Under the hood" />
         <p className="font-poppins max-w-2xl text-sm leading-relaxed sm:text-lg">
-          A technology built specifically to make reels unique. The changes are invisible to the human eye, but every
-          version is a brand-new file for the algorithms.
+          Our own engine, built specifically to make reels unique. Every version gets its own random mix of changes,
+          so no two files are ever the same. Invisible to the human eye - a brand-new upload to the algorithm.
         </p>
         <dl className="divide-y divide-border border-y border-foreground">
           {changes.map(([t, d]) => (
@@ -246,7 +221,7 @@ export default function Home() {
 
       {/* Pricing */}
       <section className="space-y-6">
-        <SectionTitle n={num(8 + R)} title="Pricing" />
+        <SectionTitle n={num(7 + R)} title="Pricing" />
         <p className="label text-xs text-muted">Pay per video / credits never expire / 3 Videos Free</p>
         <ul className="grid border border-foreground sm:grid-cols-3">
           {PACKS.map((p, i) => {
@@ -254,25 +229,32 @@ export default function Home() {
             return (
               <li
                 key={p.id}
-                className={`relative p-6 ${active ? "bg-dot text-white" : "bg-card"} ${
+                className={`${active ? "bg-dot text-white" : "bg-card"} ${
                   i > 0 ? "border-t border-foreground sm:border-t-0 sm:border-l" : ""
                 }`}
               >
-                <div className="flex items-center justify-between">
+                {/* The whole card is a link: sign in (if needed), then the pack is waiting in the dashboard. */}
+                <Link
+                  href={`/dashboard?pack=${p.id}#buy`}
+                  className={`group flex h-full flex-col p-6 transition ${active ? "hover:bg-[#c91d15]" : "hover:bg-border/40"}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className={`kicker text-2xl ${p.id === "pro" ? "text-[#7c3aed]" : ""}`}>{p.name}</span>
+                    {active && <span className="h-5 w-5 bg-white" />}
+                  </div>
+                  {p.note && <p className={`label mt-1 text-[11px] ${active ? "opacity-70" : "text-muted"}`}>{p.note}</p>}
+                  <div className="font-display mt-5 text-7xl">{usd(p.priceCents)}</div>
+                  <p className={`label mt-2 text-xs ${active ? "opacity-70" : "text-muted"}`}>
+                    {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
+                  </p>
                   <span
-                    className={`kicker text-2xl ${
-                      p.id === "starter" ? "text-[#e6a800]" : p.id === "pro" ? "text-[#7c3aed]" : ""
+                    className={`mt-6 block py-3 text-center text-sm font-semibold tracking-wide uppercase ${
+                      active ? "bg-white text-dot" : "bg-foreground text-background"
                     }`}
                   >
-                    {p.name}
+                    Choose {p.name}
                   </span>
-                  {active && <span className="h-5 w-5 bg-white" />}
-                </div>
-                {p.note && <p className={`label mt-1 text-[11px] ${active ? "opacity-70" : "text-muted"}`}>{p.note}</p>}
-                <div className="font-display mt-5 text-7xl">{usd(p.priceCents)}</div>
-                <p className={`label mt-2 text-xs ${active ? "opacity-70" : "text-muted"}`}>
-                  {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
-                </p>
+                </Link>
               </li>
             );
           })}
@@ -295,7 +277,7 @@ export default function Home() {
 
       {/* FAQ */}
       <section className="space-y-6">
-        <SectionTitle n={num(9 + R)} title="Good to know" />
+        <SectionTitle n={num(8 + R)} title="Good to know" />
         <div className="divide-y divide-border border-y border-foreground">
           {faq.map(([q, a]) => (
             <details key={q} className="group py-4">
@@ -325,25 +307,6 @@ function SectionTitle({ n, title }: { n: string; title: string }) {
 
 function CaseCard({ c }: { c: ShowcaseCase }) {
   return (
-      <div className="flex items-center gap-5 bg-panel p-4 text-panel-fg sm:gap-8 sm:p-6">
-        <div className="relative z-[60] w-[104px] shrink-0 bg-black sm:w-[120px]">
-          <video src={c.src} poster={c.poster} autoPlay muted loop playsInline preload="metadata" className="block w-full" />
-        </div>
-        <div className="min-w-0 flex-1 space-y-4">
-          <p className="label text-[10px] opacity-70">{c.label}</p>
-          <div className="grid max-w-lg grid-cols-3 gap-3">
-            {c.stats.map((s) => (
-              <div key={s.label}>
-                <div className={`font-display text-3xl sm:text-5xl ${s.accent ? "text-dot" : ""}`}>{s.value}</div>
-                <p className="label mt-1 text-[9px] opacity-70">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-
-  return (
     <div className="grid bg-panel text-panel-fg md:grid-cols-[1.5fr_1fr]">
       <div className="relative z-[60] bg-black">
         <video
@@ -354,18 +317,18 @@ function CaseCard({ c }: { c: ShowcaseCase }) {
           loop
           playsInline
           preload="metadata"
-          className="block aspect-video w-full object-cover md:aspect-auto md:h-full"
+          className="block aspect-[4/5] w-full object-cover sm:aspect-video md:aspect-auto md:h-full"
         />
       </div>
-      <div className="flex flex-col justify-between gap-6 p-6 sm:p-8">
+      <div className="flex flex-col justify-between gap-5 p-5 sm:gap-6 sm:p-8">
         <p className="label text-xs opacity-70">{c.label}</p>
         <div className="grid grid-cols-2 border-t border-panel-fg/30">
           {c.stats.map((s, i) => (
             <div
               key={s.label}
-              className={`border-b border-panel-fg/30 py-4 ${i % 2 ? "border-l pl-4" : "pr-4"}`}
+              className={`border-b border-panel-fg/30 py-3 sm:py-4 ${i % 2 ? "border-l pl-4" : "pr-4"}`}
             >
-              <div className={`font-display text-6xl sm:text-7xl ${s.accent ? "text-dot" : ""}`}>{s.value}</div>
+              <div className={`font-display text-4xl sm:text-7xl ${s.accent ? "text-dot" : ""}`}>{s.value}</div>
               <p className="label mt-2 text-[10px] opacity-70">{s.label}</p>
             </div>
           ))}

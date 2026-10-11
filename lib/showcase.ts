@@ -32,8 +32,8 @@ export const CASES: ShowcaseCase[] = [
     poster: "/showcase/levis.jpg",
     label: "Case 01 / one film / shot by Stani Flms",
     stats: [
-      { value: "≈9", label: "times posted" },
-      { value: "6×", label: "100K+ views each", accent: true },
+      { value: "9", label: "times posted" },
+      { value: "6", label: "posts over 100K", accent: true },
       { value: "169K", label: "views on one post" },
       { value: "5.2K", label: "likes on that post" },
     ],

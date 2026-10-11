@@ -49,6 +49,7 @@ export default function Dashboard(props: {
   initialCredits: number;
   initialJobs: Job[];
   notice: "paid" | "payment_error" | null;
+  selectedPack: string | null;
 }) {
   const supabase = useRef(createClient()).current;
   const [credits, setCredits] = useState(props.initialCredits);
@@ -58,6 +59,11 @@ export default function Dashboard(props: {
   const [error, setError] = useState<string | null>(null);
   const [drag, setDrag] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Came here from a pack on the pricing section: bring the "Buy credits" block into view.
+  useEffect(() => {
+    if (props.selectedPack) document.getElementById("buy")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [props.selectedPack]);
 
   const refresh = useCallback(async () => {
     const [{ data: j }, { data: p }] = await Promise.all([
@@ -219,11 +225,20 @@ export default function Dashboard(props: {
         <h2 className="kicker border-b border-foreground pb-3 text-lg">Buy credits</h2>
         <div className="grid gap-2 sm:grid-cols-3">
           {PACKS.map((p) => (
-            <form key={p.id} action="/api/checkout" method="post" className=" border border-border bg-card p-4">
+            <form
+              key={p.id}
+              action="/api/checkout"
+              method="post"
+              className={`border p-4 ${p.id === props.selectedPack ? "border-2 border-dot bg-card" : "border-border bg-card"}`}
+            >
               <input type="hidden" name="pack" value={p.id} />
               <div className="flex items-baseline justify-between">
                 <span className="font-medium">{p.name}</span>
-                {p.note && <span className="label text-[10px] text-muted">{p.note}</span>}
+                {p.id === props.selectedPack ? (
+                  <span className="label text-[10px] text-dot">Your pick</span>
+                ) : (
+                  p.note && <span className="label text-[10px] text-muted">{p.note}</span>
+                )}
               </div>
               <div className="mt-1 text-2xl font-bold">{usd(p.priceCents)}</div>
               <div className="text-xs text-muted">

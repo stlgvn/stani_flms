@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { findPack } from "@/lib/plans";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"signin" | "signup">("signup");
@@ -31,8 +32,9 @@ export default function LoginPage() {
     if (!data.session) return setMessage(`Check ${creds.email} for a confirmation link.`);
     // Full page load, not router.push: a prefetched /dashboard from before sign-in would
     // still hold the "not signed in" redirect.
-    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-    window.location.assign("/dashboard");
+    // A pack picked on the pricing section comes along, so it is waiting in the dashboard.
+    const pack = findPack(new URLSearchParams(window.location.search).get("pack") ?? "");
+    window.location.assign(pack ? `/dashboard?pack=${pack.id}#buy` : "/dashboard");
   }
 
   return (

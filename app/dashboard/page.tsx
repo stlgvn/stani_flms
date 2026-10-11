@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import Dashboard from "@/components/Dashboard";
 import { createClient } from "@/lib/supabase/server";
+import { findPack } from "@/lib/plans";
 import { JOB_COLUMNS, type Job } from "@/lib/types";
 
 export default function DashboardPage({ searchParams }: PageProps<"/dashboard">) {
@@ -20,19 +21,20 @@ async function DashboardData({ searchParams }: { searchParams: PageProps<"/dashb
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
+  const query = await searchParams;
+  if (!user) redirect(typeof query.pack === "string" ? `/login?pack=${encodeURIComponent(query.pack)}` : "/login");
 
   const [{ data: profile }, { data: jobs }] = await Promise.all([
     supabase.from("profiles").select("credits").eq("id", user.id).single(),
     supabase.from("jobs").select(JOB_COLUMNS).order("created_at", { ascending: false }).limit(50),
   ]);
 
-  const query = await searchParams;
   const notice = query.paid ? "paid" : query.payment_error ? "payment_error" : null;
 
   return (
     <Dashboard
       notice={notice}
+      selectedPack={typeof query.pack === "string" ? (findPack(query.pack)?.id ?? null) : null}
       userId={user.id}
       email={user.email ?? ""}
       initialCredits={profile?.credits ?? 0}
