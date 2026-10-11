@@ -12,7 +12,7 @@ export default function PackCards({ mode, selected }: { mode: "link" | "buy"; se
         const on = p.id === highlight;
         const tag = selected && on ? "Your pick" : p.note;
         const button = (
-          <span className="nudge shine mt-5 inline-block bg-[#c41d15] px-10 py-2.5 text-sm font-semibold tracking-wide text-white uppercase hover:bg-[#a8180f]">
+          <span className="nudge shine mt-5 inline-block bg-[#c41d15] px-16 py-2.5 text-sm font-semibold tracking-wide text-white uppercase hover:bg-[#a8180f]">
             Buy
           </span>
         );
@@ -24,25 +24,31 @@ export default function PackCards({ mode, selected }: { mode: "link" | "buy"; se
               </span>
               {tag && <span className={`label text-[10px] ${on ? "text-dot" : "text-muted"}`}>{tag}</span>}
             </div>
-            <div className="font-display mt-4 text-6xl">{usd(p.priceCents)}</div>
-            <div className="label mt-2 text-[10px] text-muted">
-              {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
+            {/* Phones: price on the left, the short description on the right, so the card has no empty half. */}
+            <div className="mt-4 grid grid-cols-[auto_1fr] items-end gap-x-5 gap-y-2 sm:grid-cols-1">
+              <div>
+                <div className="font-display text-6xl">{usd(p.priceCents)}</div>
+                <div className="label mt-2 text-[10px] whitespace-nowrap text-muted">
+                  {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
+                </div>
+              </div>
+              <p className="text-sm leading-snug text-muted">{p.blurb}</p>
             </div>
           </>
         );
-        const box = `block h-full bg-[#e4e4de] p-5 ${on ? "border-2 border-dot" : "border border-border"}`;
+        const box = `flex h-full flex-col bg-card p-5 ${on ? "border-2 border-dot" : "border border-border"}`;
         return (
           <li key={p.id}>
             {mode === "link" ? (
-              <Link href={`/dashboard?pack=${p.id}#buy`} className={`${box} transition hover:bg-[#dcdcd5]`}>
+              <Link href={`/dashboard?pack=${p.id}#buy`} className={`${box} transition hover:bg-border/30`}>
                 {body}
-                {button}
+                <span className="mt-auto">{button}</span>
               </Link>
             ) : (
               <form action="/api/checkout" method="post" className={box}>
                 <input type="hidden" name="pack" value={p.id} />
                 {body}
-                <button type="submit" className="block">
+                <button type="submit" className="mt-auto block">
                   {button}
                 </button>
               </form>
