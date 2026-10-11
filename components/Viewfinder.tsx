@@ -54,7 +54,7 @@ export default function Viewfinder({
         {/* top bar */}
         <div className={`absolute ${compact ? "top-4 right-5 left-5" : "top-7 right-8 left-8"} flex items-center justify-between ${text}`}>
           <span className="flex items-center gap-1.5 font-semibold">
-            <span className="rec-dot h-2 w-2 rounded-full bg-[#ff2d20]" /> REC
+            <span className="rec-dot h-2 w-2 rounded-full bg-dot" /> REC
           </span>
           <span className="tabular-nums">{tc}</span>
         </div>

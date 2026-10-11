@@ -14,14 +14,14 @@
   --card: #f7f7f3;
   --border: #c9c9c3;
   --muted: #5c5c57;
-  --accent: #e3241b;
+  --accent: #c41d15;
   --accent-fg: #ffffff;
   --tan: #5c5c57;
-  --dot: #e3241b;
+  --dot: #c41d15;
   --panel: #0b0b0b;
   --panel-fg: #f2f2ee;
   --ok: #2f7a2a;
-  --bad: #d11f16;
+  --bad: #c41d15;
   --grain-opacity: 0.11;
 }
 

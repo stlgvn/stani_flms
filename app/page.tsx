@@ -101,7 +101,7 @@ export default function Home() {
             Get a brand-new file that looks and sounds like your original, in about a minute.
           </p>
           <div className="flex flex-wrap items-center gap-4 border-t border-foreground pt-6">
-            <Link href="/login" className="nudge shine inline-block bg-accent px-7 py-4 font-semibold tracking-wide text-accent-fg uppercase hover:opacity-90">
+            <Link href="/login" className="nudge shine inline-block bg-accent px-7 py-4 font-semibold tracking-wide text-accent-fg uppercase hover:bg-[#a8180f]">
               Try It - 3 Videos Free
             </Link>
             <span className="label text-xs text-muted">No card needed</span>
@@ -195,7 +195,7 @@ export default function Home() {
           {changes.map(([t, d]) => (
             <div key={t} className="grid gap-0.5 py-2.5 sm:grid-cols-[200px_1fr] sm:gap-1 sm:py-4">
               <dt className="label text-[10px] sm:text-sm">{t}</dt>
-              <dd className="text-xs text-muted sm:text-base">{d}</dd>
+              <dd className="text-xs text-foreground sm:text-base">{d}</dd>
             </div>
           ))}
         </dl>
@@ -233,7 +233,7 @@ export default function Home() {
           <p className="mx-auto mt-4 max-w-md font-semibold">3 Videos Free. No card. About a minute per video.</p>
           <Link
             href="/login"
-            className="nudge shine mt-10 inline-block bg-accent px-12 py-6 text-xl font-bold tracking-wide text-accent-fg uppercase hover:opacity-90 sm:px-16 sm:text-2xl"
+            className="nudge shine mt-10 inline-block bg-accent px-12 py-6 text-xl font-bold tracking-wide text-accent-fg uppercase hover:bg-[#a8180f] sm:px-16 sm:text-2xl"
           >
             Start Free
           </Link>
@@ -255,6 +255,14 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Sign-off wordmark between the last section and the footer */}
+      <div className="flex flex-col items-center pt-4 pb-2">
+        <span className="font-display text-[7rem] leading-none sm:text-[11rem]">
+          Uniq<span className="text-dot">.</span>
+        </span>
+        <span className="label mt-3 text-[10px] text-muted">by Stani Flms</span>
+      </div>
 
       <StickyCta />
     </div>
