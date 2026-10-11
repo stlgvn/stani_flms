@@ -42,7 +42,7 @@ export default function PackCards({ mode, selected }: { mode: "link" | "buy"; se
             {mode === "link" ? (
               <Link href={`/dashboard?pack=${p.id}#buy`} className={`${box} transition hover:bg-border/30`}>
                 {body}
-                <span className="mt-auto">{button}</span>
+                <span className="mt-auto block text-center">{button}</span>
               </Link>
             ) : (
               <form action="/api/checkout" method="post" className={box}>

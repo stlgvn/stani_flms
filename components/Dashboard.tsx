@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import PackCards from "@/components/PackCards";
+import Wordmark from "@/components/Wordmark";
 import { JOB_COLUMNS, type Job, type JobStrength } from "@/lib/types";
 
 const STRENGTHS: { id: JobStrength; label: string; hint: string }[] = [
@@ -279,6 +280,8 @@ export default function Dashboard(props: {
           <a href="/guide" className="font-semibold text-accent underline">The Trial Reels Playbook</a>.
         </p>
       </section>
+
+      <Wordmark className="pt-4" />
     </div>
   );
 }

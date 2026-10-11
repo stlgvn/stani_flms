@@ -4,6 +4,7 @@ import Audiences from "@/components/Audiences";
 import PackCards from "@/components/PackCards";
 import StickyCta from "@/components/StickyCta";
 import Viewfinder from "@/components/Viewfinder";
+import Wordmark from "@/components/Wordmark";
 import { CASES, CTA_BG, HERO, REELS, type ShowcaseCase } from "@/lib/showcase";
 
 const pains = [
@@ -254,15 +255,8 @@ export default function Home() {
             </details>
           ))}
         </div>
+        <Wordmark className="pt-4" />
       </section>
-
-      {/* Sign-off wordmark between the last section and the footer */}
-      <div className="-mt-6 flex flex-col items-center sm:-mt-10">
-        <span className="font-display text-[2rem] leading-none sm:text-[2.75rem]">
-          Uniq<span className="text-dot">.</span>
-        </span>
-        <span className="label mt-1.5 text-[9px] text-muted">by Stani Flms</span>
-      </div>
 
       <StickyCta />
     </div>
