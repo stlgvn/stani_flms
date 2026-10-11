@@ -129,21 +129,23 @@ export default function Dashboard(props: {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="font-display text-6xl">Dashboard</h1>
-          <p className="text-sm text-muted">{props.email}</p>
+      <div className="space-y-4">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h1 className="font-display text-6xl">Dashboard</h1>
+            <p className="text-sm text-muted">{props.email}</p>
+          </div>
+          <form action="/auth/signout" method="post">
+            <button className="label text-[10px] text-muted hover:text-foreground">Sign out</button>
+          </form>
         </div>
-        <div className="flex items-center gap-3">
-          <div className=" border border-border bg-card px-4 py-2 text-sm">
+        <div className="flex flex-wrap items-stretch gap-2">
+          <div className="border border-border bg-card px-4 py-2 text-sm">
             Balance: <b data-testid="credits">{credits}</b> {credits === 1 ? "video" : "videos"}
           </div>
-          <a href="/guide" className="text-sm font-medium text-accent hover:underline">
-            Growth guide
+          <a href="/guide" className="shine border border-dot bg-dot px-4 py-2 text-sm font-semibold text-white">
+            Growth guide &rarr;
           </a>
-          <form action="/auth/signout" method="post">
-            <button className="text-sm text-muted hover:text-foreground">Sign out</button>
-          </form>
         </div>
       </div>
 
@@ -221,41 +223,6 @@ export default function Dashboard(props: {
         {error && <p className="mt-2 text-sm text-bad">{error}</p>}
       </section>
 
-      <section className="space-y-3" id="buy">
-        <h2 className="kicker border-b border-foreground pb-3 text-lg">Buy credits</h2>
-        <div className="grid gap-2 sm:grid-cols-3">
-          {PACKS.map((p) => (
-            <form
-              key={p.id}
-              action="/api/checkout"
-              method="post"
-              className={`border p-4 ${p.id === props.selectedPack ? "border-2 border-dot bg-card" : "border-border bg-card"}`}
-            >
-              <input type="hidden" name="pack" value={p.id} />
-              <div className="flex items-baseline justify-between">
-                <span className="font-medium">{p.name}</span>
-                {p.id === props.selectedPack ? (
-                  <span className="label text-[10px] text-dot">Your pick</span>
-                ) : (
-                  p.note && <span className="label text-[10px] text-muted">{p.note}</span>
-                )}
-              </div>
-              <div className="mt-1 text-2xl font-bold">{usd(p.priceCents)}</div>
-              <div className="text-xs text-muted">
-                {p.credits} videos · {usd(Math.round(p.priceCents / p.credits))} each
-              </div>
-              <button className="mt-3 w-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
-                Buy
-              </button>
-            </form>
-          ))}
-        </div>
-        <p className="text-xs text-muted">
-          Secure payment by Stripe. Credits never expire. Every pack includes{" "}
-          <a href="/guide" className="font-semibold text-accent underline">The Trial Reels Playbook</a>.
-        </p>
-      </section>
-
       <section className="space-y-3">
         <h2 className="kicker border-b border-foreground pb-3 text-lg">My videos</h2>
         {jobs.length === 0 && <p className="text-sm text-muted">Nothing here yet.</p>}
@@ -302,6 +269,41 @@ export default function Dashboard(props: {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="space-y-3" id="buy">
+        <h2 className="kicker border-b border-foreground pb-3 text-lg">Buy credits</h2>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {PACKS.map((p) => (
+            <form
+              key={p.id}
+              action="/api/checkout"
+              method="post"
+              className={`border p-4 ${p.id === props.selectedPack ? "border-2 border-dot bg-card" : "border-border bg-card"}`}
+            >
+              <input type="hidden" name="pack" value={p.id} />
+              <div className="flex items-baseline justify-between">
+                <span className="font-medium">{p.name}</span>
+                {p.id === props.selectedPack ? (
+                  <span className="label text-[10px] text-dot">Your pick</span>
+                ) : (
+                  p.note && <span className="label text-[10px] text-muted">{p.note}</span>
+                )}
+              </div>
+              <div className="mt-1 text-2xl font-bold">{usd(p.priceCents)}</div>
+              <div className="text-xs text-muted">
+                {p.credits} videos · {usd(Math.round(p.priceCents / p.credits))} each
+              </div>
+              <button className="mt-3 w-full bg-accent px-5 py-2 text-sm font-semibold text-accent-fg hover:opacity-90">
+                Buy
+              </button>
+            </form>
+          ))}
+        </div>
+        <p className="text-xs text-muted">
+          Secure payment by Stripe. Credits never expire. Every pack includes{" "}
+          <a href="/guide" className="font-semibold text-accent underline">The Trial Reels Playbook</a>.
+        </p>
       </section>
     </div>
   );

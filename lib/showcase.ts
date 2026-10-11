@@ -33,11 +33,11 @@ export const CASES: ShowcaseCase[] = [
     label: "Case 01 / one film / shot by Stani Flms",
     stats: [
       { value: "9", label: "times posted" },
-      { value: "6", label: "posts over 100K", accent: true },
+      { value: "6", label: "posts over 100K" },
       { value: "169K", label: "views on one post" },
-      { value: "5.2K", label: "likes on that post" },
+      { value: "600K+", label: "total views", accent: true },
     ],
-    text: "We posted this one film about 9 times. Six of those posts passed 100,000 views each. One great video can keep working - it just needs a fresh file every time.",
+    text: "One film, posted 9 times. Six of those posts passed 100K each - over 600K views in total, about 6x what a single hit brings. Same video, much more reach.",
   },
 ];
 

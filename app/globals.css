@@ -120,6 +120,25 @@ body::before {
   }
 }
 
+/* A soft band of light that sweeps across a button every few seconds. */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -60%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.55), transparent);
+  transform: skewX(-20deg);
+  animation: shine 2.8s ease-in-out infinite;
+}
+@keyframes shine {
+  0% { left: -60%; }
+  45%, 100% { left: 130%; }
+}
+
 .rec-dot {
   animation: rec 1.2s steps(1) infinite;
 }
