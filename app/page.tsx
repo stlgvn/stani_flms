@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { CompareVideos, ReelWall } from "@/components/Showcase";
+import PackCards from "@/components/PackCards";
 import StickyCta from "@/components/StickyCta";
 import Viewfinder from "@/components/Viewfinder";
-import { PACKS, usd } from "@/lib/plans";
 import { CASES, HERO, REELS, type ShowcaseCase } from "@/lib/showcase";
 
 const pains = [
@@ -82,9 +82,9 @@ export default function Home() {
           loop
           playsInline
           preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-[72%_50%] md:object-center"
         />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/60 md:bg-transparent md:bg-gradient-to-r md:from-black/75 md:via-black/45 md:to-black/20" />
         <div className="relative mx-auto flex min-h-[calc(100svh-61px)] max-w-5xl flex-col justify-center space-y-6 px-8 py-20 text-white sm:px-12">
           <p className="label text-white/70">Reels / Shorts / TikTok / AI video</p>
           <h1 className="font-display text-[4.4rem] leading-[1] sm:text-[7.5rem]">
@@ -223,42 +223,7 @@ export default function Home() {
       <section className="space-y-6">
         <SectionTitle n={num(7 + R)} title="Pricing" />
         <p className="label text-xs text-muted">Pay per video / credits never expire / 3 Videos Free</p>
-        <ul className="grid border border-foreground sm:grid-cols-3">
-          {PACKS.map((p, i) => {
-            const active = p.note === "Most popular";
-            return (
-              <li
-                key={p.id}
-                className={`${active ? "bg-dot text-white" : "bg-card"} ${
-                  i > 0 ? "border-t border-foreground sm:border-t-0 sm:border-l" : ""
-                }`}
-              >
-                {/* The whole card is a link: sign in (if needed), then the pack is waiting in the dashboard. */}
-                <Link
-                  href={`/dashboard?pack=${p.id}#buy`}
-                  className={`group flex h-full flex-col p-6 transition ${active ? "hover:bg-[#c91d15]" : "hover:bg-border/40"}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`kicker text-2xl ${p.id === "pro" ? "text-[#7c3aed]" : ""}`}>{p.name}</span>
-                    {active && <span className="h-5 w-5 bg-white" />}
-                  </div>
-                  {p.note && <p className={`label mt-1 text-[11px] ${active ? "opacity-70" : "text-muted"}`}>{p.note}</p>}
-                  <div className="font-display mt-5 text-7xl">{usd(p.priceCents)}</div>
-                  <p className={`label mt-2 text-xs ${active ? "opacity-70" : "text-muted"}`}>
-                    {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
-                  </p>
-                  <span
-                    className={`mt-6 block py-3 text-center text-sm font-semibold tracking-wide uppercase ${
-                      active ? "bg-white text-dot" : "bg-foreground text-background"
-                    }`}
-                  >
-                    Choose {p.name}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <PackCards mode="link" />
         <Tip label="Bonus with every pack">
           <b>The Trial Reels Playbook</b> - a step-by-step guide to testing Uniq versions with Instagram Trial Reels and
           growing a new audience, plus 10 hooks to try.

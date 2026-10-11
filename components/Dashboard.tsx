@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { PACKS, usd } from "@/lib/plans";
+import PackCards from "@/components/PackCards";
 import { JOB_COLUMNS, type Job, type JobStrength } from "@/lib/types";
 
 const STRENGTHS: { id: JobStrength; label: string; hint: string }[] = [
@@ -273,33 +273,7 @@ export default function Dashboard(props: {
 
       <section className="space-y-3" id="buy">
         <h2 className="kicker border-b border-foreground pb-3 text-lg">Buy credits</h2>
-        <div className="grid gap-2 sm:grid-cols-3">
-          {PACKS.map((p) => (
-            <form
-              key={p.id}
-              action="/api/checkout"
-              method="post"
-              className={`border p-5 ${p.id === props.selectedPack ? "border-2 border-dot bg-card" : "border-border bg-card"}`}
-            >
-              <input type="hidden" name="pack" value={p.id} />
-              <div className="flex items-baseline justify-between">
-                <span className="kicker text-base">{p.name}</span>
-                {p.id === props.selectedPack ? (
-                  <span className="label text-[10px] text-dot">Your pick</span>
-                ) : (
-                  p.note && <span className="label text-[10px] text-muted">{p.note}</span>
-                )}
-              </div>
-              <div className="font-display mt-4 text-6xl">{usd(p.priceCents)}</div>
-              <div className="label mt-2 text-[10px] text-muted">
-                {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
-              </div>
-              <button className="mt-5 bg-[#c41d15] px-10 py-2.5 text-sm font-semibold tracking-wide text-white uppercase hover:bg-[#a8180f]">
-                Buy
-              </button>
-            </form>
-          ))}
-        </div>
+        <PackCards mode="buy" selected={props.selectedPack} />
         <p className="text-xs text-muted">
           Secure payment by Stripe. Credits never expire. Every pack includes{" "}
           <a href="/guide" className="font-semibold text-accent underline">The Trial Reels Playbook</a>.

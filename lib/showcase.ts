@@ -14,8 +14,8 @@ export const COMPARE = {
   credit: "Levi's film - Stani Flms",
 };
 
-// Hero clip: scrolling through real Instagram activity on the Stani Flms account.
-export const HERO = { src: "/showcase/hero-bg.mp4", poster: "/showcase/hero-bg.jpg" };
+// Hero background: animated recreation of a real post (Levi's film: 169K views, 5,254 likes).
+export const HERO = { src: "/showcase/hero-views.mp4", poster: "/showcase/hero-views.jpg" };
 
 // Real results reported by Stani Flms. Keep every number true.
 export interface ShowcaseCase {
