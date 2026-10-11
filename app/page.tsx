@@ -188,7 +188,7 @@ export default function Home() {
       {/* What changes */}
       <section className="space-y-6">
         <SectionTitle n={num(6 + R)} title="Under the hood" />
-        <p className="font-poppins max-w-2xl text-sm leading-relaxed sm:text-lg">
+        <p className="font-poppins max-w-2xl text-sm leading-relaxed sm:text-base">
           Our own engine, built specifically to make reels unique. Every version gets its own random mix of changes,
           so no two files are ever the same. Invisible to the human eye - a brand-new upload to the algorithm.
         </p>
@@ -312,7 +312,7 @@ function Tip({ label, plain, children }: { label: string; plain?: boolean; child
       <p className="label flex items-center gap-3 text-xs">
         <span className="h-3 w-3 bg-dot" /> {label}
       </p>
-      <p className="mt-3 text-lg leading-snug">{children}</p>
+      <p className="font-poppins mt-3 text-sm leading-relaxed sm:text-base">{children}</p>
     </div>
   );
 }

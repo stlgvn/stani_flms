@@ -28,7 +28,7 @@ export default function PackCards({ mode, selected }: { mode: "link" | "buy"; se
             <div className="mt-4 grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-3 sm:grid-cols-1">
               <div>
                 <div className="font-display text-6xl">{usd(p.priceCents)}</div>
-                <div className="label mt-2 text-[10px] whitespace-nowrap text-muted">
+                <div className="font-poppins mt-2 text-sm whitespace-nowrap text-muted sm:text-base">
                   {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
                 </div>
               </div>
