@@ -17,6 +17,9 @@ export const COMPARE = {
 // Hero background: abstract motion graphic of growing reach (no real numbers shown).
 export const HERO = { src: "/showcase/hero-growth.mp4", poster: "/showcase/hero-growth.jpg" };
 
+// Background loop behind the "Make it unique" call to action.
+export const CTA_BG = { src: "/showcase/cta-bg.mp4", poster: "/showcase/cta-bg.jpg" };
+
 // Real results reported by Stani Flms. Keep every number true.
 export interface ShowcaseCase {
   src: string;

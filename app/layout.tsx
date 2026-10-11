@@ -37,7 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </header>
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">{children}</main>
         <footer className="border-t border-foreground">
-          <div className="mx-auto max-w-5xl space-y-3 px-4 py-6 text-xs text-muted">
+          <div className="mx-auto max-w-5xl space-y-3 px-4 pt-6 pb-24 text-xs text-muted sm:pb-6">
             <p>
               Only upload videos you own or have the rights to. This service does not clear copyright and is not
               responsible for how the result is used.
@@ -48,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <Link href="/refunds" className="hover:text-foreground">Refunds</Link>
               <a href={`mailto:${SITE.email}`} className="hover:text-foreground">Contact</a>
             </nav>
+            <p className="label text-[9px]">&copy; Stani Flms</p>
           </div>
         </footer>
       </body>

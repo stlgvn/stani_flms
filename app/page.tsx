@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { CompareVideos, ReelWall } from "@/components/Showcase";
+import Audiences from "@/components/Audiences";
 import PackCards from "@/components/PackCards";
 import StickyCta from "@/components/StickyCta";
 import Viewfinder from "@/components/Viewfinder";
-import { CASES, HERO, REELS, type ShowcaseCase } from "@/lib/showcase";
+import { CASES, CTA_BG, HERO, REELS, type ShowcaseCase } from "@/lib/showcase";
 
 const pains = [
   [
@@ -173,26 +174,7 @@ export default function Home() {
       {/* Who it's for */}
       <section className="space-y-6">
         <SectionTitle n="05" title="Who it's for" />
-        <ul className="space-y-3">
-          {audiences.map(([t, sub, d]) => {
-            const active = t === "Creators";
-            return (
-              <li
-                key={t}
-                className={`flex items-start justify-between gap-4 border p-4 ${
-                  active ? "border-panel bg-panel text-panel-fg" : "border-border bg-card"
-                }`}
-              >
-                <div>
-                  <div className="text-xl font-bold">{t}</div>
-                  <p className={`label mt-0.5 text-xs ${active ? "opacity-70" : "text-muted"}`}>{sub}</p>
-                  <p className={`mt-2 text-sm ${active ? "opacity-80" : "text-muted"}`}>{d}</p>
-                </div>
-                {active && <span className="mt-2 h-3 w-3 shrink-0 bg-dot" />}
-              </li>
-            );
-          })}
-        </ul>
+        <Audiences items={audiences} />
       </section>
 
       {REELS.length >= 3 && (
@@ -231,13 +213,29 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="bg-panel px-6 py-14 text-center text-panel-fg sm:px-12">
-        <p className="label text-xs opacity-70">Your next upload</p>
-        <h2 className="font-display mt-3 text-6xl sm:text-8xl">Make it unique</h2>
-        <p className="mx-auto mt-4 max-w-md font-semibold text-dot">3 Videos Free. No card. About a minute per video.</p>
-        <Link href="/login" className="mt-10 inline-block bg-accent px-12 py-6 text-xl font-bold tracking-wide text-accent-fg uppercase hover:opacity-90 sm:px-16 sm:text-2xl">
-          Start Free
-        </Link>
+      <section className="relative z-[60] overflow-hidden bg-panel px-6 py-14 text-center text-panel-fg sm:px-12">
+        <video
+          src={CTA_BG.src}
+          poster={CTA_BG.poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="relative">
+          <p className="label text-xs opacity-70">Your next upload</p>
+          <h2 className="font-display mt-3 text-6xl sm:text-8xl">Make it unique</h2>
+          <p className="mx-auto mt-4 max-w-md font-semibold">3 Videos Free. No card. About a minute per video.</p>
+          <Link
+            href="/login"
+            className="nudge shine mt-10 inline-block bg-accent px-12 py-6 text-xl font-bold tracking-wide text-accent-fg uppercase hover:opacity-90 sm:px-16 sm:text-2xl"
+          >
+            Start Free
+          </Link>
+        </div>
       </section>
 
       {/* FAQ */}
