@@ -30,11 +30,11 @@ export default function PackCards({ mode, selected }: { mode: "link" | "buy"; se
             </div>
           </>
         );
-        const box = `block h-full bg-card p-5 ${on ? "border-2 border-dot" : "border border-border"}`;
+        const box = `block h-full bg-[#e4e4de] p-5 ${on ? "border-2 border-dot" : "border border-border"}`;
         return (
           <li key={p.id}>
             {mode === "link" ? (
-              <Link href={`/dashboard?pack=${p.id}#buy`} className={`${box} transition hover:bg-border/30`}>
+              <Link href={`/dashboard?pack=${p.id}#buy`} className={`${box} transition hover:bg-[#dcdcd5]`}>
                 {body}
                 {button}
               </Link>

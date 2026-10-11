@@ -191,11 +191,11 @@ export default function Home() {
           Our own engine, built specifically to make reels unique. Every version gets its own random mix of changes,
           so no two files are ever the same. Invisible to the human eye - a brand-new upload to the algorithm.
         </p>
-        <dl className="divide-y divide-border border-y border-foreground">
+        <dl className="divide-y divide-white/15 bg-[#4a4a46] px-5 text-white sm:px-6">
           {changes.map(([t, d]) => (
             <div key={t} className="grid gap-0.5 py-2.5 sm:grid-cols-[200px_1fr] sm:gap-1 sm:py-4">
               <dt className="label text-[10px] sm:text-sm">{t}</dt>
-              <dd className="text-xs text-muted sm:text-base">{d}</dd>
+              <dd className="text-xs text-white/80 sm:text-base">{d}</dd>
             </div>
           ))}
         </dl>
@@ -207,8 +207,10 @@ export default function Home() {
         <p className="label text-xs text-muted">Pay per video / credits never expire / 3 Videos Free</p>
         <PackCards mode="link" />
         <Tip label="Bonus with every pack">
-          <b>The Trial Reels Playbook</b> - a step-by-step guide to testing Uniq versions with Instagram Trial Reels and
-          growing a new audience, plus 10 hooks to try.
+          <b>The Trial Reels Playbook</b>
+          <br />
+          A step-by-step guide to testing Uniq versions with Instagram Trial Reels and growing a new audience, plus 10
+          hooks to try.
         </Tip>
       </section>
 
@@ -241,7 +243,7 @@ export default function Home() {
       {/* FAQ */}
       <section className="space-y-6">
         <SectionTitle n={num(8 + R)} title="Good to know" />
-        <div className="divide-y divide-border border-y border-foreground">
+        <div className="divide-y divide-border border-b border-foreground">
           {faq.map(([q, a]) => (
             <details key={q} className="group py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold">
@@ -304,7 +306,7 @@ function CaseCard({ c }: { c: ShowcaseCase }) {
 
 function Tip({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="border border-foreground bg-card p-5">
+    <div className="border border-foreground bg-[#e4e4de] p-5">
       <p className="label flex items-center gap-3 text-xs">
         <span className="h-3 w-3 bg-dot" /> {label}
       </p>
