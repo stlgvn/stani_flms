@@ -123,10 +123,21 @@ if [ "$SET_STRIPE" = "1" ]; then
   unset sk wh
 fi
 
+# Supabase's gateway cuts every storage request after 30 seconds in total, which kills
+# video uploads and downloads on anything but a very fast connection. Lift that limit
+# for the storage route only (stalled transfers are still closed after 5 idle minutes).
+gw_patched=0
+LDS="$SB_DIR/volumes/api/envoy/lds.template.yaml"
+if [ -f "$LDS" ] && [[ "$(sed -n '/prefix: \/storage\/v1\//,/timeout:/p' "$LDS")" == *"timeout: 30s"* ]]; then
+  sed -i '/prefix: \/storage\/v1\//,/timeout:/ s/timeout: 30s$/timeout: 0s/' "$LDS"
+  gw_patched=1
+fi
+
 log "Building and starting everything (5–10 minutes the first time)"
 cd "$SB_DIR"
 if [ "$NO_BUILD" = "1" ]; then build_flag=--no-build; else build_flag=--build; fi
 docker compose up -d "$build_flag" --remove-orphans </dev/null
+[ "$gw_patched" = 1 ] && docker compose restart api-gw >/dev/null </dev/null
 
 log "Waiting for the database and storage"
 for i in $(seq 1 90); do
