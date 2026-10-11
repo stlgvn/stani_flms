@@ -102,10 +102,24 @@ keep_env STRIPE_SECRET_KEY ""
 keep_env STRIPE_WEBHOOK_SECRET ""
 if [ "$SET_STRIPE" = "1" ]; then
   log "Stripe keys (what you paste stays hidden; press Enter to keep the current value)"
+  # Pasted values often carry stray spaces or line breaks; drop them.
   read -rsp "Secret key (sk_live_... or sk_test_...): " sk </dev/tty; echo
-  [ -n "$sk" ] && { [[ "$sk" == sk_* || "$sk" == rk_* ]] || die "That doesn't look like a Stripe secret key."; set_env STRIPE_SECRET_KEY "$sk"; }
+  sk="$(printf '%s' "$sk" | tr -d '[:space:]')"
+  if [ -n "$sk" ]; then
+    case "$sk" in
+      sk_*|rk_*) set_env STRIPE_SECRET_KEY "$sk"; echo "  OK: secret key saved (${sk:0:8}...)" ;;
+      pk_*) die "That is the Publishable key (pk_...). Copy the Secret key (sk_live_...) from Developers > API keys and run this again." ;;
+      *) die "A Stripe secret key starts with sk_live_ (yours starts with '${sk:0:3}'). Run this again and paste the Secret key." ;;
+    esac
+  fi
   read -rsp "Webhook signing secret (whsec_...): " wh </dev/tty; echo
-  [ -n "$wh" ] && { [[ "$wh" == whsec_* ]] || die "That doesn't look like a webhook secret."; set_env STRIPE_WEBHOOK_SECRET "$wh"; }
+  wh="$(printf '%s' "$wh" | tr -d '[:space:]')"
+  if [ -n "$wh" ]; then
+    case "$wh" in
+      whsec_*) set_env STRIPE_WEBHOOK_SECRET "$wh"; echo "  OK: webhook secret saved (${wh:0:9}...)" ;;
+      *) die "A webhook signing secret starts with whsec_ (yours starts with '${wh:0:3}'). Run this again." ;;
+    esac
+  fi
   unset sk wh
 fi
 
