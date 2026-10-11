@@ -25,14 +25,14 @@ export default function PackCards({ mode, selected }: { mode: "link" | "buy"; se
               {tag && <span className={`label text-[10px] ${on ? "text-dot" : "text-muted"}`}>{tag}</span>}
             </div>
             {/* Phones: price on the left, the short description on the right, so the card has no empty half. */}
-            <div className="mt-4 grid grid-cols-[auto_1fr] items-end gap-x-5 gap-y-2 sm:grid-cols-1">
+            <div className="mt-4 grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-3 sm:grid-cols-1">
               <div>
                 <div className="font-display text-6xl">{usd(p.priceCents)}</div>
                 <div className="label mt-2 text-[10px] whitespace-nowrap text-muted">
                   {p.credits} videos / {usd(Math.round(p.priceCents / p.credits))} each
                 </div>
               </div>
-              <p className="text-sm leading-snug text-muted">{p.blurb}</p>
+              <p className="label self-stretch border-l border-border pl-4 text-[10px] leading-relaxed text-muted sm:border-l-0 sm:pl-0">{p.blurb}</p>
             </div>
           </>
         );
