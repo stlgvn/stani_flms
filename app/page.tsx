@@ -82,9 +82,9 @@ export default function Home() {
           loop
           playsInline
           preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover object-[72%_50%] md:object-center"
+          className="absolute inset-0 h-full w-full object-cover object-[75%_50%] md:object-center"
         />
-        <div className="absolute inset-0 bg-black/60 md:bg-transparent md:bg-gradient-to-r md:from-black/75 md:via-black/45 md:to-black/20" />
+        <div className="absolute inset-0 bg-black/45 md:bg-transparent md:bg-gradient-to-r md:from-black/70 md:via-black/25 md:to-transparent" />
         <div className="relative mx-auto flex min-h-[calc(100svh-61px)] max-w-5xl flex-col justify-center space-y-6 px-8 py-20 text-white sm:px-12">
           <p className="label text-white/70">Reels / Shorts / TikTok / AI video</p>
           <h1 className="font-display text-[4.4rem] leading-[1] sm:text-[7.5rem]">

@@ -14,8 +14,8 @@ export const COMPARE = {
   credit: "Levi's film - Stani Flms",
 };
 
-// Hero background: animated recreation of a real post (Levi's film: 169K views, 5,254 likes).
-export const HERO = { src: "/showcase/hero-views.mp4", poster: "/showcase/hero-views.jpg" };
+// Hero background: abstract motion graphic of growing reach (no real numbers shown).
+export const HERO = { src: "/showcase/hero-growth.mp4", poster: "/showcase/hero-growth.jpg" };
 
 // Real results reported by Stani Flms. Keep every number true.
 export interface ShowcaseCase {
