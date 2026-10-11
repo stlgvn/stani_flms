@@ -1,7 +1,21 @@
 # Public entry point: HTTPS certificates are issued automatically for PROXY_DOMAIN.
 # Supabase APIs go to its gateway; everything else is the website. Studio is not exposed.
+{
+	servers {
+		# HTTP/3 (QUIC) is noticeably slower than TCP for big downloads from a distant server.
+		protocols h1 h2
+	}
+}
+
 {$PROXY_DOMAIN} {
-	@supabase path /auth/v1/* /rest/v1/* /storage/v1/* /realtime/v1/*
+	# Video uploads and downloads go straight to storage: the API gateway in between
+	# slows big files down. Storage checks the signed URL or login token itself.
+	handle_path /storage/v1/* {
+		reverse_proxy storage:5000 {
+			header_up X-Forwarded-Prefix /storage/v1
+		}
+	}
+	@supabase path /auth/v1/* /rest/v1/* /realtime/v1/*
 	handle @supabase {
 		reverse_proxy api-gw:8000
 	}

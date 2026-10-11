@@ -133,11 +133,20 @@ if [ -f "$LDS" ] && [[ "$(sed -n '/prefix: \/storage\/v1\//,/timeout:/p' "$LDS")
   gw_patched=1
 fi
 
+# BBR keeps downloads fast over long distances; Caddy uses it when the kernel has it.
+modprobe tcp_bbr 2>/dev/null || true
+if grep -qw bbr /proc/sys/net/ipv4/tcp_available_congestion_control 2>/dev/null; then
+  echo tcp_bbr >/etc/modules-load.d/uniq-bbr.conf
+  set_env TCP_CONGESTION bbr
+fi
+
 log "Building and starting everything (5–10 minutes the first time)"
 cd "$SB_DIR"
 if [ "$NO_BUILD" = "1" ]; then build_flag=--no-build; else build_flag=--build; fi
 docker compose up -d "$build_flag" --remove-orphans </dev/null
 [ "$gw_patched" = 1 ] && docker compose restart api-gw >/dev/null </dev/null
+# The Caddyfile is mounted as a file, so an updated copy is only picked up on restart.
+docker compose restart caddy >/dev/null </dev/null
 
 log "Waiting for the database and storage"
 for i in $(seq 1 90); do

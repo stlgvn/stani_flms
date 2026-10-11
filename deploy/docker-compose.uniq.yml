@@ -59,12 +59,18 @@ services:
       - "443:443/udp"
     environment:
       PROXY_DOMAIN: ${PROXY_DOMAIN}
+    # Faster, steadier downloads to viewers far from the server (e.g. Europe -> US).
+    sysctls:
+      net.ipv4.tcp_congestion_control: ${TCP_CONGESTION:-cubic}
+      net.ipv4.tcp_slow_start_after_idle: 0
+      net.ipv4.tcp_wmem: "4096 65536 33554432"
     volumes:
       - ${APP_DIR}/deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
       - web
+      - storage
 
 volumes:
   caddy_data:
