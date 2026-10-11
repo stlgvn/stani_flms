@@ -26,13 +26,12 @@ async function Guide() {
   const unlocked = (count ?? 0) > 0;
 
   return (
-    <article className="mx-auto max-w-2xl space-y-10">
-      <header className="space-y-3">
-        <p className="label text-xs text-muted">your growth guide —</p>
-        <h1 className="font-display text-6xl sm:text-8xl">The Trial Reels Playbook</h1>
-        <p className="text-lg text-muted">
-          How to use Instagram Trial Reels and Uniq together to test your videos on new audiences — without spamming the
-          followers you already have.
+    <article className="mx-auto max-w-2xl space-y-12">
+      <header className="space-y-4">
+        <p className="label text-xs text-muted">Your growth guide / by Stani Flms</p>
+        <h1 className="font-display text-6xl leading-[0.95] sm:text-8xl">The Trial Reels Playbook</h1>
+        <p className="font-poppins text-sm leading-relaxed sm:text-base">
+          How to use Instagram Trial Reels and Uniq to reach new people - and get far more out of every video you make.
         </p>
       </header>
 
@@ -40,45 +39,89 @@ async function Guide() {
         <>
           <Part n="01" title="What Trial Reels are">
             <p>
-              Trial Reels is an Instagram feature for professional accounts: the Reel is shown to people who{" "}
-              <b>don&apos;t follow you yet</b>. Your followers don&apos;t see it unless you decide to share it with them after
-              you&apos;ve seen how it performed.
+              Trial Reels is an Instagram feature for professional accounts. A trial reel is shown{" "}
+              <b>only to people who don&apos;t follow you yet</b>. Your followers don&apos;t see it - so you can test as
+              much as you want without spamming your own audience.
             </p>
             <p>
-              That makes it a free testing lab — and Uniq gives you as many unique versions as you want to run through it.
+              That makes it the best free tool there is for growing a new audience. Uniq gives you as many fresh copies
+              of a video as you need to run through it.
             </p>
           </Part>
 
-          <Part n="02" title="Why Uniq makes it work">
-            <p>
-              Posting the same file again and again is exactly what platforms are built to spot. Every Uniq version is a
-              new file with fresh metadata and small changes to picture and sound — so each trial gets its own clean
-              start, while the video still looks like your original.
+          <Part n="02" title="Why it's worth it">
+            <p>A video that took off once usually isn&apos;t done. Post it again as a fresh file and it can keep going:</p>
+            <div className="grid grid-cols-2 border border-foreground">
+              <div className="p-4 sm:p-5">
+                <p className="label text-[10px] text-muted">One post</p>
+                <p className="font-display mt-2 text-4xl sm:text-5xl">100K</p>
+                <p className="font-display text-4xl sm:text-5xl">1M</p>
+              </div>
+              <div className="border-l border-foreground bg-panel p-4 text-panel-fg sm:p-5">
+                <p className="label text-[10px] opacity-70">9+ fresh copies</p>
+                <p className="font-display mt-2 text-4xl text-dot sm:text-5xl">up to 1M</p>
+                <p className="font-display text-4xl text-dot sm:text-5xl">6-10M</p>
+              </div>
+            </div>
+            <p className="text-xs text-muted">
+              From our own account. Every video and niche is different - these are possibilities, not promises.
             </p>
           </Part>
 
-          <Part n="03" title="The playbook">
+          <Part n="03" title="The schedule">
+            <p>
+              You can post up to <b>20 trial reels a day</b>. Don&apos;t upload them all in one hour - spread them out.
+              Our rhythm: <b>morning, lunch and evening</b>, one fresh copy each time.
+            </p>
+            <div className="grid grid-cols-4 border border-foreground text-center text-xs sm:text-sm">
+              <div className="border-b border-foreground p-2" />
+              {["Morning", "Lunch", "Evening"].map((t) => (
+                <div key={t} className="label border-b border-l border-foreground p-2 text-[10px]">
+                  {t}
+                </div>
+              ))}
+              {[1, 2, 3].map((day) => (
+                <div key={day} className="contents">
+                  <div className={`label p-2 text-[10px] ${day < 3 ? "border-b border-foreground" : ""}`}>Day {day}</div>
+                  {[1, 2, 3].map((slot) => (
+                    <div
+                      key={slot}
+                      className={`border-l border-foreground p-2 font-semibold ${day < 3 ? "border-b" : ""} ${
+                        day === 1 && slot === 1 ? "bg-panel text-panel-fg" : ""
+                      }`}
+                    >
+                      Copy {(day - 1) * 3 + slot}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <p>Three days, nine posts - all from one video. Keep going for longer if it keeps working.</p>
+          </Part>
+
+          <Part n="04" title="Step by step">
             <ol className="space-y-4">
               {[
-                ["Pick one strong video", "A Reel that already did well, or a new one you believe in."],
-                ["Make 3–5 versions in Uniq", "Use Medium strength. Download them all."],
                 [
-                  "Give each version a different hook",
-                  "Uniq changes the file — you change the hook: the first 2 seconds of on-screen text, the first line of the caption, or the cover. One change per version, so you know what worked.",
+                  "Pick a video that already took off",
+                  "Use the best-quality file you have - the original export, not a copy downloaded from Instagram.",
                 ],
-                ["Post each one as a Trial Reel", "Space them out: one a day, or a few hours apart."],
+                ["Make your copies in Uniq", "One credit per copy. Medium strength works for most videos. Download them all."],
+                ["Post one copy as a Trial Reel - morning", "Then the next copy at lunch, and the next in the evening."],
+                ["Repeat for 3 days or more", "One reel, nine posts or more. Each one is a new file, so each gets its own chance."],
                 [
-                  "Wait 24–72 hours and compare",
-                  "Look at reach to non-followers, average watch time, shares, saves and new follows — not just likes.",
+                  "Watch the numbers",
+                  "Check reach to non-followers, watch time, shares, saves and new follows after 24-72 hours.",
                 ],
                 [
-                  "Share the winner with your followers",
-                  "Then make one more Uniq version of it for TikTok and YouTube Shorts.",
+                  "Share the winners with your followers",
+                  "When a trial does well, Instagram lets you share it to your main audience too.",
                 ],
-                ["Repeat every week", "Keep a simple note of which hook won. After a month you'll know what your new audience wants."],
               ].map(([t, d], i) => (
                 <li key={t} className="flex gap-4">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-panel font-display text-xl text-panel-fg">{i + 1}</span>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-panel font-display text-xl text-panel-fg">
+                    {i + 1}
+                  </span>
                   <div>
                     <div className="font-semibold">{t}</div>
                     <p className="text-sm text-muted">{d}</p>
@@ -88,57 +131,64 @@ async function Guide() {
             </ol>
           </Part>
 
-          <Part n="04" title="10 hooks to test">
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {[
-                "“Nobody talks about this…”",
-                "“Stop scrolling if you…”",
-                "“I tried ___ so you don't have to”",
-                "“The ___ mistake everyone makes”",
-                "“POV: you finally ___”",
-                "“3 seconds to change how you ___”",
-                "“This took me 2 years to learn”",
-                "“Watch till the end”",
-                "“Before vs after”",
-                "A question your audience asks you all the time",
-              ].map((h) => (
-                <li key={h} className=" border border-border bg-card px-4 py-3 text-sm">
-                  {h}
-                </li>
-              ))}
-            </ul>
+          <Part n="05" title="Hits keep hitting">
+            <p>
+              In our experience, a reel that took off once takes off again in <b>about 8 out of 10</b> repeat posts. Same
+              content, fresh file, new people.
+            </p>
           </Part>
 
-          <Part n="05" title="Ground rules">
+          <Part n="06" title="Not a hit yet? Post it anyway">
+            <p>
+              Videos that didn&apos;t take off are worth a trial too. Roughly <b>3 out of 10</b> start picking up on the
+              second or third day. You lose nothing - your followers never see the trial.
+            </p>
+          </Part>
+
+          <Part n="07" title="Ground rules">
             <ul className="list-disc space-y-2 pl-5">
-              <li>Only post videos you own or have the rights to.</li>
-              <li>Change the caption and hook for every version — don&apos;t copy-paste.</li>
-              <li>Don&apos;t post all versions at the same minute; spread them out.</li>
-              <li>Results vary, and platforms change their features — treat every week as a new test.</li>
+              <li>
+                <b>Only post your own videos</b> - or videos you have the rights to.
+              </li>
+              <li>Don&apos;t download other people&apos;s videos and don&apos;t remake them.</li>
+              <li>Don&apos;t upload all your copies at once - spread them through the day.</li>
+              <li>Results vary, and Instagram changes its features - treat every week as a new test.</li>
             </ul>
           </Part>
 
-          <div className=" bg-accent p-8 text-center text-accent-fg">
-            <p className="label text-xs opacity-70">ready for this week&apos;s test? —</p>
-            <Link
-              href="/dashboard"
-              className="mt-4 inline-block bg-panel-fg px-8 py-4 font-semibold text-panel"
+          <div className="bg-panel p-8 text-center text-panel-fg">
+            <p className="label text-xs opacity-70">Got results? Tell me</p>
+            <p className="font-display mt-3 text-4xl sm:text-5xl">DM me on Instagram</p>
+            <a
+              href="https://instagram.com/stlgv"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-block font-semibold text-dot underline"
             >
-              Make your versions
-            </Link>
+              @stlgv
+            </a>
+            <div className="mt-6">
+              <Link
+                href="/dashboard"
+                className="nudge shine inline-block bg-accent px-8 py-4 font-semibold tracking-wide text-accent-fg uppercase"
+              >
+                Make your copies
+              </Link>
+            </div>
           </div>
         </>
       ) : (
-        <div className=" border border-border bg-card p-8 text-center">
-          <p className="label text-xs text-muted">the rest is for customers —</p>
-          <p className="mx-auto mt-2 max-w-md text-muted">
-            The full step-by-step playbook, 10 hooks to test and the weekly routine unlock with any credit pack.
+        <div className="border border-foreground bg-card p-8 text-center">
+          <p className="label text-xs text-muted">The rest is for customers</p>
+          <p className="font-poppins mx-auto mt-2 max-w-md text-sm text-muted sm:text-base">
+            The full playbook - the posting schedule, the step-by-step routine and what to do with videos that
+            haven&apos;t taken off yet - unlocks with any credit pack.
           </p>
           <Link
             href="/dashboard#buy"
-            className="mt-6 inline-block bg-accent px-8 py-4 font-semibold text-accent-fg"
+            className="nudge shine mt-6 inline-block bg-accent px-8 py-4 font-semibold tracking-wide text-accent-fg uppercase"
           >
-            Get a pack and unlock the guide
+            Get a pack
           </Link>
         </div>
       )}
@@ -151,9 +201,9 @@ function Part({ n, title, children }: { n: string; title: string; children: Reac
     <section className="space-y-3">
       <div className="flex items-baseline gap-4 border-b border-foreground pb-3">
         <span className="font-mono text-4xl font-medium leading-none text-dot sm:text-5xl">{n}</span>
-        <h2 className="kicker text-lg">{title}</h2>
+        <h2 className="font-display text-3xl tracking-wide sm:text-4xl">{title}</h2>
       </div>
-      <div className="space-y-3 leading-relaxed">{children}</div>
+      <div className="font-poppins space-y-4 text-sm leading-relaxed sm:text-base">{children}</div>
     </section>
   );
 }

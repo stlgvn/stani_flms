@@ -211,8 +211,8 @@ export default function Home() {
         <Tip label="Bonus with every pack" plain>
           <b>The Trial Reels Playbook</b>
           <br />
-          A step-by-step guide to testing Uniq versions with Instagram Trial Reels and growing a new audience, plus 10
-          hooks to try.
+          Our step-by-step routine for growing a new audience with Instagram Trial Reels and Uniq: the posting schedule,
+          the numbers, and what to do with videos that haven&apos;t taken off yet.
         </Tip>
       </section>
 
