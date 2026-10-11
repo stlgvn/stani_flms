@@ -9,12 +9,14 @@ export default function Viewfinder({
   label = "4K · 30 FPS",
   compact = false,
   grid = true,
+  ink = false,
   className = "",
 }: {
   children: React.ReactNode;
   label?: string;
   compact?: boolean;
   grid?: boolean; // rule-of-thirds grid and focus cross
+  ink?: boolean; // black marks for light backgrounds instead of white
   className?: string;
 }) {
   const [frames, setFrames] = useState(0);
@@ -30,17 +32,17 @@ export default function Viewfinder({
   const corner = compact ? "h-4 w-4" : "h-6 w-6";
 
   return (
-    <div className={`relative z-[60] overflow-hidden bg-black ${className}`}>
+    <div className={`relative z-[60] overflow-hidden ${ink ? "bg-background" : "bg-black"} ${className}`}>
       {children}
-      <div className="pointer-events-none absolute inset-0 font-mono text-white/90 [text-shadow:0_1px_2px_rgb(0_0_0/0.6)]">
+      <div className={`pointer-events-none absolute inset-0 font-mono ${ink ? "text-foreground/80" : "text-white/90 [text-shadow:0_1px_2px_rgb(0_0_0/0.6)]"}`}>
         {/* rule-of-thirds grid */}
         {grid && <div className="absolute inset-0 bg-[linear-gradient(to_right,transparent_calc(33.33%-0.5px),rgb(255_255_255/0.18)_calc(33.33%-0.5px),rgb(255_255_255/0.18)_calc(33.33%+0.5px),transparent_calc(33.33%+0.5px),transparent_calc(66.66%-0.5px),rgb(255_255_255/0.18)_calc(66.66%-0.5px),rgb(255_255_255/0.18)_calc(66.66%+0.5px),transparent_calc(66.66%+0.5px)),linear-gradient(to_bottom,transparent_calc(33.33%-0.5px),rgb(255_255_255/0.18)_calc(33.33%-0.5px),rgb(255_255_255/0.18)_calc(33.33%+0.5px),transparent_calc(33.33%+0.5px),transparent_calc(66.66%-0.5px),rgb(255_255_255/0.18)_calc(66.66%-0.5px),rgb(255_255_255/0.18)_calc(66.66%+0.5px),transparent_calc(66.66%+0.5px))]" />}
         {/* corner brackets */}
         <div className={`absolute ${inset}`}>
-          <span className={`absolute top-0 left-0 ${corner} border-t-2 border-l-2 border-white/90`} />
-          <span className={`absolute top-0 right-0 ${corner} border-t-2 border-r-2 border-white/90`} />
-          <span className={`absolute bottom-0 left-0 ${corner} border-b-2 border-l-2 border-white/90`} />
-          <span className={`absolute right-0 bottom-0 ${corner} border-r-2 border-b-2 border-white/90`} />
+          <span className={`absolute top-0 left-0 ${corner} border-t-2 border-l-2 border-current`} />
+          <span className={`absolute top-0 right-0 ${corner} border-t-2 border-r-2 border-current`} />
+          <span className={`absolute bottom-0 left-0 ${corner} border-b-2 border-l-2 border-current`} />
+          <span className={`absolute right-0 bottom-0 ${corner} border-r-2 border-b-2 border-current`} />
         </div>
         {/* focus cross */}
         {grid && (
@@ -60,9 +62,9 @@ export default function Viewfinder({
         <div className={`absolute ${compact ? "right-5 bottom-4 left-5" : "right-8 bottom-7 left-8"} flex items-center justify-between ${text}`}>
           <span>{label}</span>
           <span className="flex items-center gap-1">
-            <span className="relative inline-block h-2.5 w-5 rounded-[2px] border border-white/90 p-[1.5px]">
-              <span className="block h-full w-3/4 bg-white/90" />
-              <span className="absolute top-1/2 -right-[3px] h-1 w-[2px] -translate-y-1/2 bg-white/90" />
+            <span className="relative inline-block h-2.5 w-5 rounded-[2px] border border-current p-[1.5px]">
+              <span className="block h-full w-3/4 bg-current" />
+              <span className="absolute top-1/2 -right-[3px] h-1 w-[2px] -translate-y-1/2 bg-current" />
             </span>
           </span>
         </div>

@@ -12,7 +12,7 @@ export default function PackCards({ mode, selected }: { mode: "link" | "buy"; se
         const on = p.id === highlight;
         const tag = selected && on ? "Your pick" : p.note;
         const button = (
-          <span className="pulse shine mt-5 inline-block bg-[#c41d15] px-10 py-2.5 text-sm font-semibold tracking-wide text-white uppercase hover:bg-[#a8180f]">
+          <span className="nudge shine mt-5 inline-block bg-[#c41d15] px-10 py-2.5 text-sm font-semibold tracking-wide text-white uppercase hover:bg-[#a8180f]">
             Buy
           </span>
         );

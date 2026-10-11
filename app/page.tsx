@@ -73,7 +73,7 @@ export default function Home() {
   return (
     <div className="space-y-20 sm:space-y-28">
       {/* Hero: full-width, real Instagram activity playing behind the headline */}
-      <Viewfinder grid={false} className="rise relative -mt-10 ml-[calc(50%-50vw)] w-screen">
+      <Viewfinder grid={false} ink className="rise relative -mt-10 ml-[calc(50%-50vw)] w-screen">
         <video
           src={HERO.src}
           poster={HERO.poster}
@@ -84,9 +84,9 @@ export default function Home() {
           preload="metadata"
           className="absolute inset-0 h-full w-full object-cover object-[75%_50%] md:object-center"
         />
-        <div className="absolute inset-0 bg-black/45 md:bg-transparent md:bg-gradient-to-r md:from-black/70 md:via-black/25 md:to-transparent" />
-        <div className="relative mx-auto flex min-h-[calc(100svh-61px)] max-w-5xl flex-col justify-center space-y-6 px-8 py-20 text-white sm:px-12">
-          <p className="label text-white/70">Reels / Shorts / TikTok / AI video</p>
+        <div className="absolute inset-0 bg-background/70 md:bg-transparent md:bg-gradient-to-r md:from-background/90 md:via-background/40 md:to-transparent" />
+        <div className="relative mx-auto flex min-h-[calc(100svh-61px)] max-w-5xl flex-col justify-center space-y-6 px-8 py-20 sm:px-12">
+          <p className="label text-muted">Reels / Shorts / TikTok / AI video</p>
           <h1 className="font-display text-[4.4rem] leading-[1] sm:text-[7.5rem]">
             One video.
             <br />
@@ -94,16 +94,16 @@ export default function Home() {
             <br />
             versions.
           </h1>
-          <p className="font-poppins max-w-md text-sm leading-relaxed text-white/90 sm:text-base">
+          <p className="font-poppins max-w-md text-sm leading-relaxed sm:text-base">
             Stop re-editing and re-generating.
             <br />
             Get a brand-new file that looks and sounds like your original, in about a minute.
           </p>
-          <div className="flex flex-wrap items-center gap-4 border-t border-white/40 pt-6">
-            <Link href="/login" className="bg-accent px-7 py-4 font-semibold tracking-wide text-accent-fg uppercase hover:opacity-90">
+          <div className="flex flex-wrap items-center gap-4 border-t border-foreground pt-6">
+            <Link href="/login" className="nudge shine inline-block bg-accent px-7 py-4 font-semibold tracking-wide text-accent-fg uppercase hover:opacity-90">
               Try It - 3 Videos Free
             </Link>
-            <span className="label text-xs text-white/70">No card needed</span>
+            <span className="label text-xs text-muted">No card needed</span>
           </div>
         </div>
       </Viewfinder>

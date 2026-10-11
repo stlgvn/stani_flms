@@ -25,25 +25,6 @@
   --grain-opacity: 0.11;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0b0b0b;
-    --foreground: #f2f2ee;
-    --card: #141414;
-    --border: #34342f;
-    --muted: #a3a39c;
-    --accent: #ff3b30;
-    --accent-fg: #ffffff;
-    --tan: #a3a39c;
-    --dot: #ff3b30;
-    --panel: #161616;
-    --panel-fg: #f2f2ee;
-    --ok: #8fbf5a;
-    --bad: #ff6b60;
-    --grain-opacity: 0.09;
-  }
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -121,10 +102,10 @@ body::before {
 }
 
 /* Gentle "press me" nudge for buy buttons. */
-.pulse {
-  animation: pulse 2.4s ease-in-out infinite;
+.nudge {
+  animation: nudge 2.4s ease-in-out infinite;
 }
-@keyframes pulse {
+@keyframes nudge {
   0%, 70%, 100% { transform: scale(1); }
   80% { transform: scale(1.06); }
   90% { transform: scale(0.98); }
